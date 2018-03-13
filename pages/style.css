@@ -1,0 +1,12 @@
+.logo {
+  color: #fff;
+  margin: 0 20px 0 0;
+}
+
+.header {
+  display: flex
+}
+
+.menu {
+  line-height: 64px;
+}
