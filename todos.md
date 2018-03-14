@@ -28,3 +28,5 @@
 - [ ] 个人信息页（学生/教授）
 
 https://www.ratemyprofessors.com/
+
+https://i.viewmycourses.com/oauth/authorize?client_id=bridge-campus&redirect_uri=http://school.anyquestion.top/callback&response_type=code&state=http://test.com
