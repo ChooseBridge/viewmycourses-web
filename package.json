@@ -28,5 +28,8 @@
   },
   "devDependencies": {
     "isomorphic-style-loader": "^4.0.0"
+  },
+  "engines": {
+    "node": "8.x"
   }
 }
