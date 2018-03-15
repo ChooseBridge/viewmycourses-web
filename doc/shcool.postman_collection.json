@@ -1,0 +1,184 @@
+{
+	"id": "b00bf54d-6741-22d3-625e-d5d91c4fce4b",
+	"name": "shcool",
+	"description": "",
+	"order": [
+		"7af013d3-f558-fbf0-3820-fd91d16d0e80",
+		"ee628429-2396-d032-46fc-bb29a739201b",
+		"563962c0-9ed8-1eb6-697f-38828d7cb25a",
+		"39fbb00f-3183-5728-b0c5-7a445816db95"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1521118817937,
+	"owner": "3085636",
+	"public": false,
+	"requests": [
+		{
+			"id": "39fbb00f-3183-5728-b0c5-7a445816db95",
+			"headers": "token: 2c480aa3f278b2b6fbdb1c12f757df8a\n",
+			"headerData": [
+				{
+					"key": "token",
+					"value": "2c480aa3f278b2b6fbdb1c12f757df8a",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://school.anyquestion.top/api/school/create",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "b00bf54d-6741-22d3-625e-d5d91c4fce4b",
+			"data": [
+				{
+					"key": "school_name",
+					"value": "上海大学",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "school_nick_name",
+					"value": "上大",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "country_id",
+					"value": "1",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "province_id",
+					"value": "1",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "city_id",
+					"value": "1",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "website_url",
+					"value": "http://test.com",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "your_email",
+					"value": "test@email.com",
+					"type": "text",
+					"enabled": true,
+					"description": ""
+				}
+			],
+			"dataMode": "params",
+			"name": "http://school.anyquestion.top/api/school/create",
+			"description": "创建学校信息",
+			"descriptionFormat": "html",
+			"time": 1521123773438,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "563962c0-9ed8-1eb6-697f-38828d7cb25a",
+			"headers": "",
+			"headerData": [],
+			"url": "http://school.anyquestion.top/open-api/geo/get-city-by-province",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "b00bf54d-6741-22d3-625e-d5d91c4fce4b",
+			"data": [
+				{
+					"key": "province_id",
+					"value": "1",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "http://school.anyquestion.top/open-api/geo/get-city-by-province",
+			"description": "获取城市信息根据省份Id",
+			"descriptionFormat": "html",
+			"time": 1521123751086,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "7af013d3-f558-fbf0-3820-fd91d16d0e80",
+			"headers": "",
+			"headerData": [],
+			"url": "http://school.anyquestion.top/open-api/geo/get-all-countrys",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "b00bf54d-6741-22d3-625e-d5d91c4fce4b",
+			"data": null,
+			"dataMode": "params",
+			"name": "http://school.anyquestion.top/open-api/geo/get-all-countrys",
+			"description": "获取所有国家列表",
+			"descriptionFormat": "html",
+			"time": 1521123702283,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"folder": null,
+			"id": "ee628429-2396-d032-46fc-bb29a739201b",
+			"name": "http://school.anyquestion.top/open-api/geo/get-province-by-country",
+			"dataMode": "params",
+			"data": [
+				{
+					"key": "country_id",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": null,
+			"rawModeData": null,
+			"descriptionFormat": "html",
+			"description": "获取省份信息根据国家的id",
+			"variables": null,
+			"headers": "",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://school.anyquestion.top/open-api/geo/get-province-by-country",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"queryParams": [],
+			"headerData": [],
+			"pathVariableData": [],
+			"collectionId": "b00bf54d-6741-22d3-625e-d5d91c4fce4b"
+		}
+	]
+}

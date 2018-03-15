@@ -13,6 +13,9 @@
 }
 .button {
 }
+.primary_button {
+  color:#FFFFFF;
+}
 .link_button {
   color:#169BD5;
 }
@@ -66,8 +69,15 @@
 .paragraph {
   text-align:left;
 }
+.arrow {
+}
 .text_field {
   color:#000000;
+  text-align:left;
+}
+.snapshot {
+}
+.sticky_1 {
   text-align:left;
 }
 .paragraph1 {
