@@ -13,7 +13,6 @@
   "license": "ISC",
   "dependencies": {
     "@zeit/next-css": "^0.1.4",
-    "@zeit/next-less": "^0.1.1",
     "antd": "^3.3.0",
     "autoprefixer": "^8.1.0",
     "isomorphic-style-loader": "^4.0.0",
