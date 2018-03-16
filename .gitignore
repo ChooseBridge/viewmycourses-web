@@ -2,8 +2,8 @@ node_modules
 npm-debug.log
 start.sh
 .idea
+.next/
 
 # VIM
 *~
 *.swp
-.next
