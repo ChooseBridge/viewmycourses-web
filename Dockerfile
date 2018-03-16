@@ -1,4 +1,4 @@
-FROM node:0.12.7-wheezy
+FROM node
 
 WORKDIR /app
 
@@ -6,7 +6,7 @@ COPY ./package.json /app/
 
 RUN npm install
 
-COPY . /app/
+COPY ./next /app/
 
 EXPOSE 3000
 
