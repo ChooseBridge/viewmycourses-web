@@ -28,7 +28,9 @@ export default () => (
           <Breadcrumb.Item>List</Breadcrumb.Item>
           <Breadcrumb.Item>App</Breadcrumb.Item>
         </Breadcrumb>
-        <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>Content</div>
+        <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+          看我在这修改了内容诶！
+        </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>
         Ant Design ©2016 Created by Ant UED
