@@ -6,7 +6,7 @@ COPY ./package.json /app/
 
 RUN npm install
 
-COPY ./.next /app/
+COPY ./.next /app/.next
 
 EXPOSE 3000
 
