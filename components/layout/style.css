@@ -10,3 +10,14 @@
 .menu {
   line-height: 64px;
 }
+
+.row {
+	padding: 6px 0;
+}
+
+.menuWrap {
+	position: absolute;
+	width: 100%;
+    top: 64px;
+    background: #f0f2f5;
+}
