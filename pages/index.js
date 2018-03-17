@@ -2,6 +2,8 @@ import React from 'react';
 import ALayout from '../components/layout/index.js';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import style from './style.css';
+import commonStyle from '../common/style/index.css';
+
 
 const { Header, Footer, Content } = Layout;
 
