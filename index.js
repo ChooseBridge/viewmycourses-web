@@ -6,6 +6,7 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 const cookieParser = require('cookie-parser');
 const url = require('url');
+const userInfo = require('./middleware/user-info');
 
 app.prepare()
   .then(() => {
@@ -22,7 +23,7 @@ app.prepare()
       const uri = req.protocol + '://' + req.get('host') + req.originalUrl;
       return app.render(req, res, page, Object.assign({}, params, {
         loginUrl: `https://i.viewmycourses.com/oauth/authorize?client_id=bridge-campus&redirect_uri=http://school.anyquestion.top/callback&response_type=code&state=${uri}`
-      }))
+      }));
     };
 
     server.use(cookieParser());
@@ -35,7 +36,7 @@ app.prepare()
         req.cookies.token = token;
         res.cookie('token', token, { expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) });
 
-        const uri = req.protocol + '://' + req.get('host') + req.originalUrl;
+        const uri = url.parse(req.protocol + '://' + req.get('host') + req.originalUrl);
 
         return res.redirect(301, `${uri.protocol}//${uri.host}${uri.pathname}`);
       }
@@ -43,9 +44,18 @@ app.prepare()
       next();
     });
 
-    server.get('/', (req, res) => {
-      render(req, res, '/index');
+    server.get('/', userInfo, (req, res) => {
+      render(req, res, '/index', { user: req.user });
     });
+
+    // error handler
+    // server.use((err, req, res) => {
+    //   // console.log(err);
+    //   // res.send(err);
+    //
+    //   return res.send(err);
+    //
+    // });
 
     server.get('/professor/create', (req, res) => {
       render(req, res, '/create/professor');

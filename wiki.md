@@ -30,3 +30,10 @@
 https://www.ratemyprofessors.com/
 
 https://i.viewmycourses.com/oauth/authorize?client_id=bridge-campus&redirect_uri=http://school.anyquestion.top/callback&response_type=code&state=http://test.com
+
+const MISS_PARAM = 1001; //缺失参数
+const INVALID_LOGIN = 1002; //无效的登陆
+const ERROR_PARAM = 1003; //错误的参数
+const ILLGAL_OPERATION = 1004; //非法操作
+const OPERATION_EXCEPTION = 1005; //操作异常
+const DATA_EXCEPTION = 1006; //数据异常

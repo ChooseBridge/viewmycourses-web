@@ -403,7 +403,8 @@ export default class extends React.Component {
 	render() {
 		const {
 			title,
-			children
+			children,
+			url
 		} = this.props;
 
 		const {
@@ -426,7 +427,12 @@ export default class extends React.Component {
 				        <Menu.Item key="3">查找教授</Menu.Item>
 				        <Menu.Item key="4">我要点评</Menu.Item>
 			        </Menu>
-					  <a href={this.props.url.query.loginUrl}><Button>登录</Button></a>
+					  {
+					  	url.query.user ? url.query.user.name : <a href={url.query.loginUrl}><Button>登录</Button></a>
+					  }
+
+					  <input type="hidden" id="login-url" value={url.query.loginUrl} />
+
 			    </Header>
 
 					{menuContentKey && this.renderMenuContent(menuContentKey)}
