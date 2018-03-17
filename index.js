@@ -47,6 +47,14 @@ app.prepare()
       render(req, res, '/index');
     });
 
+    server.get('/professor/create', (req, res) => {
+      render(req, res, '/create/professor');
+    });
+
+    server.get('/school/create', (req, res) => {
+      render(req, res, '/create/school');
+    });
+
     server.get('*', (req, res) => {
       return handle(req, res);
     });
