@@ -109,9 +109,9 @@ class ProfessorForm extends React.Component {
                   help={firstNameError || ''}
                   label="名：">
                   {getFieldDecorator('prefessor_first_Name', {
-                    rules: [{ required: true, message: 'Please input your firstName!' }],
+                    rules: [{ required: true, message: '请填写名' }],
                   })(
-                    <Input size="large" style={{width: 250}} placeholder="firstName" />
+                    <Input size="large" style={{width: 250}} placeholder="名" />
                   )}
                 </FormItem>
                 <FormItem
@@ -120,9 +120,9 @@ class ProfessorForm extends React.Component {
                   help={secondNameError || ''}
                   label="姓：">
                   {getFieldDecorator('prefessor_second_Name', {
-                    rules: [{ required: true, message: 'Please input your secondName!' }],
+                    rules: [{ required: true, message: '请填写姓!' }],
                   })(
-                    <Input size="large" style={{width: 250}} placeholder="secondName" />
+                    <Input size="large" style={{width: 250}} placeholder="姓" />
                   )}
                 </FormItem>
                 <FormItem
@@ -131,9 +131,9 @@ class ProfessorForm extends React.Component {
                   help={schoolError || ''}
                   label="学校：">
                   {getFieldDecorator('school_id', {
-                    rules: [{ required: true, message: 'Please input your school!' }],
+                    rules: [{ required: true, message: '请填写学校!' }],
                   })(
-                    <Input size="large" style={{width: 250}} placeholder="school" />
+                    <Input size="large" style={{width: 250}} placeholder="学校" />
                   )}
                 </FormItem>
                 <FormItem
@@ -142,9 +142,9 @@ class ProfessorForm extends React.Component {
                   help={collegeError || ''}
                   label="学位：">
                   {getFieldDecorator('college_id', {
-                    rules: [{ required: true, message: 'Please input your college!' }],
+                    rules: [{ required: true, message: '请填写学位!' }],
                   })(
-                    <Input size="large" style={{width: 250}} placeholder="college" />
+                    <Input size="large" style={{width: 250}} placeholder="学位" />
                   )}
                 </FormItem>
                 <FormItem
@@ -153,9 +153,9 @@ class ProfessorForm extends React.Component {
                   help={webSiteError || ''}
                   label="个人主页：">
                   {getFieldDecorator('professor_web_Site', {
-                    rules: [{ required: true, message: 'Please input your webSite!' }],
+                    rules: [{ required: true, message: '请填写个人主页!' }],
                   })(
-                    <Input size="large" style={{width: 250}} placeholder="webSite" />
+                    <Input size="large" style={{width: 250}} placeholder="个人主页" />
                   )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}
@@ -168,7 +168,7 @@ class ProfessorForm extends React.Component {
                           callback(true);
                       }
                       callback();
-                    }, message: 'Please agree!',}],
+                    }, message: '请同意!',}],
                   })(
                     <Checkbox>I have read the <a href="">agreement</a></Checkbox>
                   )}
