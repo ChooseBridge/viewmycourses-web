@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
 	Layout,
 	Menu,
 	Breadcrumb,
 	Row,
-	Col
+	Col,
+	Button
 } from 'antd';
 import Base from '../base/index.js';
 import commonStyle from '../../common/style/index.css';
@@ -27,7 +29,6 @@ export default class extends React.Component {
 	}
 
 	componentDidMount() {
-
 	}
 
 	MenuClickHandler(item) {
@@ -70,7 +71,7 @@ export default class extends React.Component {
 	render() {
 		const {
 			title,
-			children,
+			children
 		} = this.props;
 
 		const {
@@ -93,6 +94,7 @@ export default class extends React.Component {
 					        <Menu.Item key="3">查找教授</Menu.Item>
 					        <Menu.Item key="4">我要点评</Menu.Item>
 				        </Menu>
+						  <a href={this.props.url.query.loginUrl}><Button>登录</Button></a>
 				    </Header>
 
 					{menuContentKey && this.renderMenuContent(menuContentKey)}

@@ -15,16 +15,16 @@ class Index extends React.Component {
     }
 
     componentDidMount() {
-
+      // console.log(this.props)
     }
 
     render() {
         const {
-
+          url
         } = this.props;
 
         return (
-            <ALayout title='首页'>
+            <ALayout title='首页' url={url}>
                 <Content style={{ padding: '0 50px' }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
                         <Breadcrumb.Item>Home</Breadcrumb.Item>
