@@ -1,29 +1,22 @@
 import React from 'react';
 import ALayout from '../components/layout/index.js';
-import { Layout, Menu, Breadcrumb, Button } from 'antd';
-import style from './style.css';
-import commonStyle from '../common/style/index.css';
+import { Layout, Breadcrumb, Button } from 'antd';
+// import style from '../common/style/home.css';
+// import commonStyle from '../common/style/index.css';
 import api from '../common/api';
 import client from '../common/client';
 
-const { Header, Footer, Content } = Layout;
+const { Content } = Layout;
 
-class Index extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {};
   }
 
-  componentDidMount() {
-    // console.log(this.props)
-  }
-
   getCountry() {
-
     client(api.getSchoolGroupByCountry)();
-
-    // api.getSchoolGroupByCountry().then(res => console.log(res), e => console.error(e));
   }
 
   render() {
@@ -49,4 +42,4 @@ class Index extends React.Component {
   }
 }
 
-export default Index;
+export default Home;
