@@ -9,6 +9,8 @@ import {
   Button
 } from 'antd';
 import style from '../../common/style/create.css';
+import api from '../../common/api';
+import client from '../../common/client;'
 
 const FormItem = Form.Item;
 
@@ -38,6 +40,10 @@ class SchoolForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        client(api.createSchool)({
+          body: values
+        })
+        //TODO: loading 状态，成功提示
       }
     });
   }
