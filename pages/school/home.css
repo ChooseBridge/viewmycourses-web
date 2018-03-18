@@ -22,6 +22,12 @@
 	color: #000;
 }
 
+.verCenter {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
 .tagWrap {
 	position: absolute;
 	top: 50%;
@@ -43,7 +49,7 @@
 	color: #000;
 }
 
-.rowWrapPadding{
+.rowWrapPadding {
 	padding: 20px;
 }
 
@@ -53,4 +59,9 @@
 
 .likeWrap {
 	margin-top: 30px;
+}
+
+.schoolStyle {
+	font-size: 28px;
+	color: #000;
 }

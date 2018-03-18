@@ -201,7 +201,6 @@ class Professor extends React.Component {
                   </Row>
                 </Col>
               </Row>
-
             </Card>
           </div>
         </Content>
