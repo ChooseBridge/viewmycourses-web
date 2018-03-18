@@ -57,12 +57,12 @@ app.prepare()
     //
     // });
 
-    server.get('professor/create', (req, res) => {
-      render(req, res, 'professor/create');
+    server.get('/professor/create', userInfo, (req, res) => {
+      render(req, res, '/professor/create', { user: req.user });
     });
 
-    server.get('school/create', (req, res) => {
-      render(req, res, 'school/create');
+    server.get('/school/create', userInfo, (req, res) => {
+      render(req, res, '/school/create', { user: req.user });
     });
 
     server.get('*', (req, res) => {
