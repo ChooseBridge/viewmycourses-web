@@ -145,7 +145,7 @@ class ProfessorForm extends React.Component {
                 help={schoolError || ''}
                 label="学校：">
                 {getFieldDecorator('school_id', {
-                  rules: [{ required: true, message: '请填写学校!' }]
+                  rules: [{ required: true, message: '请填写学校' }]
                 })(
                   <SchoolSelector
                     size="large"
@@ -159,11 +159,11 @@ class ProfessorForm extends React.Component {
                 {...formItemLayout}
                 validateStatus={collegeError ? 'error' : ''}
                 help={collegeError || ''}
-                label="学位：">
+                label="学院：">
                 {getFieldDecorator('college_id', {
-                  rules: [{ required: true, message: '请填写学位!' }]
+                  rules: [{ required: true, message: '请填写学院' }]
                 })(
-                  <Input size="large" style={{ width: 250 }} placeholder="学位" />
+                  <Input size="large" style={{ width: 250 }} placeholder="学院" />
                 )}
               </FormItem>
               <FormItem
@@ -172,9 +172,9 @@ class ProfessorForm extends React.Component {
                 help={webSiteError || ''}
                 label="个人主页：">
                 {getFieldDecorator('professor_web_Site', {
-                  rules: [{ required: true, message: '请填写个人主页!' }]
+                  rules: [{ required: true, message: '请填写个人主页' }]
                 })(
-                  <Input size="large" style={{ width: 250 }} placeholder="个人主页" />
+                  <Input size="large" style={{ width: 250 }} placeholder="http://" />
                 )}
               </FormItem>
               <FormItem {...tailFormItemLayout}

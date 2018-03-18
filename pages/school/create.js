@@ -6,11 +6,15 @@ import {
   Form,
   Input,
   Checkbox,
-  Button
+  Button,
+  Select
 } from 'antd';
 import style from '../../common/style/create.css';
+import api from '../../common/api';
+import client from '../../common/client';
 
 const FormItem = Form.Item;
+const { Option } = Select;
 
 const {
   Content
@@ -24,13 +28,23 @@ class SchoolForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      country: [],
+      province: [],
+      city: []
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.props.form.validateFields();
+
+    client(api.getAllCountry)().then(country => {
+      this.setState({
+        country: country
+      });
+    });
   }
 
   handleSubmit(e) {
@@ -40,16 +54,42 @@ class SchoolForm extends React.Component {
         console.log('Received values of form: ', values);
         client(api.createSchool)({
           body: values
-        })
+        });
         //TODO: loading 状态，成功提示
       }
     });
   }
 
+  countryChange = countryId => {
+    client(api.getProvinceByCountry)({ countryId }).then(province => {
+      this.setState({
+        province,
+        countryValue: countryId
+      });
+      this.props.form.setFieldsValue({ 'city_id': '', 'province_id': '' });
+    });
+  };
+
+  provinceChange = provinceId => {
+    client(api.getCityByProvince)({ provinceId }).then(city => {
+      this.setState({
+        city,
+        provinceValue: provinceId
+      });
+      this.props.form.setFieldsValue({ 'city_id': '' });
+    });
+  };
+
   render() {
     const {
       url
     } = this.props;
+
+    const {
+      country,
+      province,
+      city
+    } = this.state;
 
     const {
       getFieldDecorator,
@@ -107,7 +147,7 @@ class SchoolForm extends React.Component {
                 help={schoolNameError || ''}
                 label="学校名称：">
                 {getFieldDecorator('school_name', {
-                  rules: [{ required: true, message: '请填写学校名称!' }]
+                  rules: [{ required: true, message: '请填写学校名称' }]
                 })(
                   <Input size="large" style={{ width: 250 }} placeholder="学校名称" />
                 )}
@@ -118,7 +158,7 @@ class SchoolForm extends React.Component {
                 help={schoolNickNameError || ''}
                 label="学校简称：">
                 {getFieldDecorator('school_nick_name', {
-                  rules: [{ required: true, message: '请填写学校简称!' }]
+                  rules: [{ required: true, message: '请填写学校简称' }]
                 })(
                   <Input size="large" style={{ width: 250 }} placeholder="学校简称" />
                 )}
@@ -129,20 +169,37 @@ class SchoolForm extends React.Component {
                 help={countryError || ''}
                 label="国家：">
                 {getFieldDecorator('country_id', {
-                  rules: [{ required: true, message: '请填写国家!' }]
+                  rules: [{ required: true, message: '请填写国家' }]
                 })(
-                  <Input size="large" style={{ width: 250 }} placeholder="国家" />
+                  <Select
+                    size="large"
+                    style={{ width: 250 }}
+                    placeholder="国家"
+                    onSelect={this.countryChange}>
+                    {
+                      country.map(c => <Option key={c.country_id} value={c.country_id}>{c.country_name}</Option>)
+                    }
+                  </Select>
                 )}
               </FormItem>
+
               <FormItem
                 {...formItemLayout}
                 validateStatus={provinceError ? 'error' : ''}
                 help={provinceError || ''}
                 label="省市：">
                 {getFieldDecorator('province_id', {
-                  rules: [{ required: true, message: '请填写省市!' }]
+                  rules: [{ required: true, message: '请填写洲/省' }]
                 })(
-                  <Input size="large" style={{ width: 250 }} placeholder="省市" />
+                  <Select
+                    size="large"
+                    style={{ width: 250 }}
+                    placeholder="洲/省"
+                    onSelect={this.provinceChange}>
+                    {
+                      province.map(p => <Option key={p.province_id} value={p.province_id}>{p.province_name}</Option>)
+                    }
+                  </Select>
                 )}
               </FormItem>
               <FormItem
@@ -151,9 +208,16 @@ class SchoolForm extends React.Component {
                 help={cityError || ''}
                 label="城市">
                 {getFieldDecorator('city_id', {
-                  rules: [{ required: true, message: '请填写城市！' }]
+                  rules: [{ required: true, message: '请填写城市' }]
                 })(
-                  <Input size="large" style={{ width: 250 }} placeholder="城市" />
+                  <Select
+                    size="large"
+                    style={{ width: 250 }}
+                    placeholder="城市">
+                    {
+                      city.map(c => <Option key={c.city_id} value={c.city_id}>{c.city_name}</Option>)
+                    }
+                  </Select>
                 )}
               </FormItem>
               <FormItem
@@ -162,9 +226,9 @@ class SchoolForm extends React.Component {
                 help={websiteError || ''}
                 label="学校首页">
                 {getFieldDecorator('website_url', {
-                  rules: [{ required: true, message: '请填写学校首页！' }]
+                  rules: [{ required: true, message: '请填写学校主页' }]
                 })(
-                  <Input size="large" style={{ width: 250 }} placeholder="学校首页" />
+                  <Input size="large" style={{ width: 250 }} placeholder="http://" />
                 )}
               </FormItem>
               <FormItem
