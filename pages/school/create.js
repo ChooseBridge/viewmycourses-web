@@ -7,7 +7,8 @@ import {
   Input,
   Checkbox,
   Button,
-  Select
+  Select,
+  Modal
 } from 'antd';
 import style from '../../common/style/create.css';
 import api from '../../common/api';
@@ -31,7 +32,8 @@ class SchoolForm extends React.Component {
     this.state = {
       country: [],
       province: [],
-      city: []
+      city: [],
+      loading: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -52,10 +54,16 @@ class SchoolForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        this.setState({ loading: true });
         client(api.createSchool)({
           body: values
+        }).then(() => {
+          Modal.success({
+            title: '提交成功',
+            content: '我们将对你提交的资料进行审核，审核结果将会发送到你的邮箱',
+            onOk: () => history.back()
+          });
         });
-        //TODO: loading 状态，成功提示
       }
     });
   }
@@ -82,7 +90,8 @@ class SchoolForm extends React.Component {
 
   render() {
     const {
-      url
+      url,
+      loading
     } = this.props;
 
     const {
@@ -235,7 +244,7 @@ class SchoolForm extends React.Component {
                 {...formItemLayout}
                 validateStatus={emailError ? 'error' : ''}
                 help={emailError || ''}
-                label="e-mail">
+                label="你的邮箱">
                 {getFieldDecorator('your_email', {
                   rules: [{
                     required: true,
@@ -267,6 +276,7 @@ class SchoolForm extends React.Component {
               </FormItem>
               <FormItem {...tailFormItemLayout}>
                 <Button
+                  loading={loading}
                   size="large"
                   style={{ width: 250 }}
                   type="primary"
