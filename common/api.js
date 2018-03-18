@@ -7,4 +7,6 @@ module.exports = {
     url: '/api/school/create',
     method: 'POST'
   }, opt)),
+
+
 };

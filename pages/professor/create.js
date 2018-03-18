@@ -6,9 +6,12 @@ import {
   Form,
   Input,
   Checkbox,
-  Button
+  Button,
 } from 'antd';
 import style from '../../common/style/create.css';
+import api from '../../common/api';
+import client from '../../common/client';
+import SchoolSelector from '../../components/school-selector';
 
 const FormItem = Form.Item;
 
@@ -24,13 +27,22 @@ class ProfessorForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      schools: []
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.props.form.validateFields();
+    client(api.getSchoolGroupByCountry)()
+      .then(res => {
+
+        this.setState({
+          schools: res
+        })
+      });
   }
 
   handleSubmit(e) {
@@ -40,6 +52,16 @@ class ProfessorForm extends React.Component {
         console.log('Received values of form: ', values);
       }
     });
+  }
+
+  handleSearch = (value) => {
+    // let result;
+    // if (!value || value.indexOf('@') >= 0) {
+    //   result = [];
+    // } else {
+    //   result = ['gmail.com', '163.com', 'qq.com'].map(domain => `${value}@${domain}`);
+    // }
+    // this.setState({ result });
   }
 
   render() {
@@ -125,7 +147,12 @@ class ProfessorForm extends React.Component {
                 {getFieldDecorator('school_id', {
                   rules: [{ required: true, message: '请填写学校!' }]
                 })(
-                  <Input size="large" style={{ width: 250 }} placeholder="学校" />
+                  <SchoolSelector
+                    size="large"
+                    style={{ width: 250 }}
+                    onSearch={this.handleSearch}
+                    placeholder="学校"
+                    dataSource={this.state.schools} />
                 )}
               </FormItem>
               <FormItem

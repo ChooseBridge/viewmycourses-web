@@ -5,6 +5,7 @@ import { Layout, Breadcrumb, Button } from 'antd';
 // import commonStyle from '../common/style/index.css';
 import api from '../common/api';
 import client from '../common/client';
+import SchoolSelector from '../components/school-selector';
 
 const { Content } = Layout;
 
@@ -35,6 +36,27 @@ class Home extends React.Component {
           <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
             看我在这修改了内容诶！
             <Button onClick={this.getCountry}>国家</Button>
+            <SchoolSelector dataSource={{
+              "中国": [
+                {
+                  "school_id": 2,
+                  "school_name": "中国科技大学",
+                  "school_nick_name": "中科大"
+                },
+                {
+                  "school_id": 5,
+                  "school_name": "复旦大学",
+                  "school_nick_name": "复旦"
+                }
+              ],
+              "美国": [
+                {
+                  "school_id": 6,
+                  "school_name": "Emory University",
+                  "school_nick_name": "埃默里"
+                }
+              ]
+            }}/>
           </div>
         </Content>
       </ALayout>
