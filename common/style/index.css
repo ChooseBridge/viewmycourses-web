@@ -1,3 +1,15 @@
 .textCenter {
 	text-align: center;
 }
+
+.textRight {
+	text-align: right;
+}
+
+.textLeft {
+	text-align: left;
+}
+
+.colorBlue {
+	color: #40a9ff;
+}

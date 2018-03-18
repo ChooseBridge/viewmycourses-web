@@ -57,6 +57,10 @@ app.prepare()
     //
     // });
 
+    server.get('/professor/:id', userInfo, (req, res) => {
+      render(req, res, '/professor/home', { user: req.user });
+    });
+
     server.get('/professor/create', userInfo, (req, res) => {
       render(req, res, '/professor/create', { user: req.user });
     });
