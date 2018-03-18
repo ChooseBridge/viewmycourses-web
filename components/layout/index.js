@@ -103,7 +103,7 @@ export default class extends React.Component {
 						className={cla(commonStyle.textCenter)}
 						span={12}
 						offset={6}>
-						查找你的学校
+						<h2>查找你的学校</h2>
 					</Col>
 				</Row>
 
@@ -184,7 +184,7 @@ export default class extends React.Component {
 						className={cla(commonStyle.textCenter)}
 						span={12}
 						offset={6}>
-						查找你的教授
+						<h2>查找你的教授</h2>
 					</Col>
 				</Row>
 
@@ -314,7 +314,7 @@ export default class extends React.Component {
 						className={cla(commonStyle.textCenter)}
 						span={12}
 						offset={6}>
-						我要点评
+						<h2>我要点评</h2>
 					</Col>
 				</Row>
 

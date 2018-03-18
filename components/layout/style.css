@@ -12,12 +12,15 @@
 }
 
 .row {
-	padding: 6px 0;
+  padding: 6px 0;
 }
 
 .menuWrap {
-	position: absolute;
-	width: 100%;
-    top: 64px;
-    background: #f0f2f5;
+  position: absolute;
+  width: 100%;
+  top: 64px;
+  background: #f0f2f5;
+  z-index: 1;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, .2);
+  padding: 20px;
 }
