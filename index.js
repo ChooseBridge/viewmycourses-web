@@ -7,6 +7,8 @@ const handle = app.getRequestHandler();
 const cookieParser = require('cookie-parser');
 const url = require('url');
 const userInfo = require('./middleware/user-info');
+const config = require('./config');
+const checkLogin = require('./middleware/check-login');
 
 app.prepare()
   .then(() => {
@@ -22,7 +24,7 @@ app.prepare()
     const render = (req, res, page, params = {}) => {
       const uri = req.protocol + '://' + req.get('host') + req.originalUrl;
       return app.render(req, res, page, Object.assign({}, params, {
-        loginUrl: `https://i.viewmycourses.com/oauth/authorize?client_id=bridge-campus&redirect_uri=http://school.anyquestion.top/callback&response_type=code&state=${uri}`
+        loginUrl: `${config.loginUrl}${uri}`
       }));
     };
 
@@ -44,7 +46,9 @@ app.prepare()
       next();
     });
 
-    server.get('/', userInfo, (req, res) => {
+    server.use(userInfo);
+
+    server.get('/', (req, res) => {
       render(req, res, '/index', { user: req.user });
     });
 
@@ -57,27 +61,27 @@ app.prepare()
     //
     // });
 
-    server.get('/professor/create', userInfo, (req, res) => {
+    server.get('/professor/create', checkLogin, (req, res) => {
       render(req, res, '/professor/create', { user: req.user });
     });
 
-    server.get('/professor/rate', userInfo, (req, res) => {
+    server.get('/professor/rate', checkLogin, (req, res) => {
       render(req, res, '/professor/rate', { user: req.user });
     });
 
-    server.get('/school/create', userInfo, (req, res) => {
-      render(req, res, '/school/create', { user: req.user });
-    });
-
-    server.get('/professor/:id', userInfo, (req, res) => {
+    server.get('/professor/:id', (req, res) => {
       render(req, res, '/professor/home', { user: req.user });
     });
 
-    server.get('/school/rate', userInfo, (req, res) => {
+    server.get('/school/create', checkLogin, (req, res) => {
+      render(req, res, '/school/create', { user: req.user });
+    });
+
+    server.get('/school/rate', checkLogin, (req, res) => {
       render(req, res, '/school/rate', { user: req.user });
     });
 
-    server.get('/school/:id', userInfo, (req, res) => {
+    server.get('/school/:id', (req, res) => {
       render(req, res, '/school/home', { user: req.user });
     });
 

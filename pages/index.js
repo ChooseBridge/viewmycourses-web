@@ -2,7 +2,7 @@ import React from 'react';
 import ALayout from '../components/layout/index.js';
 import { Layout, Breadcrumb, Button } from 'antd';
 // import style from '../common/style/home.css';
-// import commonStyle from '../common/style/index.css';
+import commonStyle from '../common/style/index.css';
 import api from '../common/api';
 import client from '../common/client';
 import SchoolSelector from '../components/school-selector';
@@ -27,7 +27,7 @@ class Home extends React.Component {
 
     return (
       <ALayout title='首页' url={url}>
-        <Content style={{ padding: '0 50px' }}>
+        <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>List</Breadcrumb.Item>
@@ -57,6 +57,14 @@ class Home extends React.Component {
                 }
               ]
             }}/>
+
+            <p><a href="/professor/create">创建教授</a></p>
+            <p><a href="/professor/rate">教授评价</a></p>
+            <p><a href="/professor/123">教授主页</a></p>
+            <p><a href="/professor/123">创建学校</a></p>
+            <p><a href="/school/create">创建学校</a></p>
+            <p><a href="/school/rate">学校评价</a></p>
+            <p><a href="/school/123">学校评价</a></p>
           </div>
         </Content>
       </ALayout>

@@ -5,6 +5,7 @@ const DEV = !TEST && !PROD;
 
 const config = {
   port: 3000,
+  loginUrl: 'https://i.viewmycourses.com/oauth/authorize?client_id=bridge-campus&redirect_uri=http://school.anyquestion.top/callback&response_type=code&state='
 };
 
 if (PROD) {

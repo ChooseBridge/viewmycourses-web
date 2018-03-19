@@ -131,7 +131,7 @@ class SchoolRate extends React.Component {
 
     return (
       <ALayout title='学校点评页' url={url}>
-        <Content style={{ padding: '0 160px' }}>
+        <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={style.bgWrap}>
             <Card className={style.wrap}>

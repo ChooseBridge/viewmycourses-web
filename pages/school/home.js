@@ -156,7 +156,7 @@ class School extends React.Component {
 
     return (
       <ALayout title='学校主页' url={url}>
-        <Content style={{ padding: '0 160px' }}>
+        <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={style.bgWrap}>
             <Card className={style.wrap}>

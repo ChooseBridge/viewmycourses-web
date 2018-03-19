@@ -12,6 +12,7 @@ import style from '../../common/style/create.css';
 import api from '../../common/api';
 import client from '../../common/client';
 import SchoolSelector from '../../components/school-selector';
+import commonStyle from '../../common/style/index.css'
 
 const FormItem = Form.Item;
 
@@ -109,12 +110,11 @@ class ProfessorForm extends React.Component {
 
     return (
       <ALayout title='教授创建页面' url={url}>
-        <Content style={{ padding: '0 50px' }}>
+        <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
-            <h1>Add New Professor</h1>
-            <div className={style.proTip}>Important: Please use the search bar above to make sure that the professor
-              does not already exist at this school.
+            <h1>添加新教授</h1>
+            <div className={style.proTip}>重要提示：请使用上面的搜索栏确保不存在这位教授。
             </div>
             <Form layout="horizontal" onSubmit={this.handleSubmit}>
               <FormItem
@@ -191,7 +191,7 @@ class ProfessorForm extends React.Component {
                     }, message: '请同意!'
                   }]
                 })(
-                  <Checkbox>I have read the <a href="">agreement</a></Checkbox>
+                  <Checkbox>我已阅读并接受<a href="">协议</a></Checkbox>
                 )}
               </FormItem>
               <FormItem {...tailFormItemLayout}>

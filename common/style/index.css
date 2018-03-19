@@ -13,3 +13,9 @@
 .colorBlue {
 	color: #40a9ff;
 }
+
+.container {
+	width: 875px;
+	margin: 0 auto;
+	max-width: 100%;
+}
