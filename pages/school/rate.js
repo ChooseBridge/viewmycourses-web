@@ -37,6 +37,7 @@ class SchoolRate extends React.Component {
 
     this.state = {
       loading: false,
+      avgPoints: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -66,13 +67,32 @@ class SchoolRate extends React.Component {
     });
   }
 
+  onSliderChangeHandler() {
+    const valueObj = this.props.form.getFieldsValue();
+    const avgPoints = (valueObj['slide'] +
+    valueObj['slide1'] +
+    valueObj['slide2'] +
+    valueObj['slide3'] +
+    valueObj['slide4'] +
+    valueObj['slide5'] +
+    valueObj['slide6'] +
+    valueObj['slide7'] +
+    valueObj['slide8'] +
+    valueObj['slide9']) / 10;
+
+    this.setState({
+      avgPoints,
+    });
+  }
+
   render() {
     const {
       url
     } = this.props;
 
     const {
-      loading
+      loading,
+      avgPoints
     } = this.state;
 
     const {
@@ -179,6 +199,7 @@ class SchoolRate extends React.Component {
                     initialValue: 0,
                   })(
                     <Slider
+                      onAfterChange={() => this.onSliderChangeHandler()}
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
@@ -191,6 +212,7 @@ class SchoolRate extends React.Component {
                     initialValue: 0,
                   })(
                     <Slider
+                      onAfterChange={() => this.onSliderChangeHandler()}
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
@@ -203,6 +225,7 @@ class SchoolRate extends React.Component {
                     initialValue: 0,
                   })(
                     <Slider
+                      onAfterChange={() => this.onSliderChangeHandler()}
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
@@ -215,6 +238,7 @@ class SchoolRate extends React.Component {
                     initialValue: 0,
                   })(
                     <Slider
+                      onAfterChange={() => this.onSliderChangeHandler()}
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
@@ -227,6 +251,7 @@ class SchoolRate extends React.Component {
                     initialValue: 0,
                   })(
                     <Slider
+                      onAfterChange={() => this.onSliderChangeHandler()}
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
@@ -239,6 +264,7 @@ class SchoolRate extends React.Component {
                     initialValue: 0,
                   })(
                     <Slider
+                      onAfterChange={() => this.onSliderChangeHandler()}
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
@@ -251,6 +277,7 @@ class SchoolRate extends React.Component {
                     initialValue: 0,
                   })(
                     <Slider
+                      onAfterChange={() => this.onSliderChangeHandler()}
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
@@ -263,6 +290,7 @@ class SchoolRate extends React.Component {
                     initialValue: 0,
                   })(
                     <Slider
+                      onAfterChange={() => this.onSliderChangeHandler()}
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
@@ -275,6 +303,7 @@ class SchoolRate extends React.Component {
                     initialValue: 0,
                   })(
                     <Slider
+                      onAfterChange={() => this.onSliderChangeHandler()}
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
@@ -287,6 +316,7 @@ class SchoolRate extends React.Component {
                     initialValue: 0,
                   })(
                     <Slider
+                      onAfterChange={() => this.onSliderChangeHandler()}
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
@@ -302,6 +332,12 @@ class SchoolRate extends React.Component {
                   })(
                     <TextArea rows={4}  style={{resize:'none'}}/>
                   )}
+                </FormItem>
+
+                <FormItem
+                  {...formItemLayout}
+                  label="综合得分">
+                  <h2 style={{fontSize:40}}>{avgPoints}</h2>
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
                   <Button
