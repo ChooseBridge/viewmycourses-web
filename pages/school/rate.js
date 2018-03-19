@@ -54,10 +54,6 @@ class SchoolRate extends React.Component {
     console.log(e);
   }
 
-  onRateHandler(rate) {
-    console.log(rate);
-  }
-
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -127,6 +123,16 @@ class SchoolRate extends React.Component {
     };
 
     const collegeError = isFieldTouched('college_id') && getFieldError('college_id');
+    const slideError = isFieldTouched('slide') && getFieldError('slide');
+    const slide1Error = isFieldTouched('slide1') && getFieldError('slide1');
+    const slide2Error = isFieldTouched('slide2') && getFieldError('slide2');
+    const slide3Error = isFieldTouched('slide3') && getFieldError('slide3');
+    const slide4Error = isFieldTouched('slide4') && getFieldError('slide4');
+    const slide5Error = isFieldTouched('slide5') && getFieldError('slide5');
+    const slide6Error = isFieldTouched('slide6') && getFieldError('slide6');
+    const slide7Error = isFieldTouched('slide7') && getFieldError('slide7');
+    const slide8Error = isFieldTouched('slide8') && getFieldError('slide8');
+    const slide9Error = isFieldTouched('slide9') && getFieldError('slide9');
     const textError = isFieldTouched('textarea') && getFieldError('textarea');
 
     return (
@@ -194,9 +200,19 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
+                  validateStatus={slideError ? 'error' : ''}
+                  help={slideError || ''}
                   label="社会声誉">
-                  {getFieldDecorator('slide', {
+                  {getFieldDecorator('slide',{
                     initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
                   })(
                     <Slider
                       onAfterChange={() => this.onSliderChangeHandler()}
@@ -207,9 +223,19 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
+                  validateStatus={slide1Error ? 'error' : ''}
+                  help={slide1Error || ''}
                   label="学术水平">
-                  {getFieldDecorator('slide1', {
+                  {getFieldDecorator('slide1',{
                     initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
                   })(
                     <Slider
                       onAfterChange={() => this.onSliderChangeHandler()}
@@ -220,9 +246,19 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
+                  validateStatus={slide2Error ? 'error' : ''}
+                  help={slide2Error || ''}
                   label="网络服务">
-                  {getFieldDecorator('slide2', {
+                  {getFieldDecorator('slide2',{
                     initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
                   })(
                     <Slider
                       onAfterChange={() => this.onSliderChangeHandler()}
@@ -233,9 +269,19 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
+                  validateStatus={slide3Error ? 'error' : ''}
+                  help={slide3Error || ''}
                   label="住宿条件">
-                  {getFieldDecorator('slide3', {
+                  {getFieldDecorator('slide3',{
                     initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
                   })(
                     <Slider
                       onAfterChange={() => this.onSliderChangeHandler()}
@@ -246,9 +292,19 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
+                  validateStatus={slide4Error ? 'error' : ''}
+                  help={slide4Error || ''}
                   label="餐饮质量">
-                  {getFieldDecorator('slide4', {
+                  {getFieldDecorator('slide4',{
                     initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
                   })(
                     <Slider
                       onAfterChange={() => this.onSliderChangeHandler()}
@@ -259,9 +315,19 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
+                  validateStatus={slide5Error ? 'error' : ''}
+                  help={slide5Error || ''}
                   label="校园地理位置">
-                  {getFieldDecorator('slide5', {
+                  {getFieldDecorator('slide5',{
                     initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
                   })(
                     <Slider
                       onAfterChange={() => this.onSliderChangeHandler()}
@@ -272,9 +338,19 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
+                  validateStatus={slide6Error ? 'error' : ''}
+                  help={slide6Error || ''}
                   label="校园课外活动">
-                  {getFieldDecorator('slide6', {
+                  {getFieldDecorator('slide6',{
                     initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
                   })(
                     <Slider
                       onAfterChange={() => this.onSliderChangeHandler()}
@@ -285,9 +361,20 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
+                  validateStatus={slide7Error ? 'error' : ''}
+                  help={slide7Error || ''}
                   label="校园基础设施">
-                  {getFieldDecorator('slide7', {
+                  {getFieldDecorator('slide7',{
                     initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        console.log(value);
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
                   })(
                     <Slider
                       onAfterChange={() => this.onSliderChangeHandler()}
@@ -298,9 +385,20 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
+                  validateStatus={slide8Error ? 'error' : ''}
+                  help={slide8Error || ''}
                   label="生活幸福指数">
-                  {getFieldDecorator('slide8', {
+                  {getFieldDecorator('slide8',{
                     initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        console.log(value);
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
                   })(
                     <Slider
                       onAfterChange={() => this.onSliderChangeHandler()}
@@ -311,9 +409,20 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
+                  validateStatus={slide9Error ? 'error' : ''}
+                  help={slide9Error || ''}
                   label="校方与学生群体关系">
-                  {getFieldDecorator('slide9', {
+                  {getFieldDecorator('slide9',{
                     initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        console.log(value);
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
                   })(
                     <Slider
                       onAfterChange={() => this.onSliderChangeHandler()}
