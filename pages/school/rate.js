@@ -347,7 +347,7 @@ class SchoolRate extends React.Component {
                     type="primary"
                     htmlType="submit"
                     disabled={hasErrors(getFieldsError())}>
-                    提交
+                    提交点评
                   </Button>
                 </FormItem>
               </Form>
