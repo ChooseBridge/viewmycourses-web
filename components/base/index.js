@@ -9,9 +9,5 @@ export default ({ children, title }) =>
       <link rel='stylesheet' href='https://unpkg.com/antd@3/dist/antd.min.css' />
       <link rel="stylesheet" href="/_next/static/style.css" />
     </Head>
-    <style jsx global>{`
-      body {
-      }
-    `}</style>
     {children}
   </div>
