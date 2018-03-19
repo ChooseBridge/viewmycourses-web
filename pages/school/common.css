@@ -1,3 +1,11 @@
+/*create.js*/
+.proTip {
+	margin-bottom: 20px;
+	color: #908c8c;
+	font-size: 14px;
+}
+
+/*home.js*/
 .wrap {
 	margin-bottom: 10px;
 }
@@ -65,3 +73,5 @@
 	font-size: 28px;
 	color: #000;
 }
+
+/*rate.js*/

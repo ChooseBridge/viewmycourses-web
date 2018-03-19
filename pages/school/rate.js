@@ -13,7 +13,7 @@ import {
   Card,
 } from 'antd';
 import cla from 'classnames';
-import style from './home.css';
+import style from './common.css';
 import commonStyle from '../../common/style/index.css';
 
 const {
@@ -31,7 +31,7 @@ class SchoolRate extends React.Component {
   }
 
   componentDidMount() {
-
+    console.log(this.props);
   }
 
   render() {
@@ -43,8 +43,18 @@ class SchoolRate extends React.Component {
       <ALayout title='学校点评页' url={url}>
         <Content style={{ padding: '0 160px' }}>
           <Breadcrumb style={{ margin: '16px 0' }} />
-          <div className={commonStyle.bgWrap}>
-            111
+          <div className={style.bgWrap}>
+            <Card className={style.wrap}>
+              <div>评价高校</div>
+              <h2>复旦大学</h2>
+              <div>中国上海杨浦区</div>
+            </Card>
+
+            <Card>
+              <div>评价高校</div>
+              <h2>复旦大学</h2>
+              <div>中国上海杨浦区</div>
+            </Card>
           </div>
         </Content>
       </ALayout>
