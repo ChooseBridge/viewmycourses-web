@@ -57,21 +57,27 @@ app.prepare()
     //
     // });
 
+    server.get('/professor/create', userInfo, (req, res) => {
+      render(req, res, '/professor/create', { user: req.user });
+    });
+
     server.get('/professor/:id', userInfo, (req, res) => {
       render(req, res, '/professor/home', { user: req.user });
     });
 
-    server.get('/professor/create', userInfo, (req, res) => {
-      render(req, res, '/professor/create', { user: req.user });
+    server.get('/school/create', userInfo, (req, res) => {
+      render(req, res, '/school/create', { user: req.user });
+    });
+
+    server.get('/school/rate', userInfo, (req, res) => {
+      render(req, res, '/school/rate', { user: req.user });
     });
 
     server.get('/school/:id', userInfo, (req, res) => {
       render(req, res, '/school/home', { user: req.user });
     });
 
-    server.get('/school/create', userInfo, (req, res) => {
-      render(req, res, '/school/create', { user: req.user });
-    });
+
 
     server.get('*', (req, res) => {
       return handle(req, res);
