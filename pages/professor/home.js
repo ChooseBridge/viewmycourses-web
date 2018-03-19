@@ -13,7 +13,7 @@ import {
   Card,
 } from 'antd';
 import cla from 'classnames';
-import style from './home.css';
+import style from '../../common/style/home.css';
 import commonStyle from '../../common/style/index.css';
 
 const {

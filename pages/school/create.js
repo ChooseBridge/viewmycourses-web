@@ -10,7 +10,7 @@ import {
   Select,
   Modal
 } from 'antd';
-import style from './common.css';
+import style from '../../common/style/create.css';
 import api from '../../common/api';
 import client from '../../common/client';
 

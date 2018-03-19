@@ -31,7 +31,7 @@ function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
-class SchoolRate extends React.Component {
+class ProfessorRate extends React.Component {
   constructor(props) {
     super(props);
 
@@ -130,14 +130,14 @@ class SchoolRate extends React.Component {
     const textError = isFieldTouched('textarea') && getFieldError('textarea');
 
     return (
-      <ALayout title='学校点评页' url={url}>
+      <ALayout title='课程点评页' url={url}>
         <Content style={{ padding: '0 160px' }}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={style.bgWrap}>
             <Card className={style.wrap}>
-              <div>评价高校</div>
-              <h2>复旦大学</h2>
-              <div>中国上海杨浦区</div>
+              <div>评价课程</div>
+              <h2>PCS0001</h2>
+              <div>复旦大学 刘强东教授</div>
             </Card>
 
             <Card className={style.wrap}>
@@ -359,4 +359,4 @@ class SchoolRate extends React.Component {
   }
 }
 
-export default Form.create()(SchoolRate);
+export default Form.create()(ProfessorRate);
