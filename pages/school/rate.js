@@ -40,18 +40,12 @@ class SchoolRate extends React.Component {
       avgPoints: 0,
     };
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
   }
 
   componentDidMount() {
     console.log(this.props);
     this.props.form.validateFields();
-  }
-
-  handleChange(e) {
-    console.log(e);
   }
 
   handleSubmit(e) {
