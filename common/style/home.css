@@ -43,7 +43,7 @@
 	color: #000;
 }
 
-.rowWrapPadding{
+.rowWrapPadding {
 	padding: 20px;
 }
 
@@ -57,5 +57,19 @@
 
 .schoolStyle {
 	font-size: 28px;
+	color: #000;
+}
+
+/*user-home*/
+.schoolName {
+	padding: 10px;
+	margin: 10px 0;
+	background-color: #eee;
+	color: #a6a6a2;
+}
+
+.schoolPoints {
+	font-size: 32px;
+	font-weight: 500;
 	color: #000;
 }
