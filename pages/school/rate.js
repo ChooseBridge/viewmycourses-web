@@ -362,7 +362,6 @@ class SchoolRate extends React.Component {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
-                        console.log(value);
                         if (value == 0) {
                           callback(true);
                         }
@@ -386,7 +385,6 @@ class SchoolRate extends React.Component {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
-                        console.log(value);
                         if (value == 0) {
                           callback(true);
                         }
@@ -410,7 +408,6 @@ class SchoolRate extends React.Component {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
-                        console.log(value);
                         if (value == 0) {
                           callback(true);
                         }
