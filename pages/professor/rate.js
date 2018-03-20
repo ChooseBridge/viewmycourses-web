@@ -14,6 +14,8 @@ import {
   Form,
   Slider,
   Input,
+  Radio,
+  AutoComplete,
 } from 'antd';
 import cla from 'classnames';
 import style from '../../common/style/rate.css';
@@ -26,6 +28,7 @@ const {
 const FormItem = Form.Item;
 const { Option } = Select;
 const { TextArea } = Input;
+const RadioGroup = Radio.Group;
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -37,25 +40,15 @@ class ProfessorRate extends React.Component {
 
     this.state = {
       loading: false,
-      avgPoints: 0,
+      effort: 0
     };
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
   }
 
   componentDidMount() {
     console.log(this.props);
     this.props.form.validateFields();
-  }
-
-  handleChange(e) {
-    console.log(e);
-  }
-
-  onRateHandler(rate) {
-    console.log(rate);
   }
 
   handleSubmit(e) {
@@ -67,22 +60,23 @@ class ProfessorRate extends React.Component {
     });
   }
 
-  onSliderChangeHandler() {
+  onCalEffort() {
     const valueObj = this.props.form.getFieldsValue();
-    const avgPoints = (valueObj['slide'] +
-    valueObj['slide1'] +
-    valueObj['slide2'] +
-    valueObj['slide3'] +
-    valueObj['slide4'] +
-    valueObj['slide5'] +
-    valueObj['slide6'] +
-    valueObj['slide7'] +
-    valueObj['slide8'] +
-    valueObj['slide9']) / 10;
 
-    this.setState({
-      avgPoints,
-    });
+    console.log(valueObj);
+
+    if (valueObj['slide2'] != 0) {
+      if (valueObj['minutes'] && valueObj['test_number']) {
+        const effort = valueObj['slide'] *
+          valueObj['minutes'] *
+          valueObj['test_number'] *
+          (5 / valueObj['slide2']);
+
+        this.setState({
+          effort
+        });
+      }
+    }
   }
 
   render() {
@@ -92,7 +86,7 @@ class ProfessorRate extends React.Component {
 
     const {
       loading,
-      avgPoints
+      effort
     } = this.state;
 
     const {
@@ -126,7 +120,16 @@ class ProfessorRate extends React.Component {
       }
     };
 
-    const collegeError = isFieldTouched('college_id') && getFieldError('college_id');
+    const classError = isFieldTouched('class_type') && getFieldError('class_type');
+    const classIdError = isFieldTouched('class_id') && getFieldError('class_id');
+    const classNameError = isFieldTouched('class_name') && getFieldError('class_name');
+    const recordError = isFieldTouched('record') && getFieldError('record');
+    const slideError = isFieldTouched('slide') && getFieldError('slide');
+    const slide1Error = isFieldTouched('slide1') && getFieldError('slide1');
+    const testError = isFieldTouched('test_number') && getFieldError('test_number');
+    const slide2Error = isFieldTouched('slide2') && getFieldError('slide2');
+    const minutesError = isFieldTouched('minutes') && getFieldError('minutes');
+    const scoreError = isFieldTouched('score') && getFieldError('score');
     const textError = isFieldTouched('textarea') && getFieldError('textarea');
 
     return (
@@ -176,30 +179,83 @@ class ProfessorRate extends React.Component {
               <Form layout="horizontal" onSubmit={this.handleSubmit}>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={collegeError ? 'error' : ''}
-                  help={collegeError || ''}
-                  label="选择校区">
-                  {getFieldDecorator('college_id', {
-                    rules: [{ required: true, message: '请选择校区' }]
+                  validateStatus={classError ? 'error' : ''}
+                  help={classError || ''}
+                  label="课程类别">
+                  {getFieldDecorator('class_type', {
+                    rules: [{ required: true, message: '请选择课程类别' }]
                   })(
                     <Select
-                      size="large"
-                      style={{ width: 250 }}
-                      placeholder="请选择校区">
-                        <Option value="1">校区1</Option>
-                        <Option value="2">校区2</Option>
-                        <Option value="3">校区3</Option>
+                      mode="combobox"
+                      placeholder="请选择课程类别"
+                      style={{ width: 200 }}>
+                      <Option value="1">类别1</Option>
+                      <Option value="2">类别2</Option>
                     </Select>
                   )}
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  label="社会声誉">
-                  {getFieldDecorator('slide', {
+                  validateStatus={classIdError ? 'error' : ''}
+                  help={classIdError || ''}
+                  label="课程编号">
+                  {getFieldDecorator('class_id', {
+                    rules: [{ required: true, message: '请选择课程编号' }]
+                  })(
+                    <Select
+                      mode="combobox"
+                      placeholder="请选择课程编号"
+                      style={{ width: 200 }}>
+                      <Option value="PCS0001">PCS0001</Option>
+                      <Option value="PCS0002">PCS0002</Option>
+                    </Select>
+                  )}
+                </FormItem>
+                <FormItem
+                  {...formItemLayout}
+                  validateStatus={classNameError ? 'error' : ''}
+                  help={classNameError || ''}
+                  label="课程名">
+                  {getFieldDecorator('class_name', {
+                    rules: [{ required: true, message: '请填写课程名' }]
+                  })(
+                    <Input
+                      style={{ width: 200 }}
+                      placeholder="课程名" />
+                  )}
+                </FormItem>
+                <FormItem
+                  {...formItemLayout}
+                  validateStatus={recordError ? 'error' : ''}
+                  help={recordError || ''}
+                  label="是否记出勤">
+                  {getFieldDecorator('record', {
+                    rules: [{ required: true, message: '请选择是否记出勤' }]
+                  })(
+                    <RadioGroup>
+                      <Radio value="是">是</Radio>
+                      <Radio value="否">否</Radio>
+                    </RadioGroup>
+                  )}
+                </FormItem>
+                <FormItem
+                  {...formItemLayout}
+                  validateStatus={slideError ? 'error' : ''}
+                  help={slideError || ''}
+                  label="课程难度">
+                  {getFieldDecorator('slide',{
                     initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
                   })(
                     <Slider
-                      onAfterChange={() => this.onSliderChangeHandler()}
+                      onAfterChange={() => this.onCalEffort()}
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
@@ -207,12 +263,22 @@ class ProfessorRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  label="学术水平">
-                  {getFieldDecorator('slide1', {
+                  validateStatus={slide1Error ? 'error' : ''}
+                  help={slide1Error || ''}
+                  label="笔头作业量">
+                  {getFieldDecorator('slide1',{
                     initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        console.log(value);
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
                   })(
                     <Slider
-                      onAfterChange={() => this.onSliderChangeHandler()}
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
@@ -220,12 +286,38 @@ class ProfessorRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  label="网络服务">
-                  {getFieldDecorator('slide2', {
+                  validateStatus={testError ? 'error' : ''}
+                  help={testError || ''}
+                  label="每月考试数（包括随堂检测等）">
+                  {getFieldDecorator('test_number', {
+                    rules: [{ required: true, message: '请填写每月考试数' }]
+                  })(
+                    <AutoComplete
+                      children={<Input type="number"/>}
+                      onChange={() => this.onCalEffort()}
+                      style={{ width: 200 }}
+                      placeholder="每月考试数" />
+                  )}
+                </FormItem>
+                <FormItem
+                  {...formItemLayout}
+                  validateStatus={slide2Error ? 'error' : ''}
+                  help={slide2Error || ''}
+                  label="课程与考试内容相关度">
+                  {getFieldDecorator('slide2',{
                     initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        console.log(value);
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
                   })(
                     <Slider
-                      onAfterChange={() => this.onSliderChangeHandler()}
+                      onAfterChange={() => this.onCalEffort()}
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
@@ -233,94 +325,41 @@ class ProfessorRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  label="住宿条件">
-                  {getFieldDecorator('slide3', {
-                    initialValue: 0,
+                  validateStatus={minutesError ? 'error' : ''}
+                  help={minutesError || ''}
+                  label="每周课堂外所花总时间">
+                  {getFieldDecorator('minutes', {
+                    rules: [{ required: true, message: '请填写每周课堂外所花总时间' }]
                   })(
-                    <Slider
-                      onAfterChange={() => this.onSliderChangeHandler()}
-                      dots
-                      max={5}
-                      marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
+                    <AutoComplete
+                      children={<Input type="number"/>}
+                      onChange={() => this.onCalEffort()}
+                      style={{ width: 200 }}
+                      placeholder="分钟" />
                   )}
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  label="餐饮质量">
-                  {getFieldDecorator('slide4', {
-                    initialValue: 0,
+                  validateStatus={scoreError ? 'error' : ''}
+                  help={scoreError || ''}
+                  label="你的成绩">
+                  {getFieldDecorator('your_score', {
+                    rules: [{ required: true, message: '请选你的成绩' }]
                   })(
-                    <Slider
-                      onAfterChange={() => this.onSliderChangeHandler()}
-                      dots
-                      max={5}
-                      marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
+                    <Select
+                      placeholder="你的成绩"
+                      style={{ width: 200 }}>
+                      <Option value="A">A</Option>
+                      <Option value="B">B</Option>
+                      <Option value="C">C</Option>
+                      <Option value="D">D</Option>
+                    </Select>
                   )}
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  label="校园地理位置">
-                  {getFieldDecorator('slide5', {
-                    initialValue: 0,
-                  })(
-                    <Slider
-                      onAfterChange={() => this.onSliderChangeHandler()}
-                      dots
-                      max={5}
-                      marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
-                  )}
-                </FormItem>
-                <FormItem
-                  {...formItemLayout}
-                  label="校园课外活动">
-                  {getFieldDecorator('slide6', {
-                    initialValue: 0,
-                  })(
-                    <Slider
-                      onAfterChange={() => this.onSliderChangeHandler()}
-                      dots
-                      max={5}
-                      marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
-                  )}
-                </FormItem>
-                <FormItem
-                  {...formItemLayout}
-                  label="校园基础设施">
-                  {getFieldDecorator('slide7', {
-                    initialValue: 0,
-                  })(
-                    <Slider
-                      onAfterChange={() => this.onSliderChangeHandler()}
-                      dots
-                      max={5}
-                      marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
-                  )}
-                </FormItem>
-                <FormItem
-                  {...formItemLayout}
-                  label="生活幸福指数">
-                  {getFieldDecorator('slide8', {
-                    initialValue: 0,
-                  })(
-                    <Slider
-                      onAfterChange={() => this.onSliderChangeHandler()}
-                      dots
-                      max={5}
-                      marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
-                  )}
-                </FormItem>
-                <FormItem
-                  {...formItemLayout}
-                  label="校方与学生群体关系">
-                  {getFieldDecorator('slide9', {
-                    initialValue: 0,
-                  })(
-                    <Slider
-                      onAfterChange={() => this.onSliderChangeHandler()}
-                      dots
-                      max={5}
-                      marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
-                  )}
+                  label="努力指数">
+                  <h2 style={{fontSize:40}}>{effort}</h2>
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
@@ -332,12 +371,6 @@ class ProfessorRate extends React.Component {
                   })(
                     <TextArea rows={4}  style={{resize:'none'}}/>
                   )}
-                </FormItem>
-
-                <FormItem
-                  {...formItemLayout}
-                  label="综合得分">
-                  <h2 style={{fontSize:40}}>{avgPoints}</h2>
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
                   <Button
