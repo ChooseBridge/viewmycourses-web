@@ -41,7 +41,10 @@ class Message extends React.Component {
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={commonStyle.bgWrap}>
             <Card>
-              11
+              <div><h2>消息中心</h2></div>
+              <div className={style.record}>[2018-03-19] 您创建的 <span className={commonStyle.colorBlue}>复旦大学</span> 已通过审核</div>
+              <div className={style.record}>[2018-03-18] 您创建的 <span className={commonStyle.colorBlue}>刘强东</span> 教授已通过审核</div>
+              <div className={style.record}>[2018-03-18] 您的邮箱已通过验证</div>
             </Card>
           </div>
         </Content>
