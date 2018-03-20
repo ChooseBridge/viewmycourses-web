@@ -416,11 +416,11 @@ export default class extends React.Component {
         <Layout>
           <Header className={style.header}>
             <Row style={{ flex: 1 }}>
-              <Col lg={{ span: 4 }} md={{span: 5}}>
+              <Col lg={{ span: 4 }} md={{ span: 5 }}>
                 <h2 className={style.logo}><a href="">桥选®校园</a></h2>
               </Col>
 
-              <Col lg={{ span: 20 }} md={{span: 19}}>
+              <Col lg={{ span: 20 }} md={{ span: 19 }}>
                 <Menu
                   theme="dark"
                   mode="horizontal"
@@ -450,8 +450,15 @@ export default class extends React.Component {
 
           {children}
 
-          <Footer style={{ textAlign: 'center' }}>
-            Ant Design ©2016 Created by Ant UED
+          <Footer className={style.footer}>
+            <div>
+              <a href="">关于我们</a>
+              <a href="">加入我们</a>
+              <a href="">联系我们</a>
+              <a href="">使用规范</a>
+              <a href="">隐私政策</a>
+            </div>
+            <div>备案号 xxxxxxxx</div>
           </Footer>
         </Layout>
       </Base>
