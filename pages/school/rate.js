@@ -133,7 +133,7 @@ class SchoolRate extends React.Component {
       <ALayout title='学校点评页' url={url}>
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
-          <div className={style.bgWrap}>
+          <div className={commonStyle.bgWrap}>
             <Card className={style.wrap}>
               <div>评价高校</div>
               <h2>复旦大学</h2>

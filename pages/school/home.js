@@ -158,7 +158,7 @@ class School extends React.Component {
       <ALayout title='学校主页' url={url}>
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
-          <div className={style.bgWrap}>
+          <div className={commonStyle.bgWrap}>
             <Card className={style.wrap}>
               <Row style={{position:'relative'}}>
                 <Col span={12}>

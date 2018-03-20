@@ -19,3 +19,8 @@
 	margin: 0 auto;
 	max-width: 100%;
 }
+
+.bgWrap {
+	margin: 0 auto;
+	width: 875px;
+}

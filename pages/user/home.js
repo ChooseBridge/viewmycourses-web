@@ -39,7 +39,7 @@ class User extends React.Component {
       <ALayout title='个人主页' url={url}>
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
-          <div className={style.bgWrap}>
+          <div className={commonStyle.bgWrap}>
             <Card className={style.wrap}>
               <Row>
                 <Col span={12}>
