@@ -37,7 +37,7 @@ class SchoolRate extends React.Component {
 
     this.state = {
       loading: false,
-      avgPoints: 0,
+      avgPoints: 0
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);

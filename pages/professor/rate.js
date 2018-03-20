@@ -29,6 +29,8 @@ const FormItem = Form.Item;
 const { Option } = Select;
 const { TextArea } = Input;
 const RadioGroup = Radio.Group;
+const CheckableTag = Tag.CheckableTag;
+const tagsFromServer = ['风趣幽默', '和蔼可亲', '严谨认真', '反馈及时', '良师益友', '超赞讲师', '学识渊博', '学富五车', '呕心沥血', '鞠躬尽瘁', '诲人不倦', '一丝不苟'];
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -40,7 +42,8 @@ class ProfessorRate extends React.Component {
 
     this.state = {
       loading: false,
-      effort: 0
+      effort: 0,
+      selectedTags: [],
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -53,29 +56,50 @@ class ProfessorRate extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+
+    const {
+      selectedTags
+    } = this.state;
+
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        values.tag = selectedTags.join(',');
         console.log('Received values of form: ', values);
       }
     });
   }
 
+  //计算努力指数
   onCalEffort() {
     const valueObj = this.props.form.getFieldsValue();
 
-    console.log(valueObj);
-
-    if (valueObj['slide2'] != 0) {
-      if (valueObj['minutes'] && valueObj['test_number']) {
-        const effort = valueObj['slide'] *
-          valueObj['minutes'] *
-          valueObj['test_number'] *
-          (5 / valueObj['slide2']);
+    if (valueObj['course_related_quiz'] != 0) {
+      if (valueObj['spend_course_time_at_week'] && valueObj['quiz_num']) {
+        const effort = valueObj['difficult_level'] *
+          valueObj['spend_course_time_at_week'] *
+          valueObj['quiz_num'] *
+          (5 / valueObj['course_related_quiz']);
 
         this.setState({
           effort
         });
       }
+    }
+  }
+
+  handleChange(tag, checked) {
+    const {
+      selectedTags
+    } = this.state;
+
+    const nextSelectedTags = checked ?
+      [...selectedTags, tag] :
+      selectedTags.filter(t => t !== tag);
+
+    if (nextSelectedTags.length <= 3) {
+      this.setState({
+        selectedTags: nextSelectedTags
+      });
     }
   }
 
@@ -86,7 +110,8 @@ class ProfessorRate extends React.Component {
 
     const {
       loading,
-      effort
+      effort,
+      selectedTags
     } = this.state;
 
     const {
@@ -120,17 +145,18 @@ class ProfessorRate extends React.Component {
       }
     };
 
-    const classError = isFieldTouched('class_type') && getFieldError('class_type');
-    const classIdError = isFieldTouched('class_id') && getFieldError('class_id');
-    const classNameError = isFieldTouched('class_name') && getFieldError('class_name');
-    const recordError = isFieldTouched('record') && getFieldError('record');
-    const slideError = isFieldTouched('slide') && getFieldError('slide');
-    const slide1Error = isFieldTouched('slide1') && getFieldError('slide1');
-    const testError = isFieldTouched('test_number') && getFieldError('test_number');
-    const slide2Error = isFieldTouched('slide2') && getFieldError('slide2');
-    const minutesError = isFieldTouched('minutes') && getFieldError('minutes');
-    const scoreError = isFieldTouched('score') && getFieldError('score');
-    const textError = isFieldTouched('textarea') && getFieldError('textarea');
+    const categorysError = isFieldTouched('course_category_id') && getFieldError('course_category_id');
+    const courseIdError = isFieldTouched('course_id') && getFieldError('course_id');
+    const courseNameError = isFieldTouched('course_name') && getFieldError('course_name');
+    const attendError = isFieldTouched('is_attend') && getFieldError('is_attend');
+    const difficultError = isFieldTouched('difficult_level') && getFieldError('difficult_level');
+    const homeworkError = isFieldTouched('homework_num') && getFieldError('homework_num');
+    const quizError = isFieldTouched('quiz_num') && getFieldError('quiz_num');
+    const relatedError = isFieldTouched('course_related_quiz') && getFieldError('course_related_quiz');
+    const timeError = isFieldTouched('spend_course_time_at_week') && getFieldError('spend_course_time_at_week');
+    const gradeError = isFieldTouched('grade') && getFieldError('grade');
+    const tagError = isFieldTouched('tag') && getFieldError('tag');
+    const commentError = isFieldTouched('comment') && getFieldError('comment');
 
     return (
       <ALayout title='课程点评页' url={url}>
@@ -179,27 +205,27 @@ class ProfessorRate extends React.Component {
               <Form layout="horizontal" onSubmit={this.handleSubmit}>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={classError ? 'error' : ''}
-                  help={classError || ''}
+                  validateStatus={categorysError ? 'error' : ''}
+                  help={categorysError || ''}
                   label="课程类别">
-                  {getFieldDecorator('class_type', {
+                  {getFieldDecorator('course_category_id', {
                     rules: [{ required: true, message: '请选择课程类别' }]
                   })(
                     <Select
                       mode="combobox"
                       placeholder="请选择课程类别"
                       style={{ width: 200 }}>
-                      <Option value="1">类别1</Option>
-                      <Option value="2">类别2</Option>
+                      <Option value="类别1">类别1</Option>
+                      <Option value="类别2">类别2</Option>
                     </Select>
                   )}
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={classIdError ? 'error' : ''}
-                  help={classIdError || ''}
+                  validateStatus={courseIdError ? 'error' : ''}
+                  help={courseIdError || ''}
                   label="课程编号">
-                  {getFieldDecorator('class_id', {
+                  {getFieldDecorator('course_id', {
                     rules: [{ required: true, message: '请选择课程编号' }]
                   })(
                     <Select
@@ -213,10 +239,10 @@ class ProfessorRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={classNameError ? 'error' : ''}
-                  help={classNameError || ''}
+                  validateStatus={courseNameError ? 'error' : ''}
+                  help={courseNameError || ''}
                   label="课程名">
-                  {getFieldDecorator('class_name', {
+                  {getFieldDecorator('course_name', {
                     rules: [{ required: true, message: '请填写课程名' }]
                   })(
                     <Input
@@ -226,24 +252,24 @@ class ProfessorRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={recordError ? 'error' : ''}
-                  help={recordError || ''}
+                  validateStatus={attendError ? 'error' : ''}
+                  help={attendError || ''}
                   label="是否记出勤">
-                  {getFieldDecorator('record', {
+                  {getFieldDecorator('is_attend', {
                     rules: [{ required: true, message: '请选择是否记出勤' }]
                   })(
                     <RadioGroup>
-                      <Radio value="是">是</Radio>
-                      <Radio value="否">否</Radio>
+                      <Radio value="1">是</Radio>
+                      <Radio value="2">否</Radio>
                     </RadioGroup>
                   )}
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={slideError ? 'error' : ''}
-                  help={slideError || ''}
+                  validateStatus={difficultError ? 'error' : ''}
+                  help={difficultError || ''}
                   label="课程难度">
-                  {getFieldDecorator('slide',{
+                  {getFieldDecorator('difficult_level',{
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -263,14 +289,13 @@ class ProfessorRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={slide1Error ? 'error' : ''}
-                  help={slide1Error || ''}
+                  validateStatus={homeworkError ? 'error' : ''}
+                  help={homeworkError || ''}
                   label="笔头作业量">
-                  {getFieldDecorator('slide1',{
+                  {getFieldDecorator('homework_num',{
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
-                        console.log(value);
                         if (value == 0) {
                           callback(true);
                         }
@@ -286,29 +311,30 @@ class ProfessorRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={testError ? 'error' : ''}
-                  help={testError || ''}
+                  validateStatus={quizError ? 'error' : ''}
+                  help={quizError || ''}
                   label="每月考试数（包括随堂检测等）">
-                  {getFieldDecorator('test_number', {
+                  {getFieldDecorator('quiz_num', {
                     rules: [{ required: true, message: '请填写每月考试数' }]
                   })(
                     <AutoComplete
                       children={<Input type="number"/>}
-                      onChange={() => this.onCalEffort()}
+                      onChange={() => {
+                        setTimeout(() => this.onCalEffort(), 1000);
+                      }}
                       style={{ width: 200 }}
                       placeholder="每月考试数" />
                   )}
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={slide2Error ? 'error' : ''}
-                  help={slide2Error || ''}
+                  validateStatus={relatedError ? 'error' : ''}
+                  help={relatedError || ''}
                   label="课程与考试内容相关度">
-                  {getFieldDecorator('slide2',{
+                  {getFieldDecorator('course_related_quiz',{
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
-                        console.log(value);
                         if (value == 0) {
                           callback(true);
                         }
@@ -325,25 +351,27 @@ class ProfessorRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={minutesError ? 'error' : ''}
-                  help={minutesError || ''}
+                  validateStatus={timeError ? 'error' : ''}
+                  help={timeError || ''}
                   label="每周课堂外所花总时间">
-                  {getFieldDecorator('minutes', {
+                  {getFieldDecorator('spend_course_time_at_week', {
                     rules: [{ required: true, message: '请填写每周课堂外所花总时间' }]
                   })(
                     <AutoComplete
                       children={<Input type="number"/>}
-                      onChange={() => this.onCalEffort()}
+                      onChange={() => {
+                        setTimeout(() => this.onCalEffort(), 1000);
+                      }}
                       style={{ width: 200 }}
                       placeholder="分钟" />
                   )}
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={scoreError ? 'error' : ''}
-                  help={scoreError || ''}
+                  validateStatus={gradeError ? 'error' : ''}
+                  help={gradeError || ''}
                   label="你的成绩">
-                  {getFieldDecorator('your_score', {
+                  {getFieldDecorator('grade', {
                     rules: [{ required: true, message: '请选你的成绩' }]
                   })(
                     <Select
@@ -363,13 +391,31 @@ class ProfessorRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={textError ? 'error' : ''}
-                  help={textError || ''}
+                  validateStatus={commentError ? 'error' : ''}
+                  help={commentError || ''}
                   label="文字点评">
-                  {getFieldDecorator('textarea', {
+                  {getFieldDecorator('comment', {
                     rules: [{ required: true, message: '请填写点评' }]
                   })(
                     <TextArea rows={4}  style={{resize:'none'}}/>
+                  )}
+                </FormItem>
+                <FormItem
+                  {...formItemLayout}
+                  validateStatus={tagError ? 'error' : ''}
+                  help={tagError || ''}
+                  label="为教授选取标签">
+                  {getFieldDecorator('tag')(
+                    <div>
+                      {tagsFromServer.map(tag => (
+                        <CheckableTag
+                          key={tag}
+                          checked={selectedTags.indexOf(tag) > -1}
+                          onChange={checked => this.handleChange(tag, checked)}>
+                          {tag}
+                        </CheckableTag>
+                      ))}
+                    </div>
                   )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
