@@ -36,12 +36,17 @@ module.exports = {
    * 获取学校详细信息
    * @param schoolId 学校id
    */
-  getSchoolDetail: ({schoolId}) =>  request({
-    type: 'GET',
+  getSchoolDetail: ({ schoolId }) => request({
     url: '/api/get-school-detail',
     body: {
       school_id: schoolId
     }
   }),
+
+  /**
+   * 根据条件获取学校
+   * @param opt 参数包括（关键字，国家，省/州，城市的Id）
+   */
+  getSchoolByCondition: opt => request(Object.assign({}, { url: '/api/get-school-by-condition' }, opt)),
 
 };
