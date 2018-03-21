@@ -18,6 +18,8 @@ import {
 import cla from 'classnames';
 import style from '../../common/style/rate.css';
 import commonStyle from '../../common/style/index.css';
+import client from '../../common/client';
+import api from '../../common/api';
 
 const {
   Content
@@ -37,7 +39,8 @@ class SchoolRate extends React.Component {
 
     this.state = {
       loading: false,
-      avgPoints: 0
+      avgPoints: 0,
+      school: {}
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,6 +49,14 @@ class SchoolRate extends React.Component {
   componentDidMount() {
     console.log(this.props);
     this.props.form.validateFields();
+
+    client(api.getSchoolDetail)({
+      schoolId: 5
+    }).then(school => {
+      this.setState({
+        school,
+      });
+    });
   }
 
   handleSubmit(e) {

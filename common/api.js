@@ -30,6 +30,18 @@ module.exports = {
     body: {
       province_id: provinceId
     }
-  })
+  }),
+
+  /**
+   * 获取学校详细信息
+   * @param schoolId 学校id
+   */
+  getSchoolDetail: ({schoolId}) =>  request({
+    type: 'GET',
+    url: '/api/get-school-detail',
+    body: {
+      school_id: schoolId
+    }
+  }),
 
 };

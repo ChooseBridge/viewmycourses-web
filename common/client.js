@@ -9,6 +9,7 @@ module.exports = api => opt => {
     headers: { token: getCookie('token') }
   }, opt))
     .catch(e => {
+      console.log(e);
       if (e.errorCode === 1002) {
         location.href = document.getElementById('login-url').value
       }
