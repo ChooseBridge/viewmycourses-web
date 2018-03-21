@@ -1,52 +1,75 @@
 const request = require('./request');
 
-module.exports = {
-  getStudent: opt => request(Object.assign({}, { url: '/api/get-student' }, opt)),
-  getSchoolGroupByCountry: opt => request(Object.assign({}, { url: '/api/get-school-group-by-country' }, opt)),
-  createSchool: opt => request(Object.assign({}, {
-    url: '/api/school/create',
-    type: 'POST'
-  }, opt)),
+function makeApi(defaultOpt, opt) {
+  return request(Object.assign({}, defaultOpt, opt))
+}
 
-  getAllCountry: opt => request(Object.assign({}, {
-    url: '/open-api/geo/get-all-countrys'
-  }, opt)),
+module.exports = {
+  /**
+   *
+   * @param opt
+   */
+
+  getStudent: opt => makeApi({ url: '/api/get-student' }, opt),
 
   /**
    *
-   * @param countryId
+   * @param opt
    */
-  getProvinceByCountry: ({ countryId }) => request({
-    type: 'POST',
-    url: '/open-api/geo/get-province-by-country',
-    body: {
-      country_id: countryId
-    }
-  }),
+  getSchoolGroupByCountry: opt => makeApi({ url: '/api/get-school-group-by-country' }, opt),
 
-  getCityByProvince: ({ provinceId }) => request({
+  /**
+   *
+   * @param opt
+   */
+  createSchool: opt => makeApi({
+    url: '/api/school/create',
+    type: 'POST'
+  }, opt),
+
+  getAllCountry: opt => makeApi({
+    url: '/open-api/geo/get-all-countrys'
+  }, opt),
+
+  getProvinceByCountry: opt => makeApi({
+    type: 'POST',
+    url: '/open-api/geo/get-province-by-country'
+  }, opt),
+
+  getCityByProvince: opt => makeApi({
     type: 'POST',
     url: '/open-api/geo/get-city-by-province',
-    body: {
-      province_id: provinceId
-    }
-  }),
+  }, opt),
 
   /**
    * 获取学校详细信息
-   * @param schoolId 学校id
    */
-  getSchoolDetail: ({ schoolId }) => request({
+  getSchoolDetail: opt => makeApi({
     url: '/api/get-school-detail',
-    body: {
-      school_id: schoolId
-    }
-  }),
+  }, opt),
 
   /**
    * 根据条件获取学校
    * @param opt 参数包括（关键字，国家，省/州，城市的Id）
    */
-  getSchoolByCondition: opt => request(Object.assign({}, { url: '/api/get-school-by-condition' }, opt)),
+  getSchoolByCondition: opt => makeApi({ url: '/api/get-school-by-condition' }, opt),
+
+  /**
+   * 创建教授
+   * @param opt
+   */
+  createProfessor: opt => makeApi({
+    url: '/api/professor/create',
+    type: 'POST'
+  }, opt),
+
+  /**
+   * 根据学校获取学院信息
+   * @param opt
+   */
+  getCollegeBySchool: opt => makeApi({
+    url: '/api/get-college-by-school',
+    type: 'POST'
+  }, opt)
 
 };

@@ -1,6 +1,7 @@
 const config = require('../config');
 
 module.exports = (req, res, next) => {
+  return next();
   if (req.user) {
     next();
   }

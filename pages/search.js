@@ -55,7 +55,9 @@ class Search extends React.Component {
 
   countryChange = countryId => {
     client(api.getProvinceByCountry)({
-      countryId
+      body: {
+        country_id: countryId
+      }
     }).then(province => {
       this.setState({
         province,
@@ -69,7 +71,9 @@ class Search extends React.Component {
 
   provinceChange = provinceId => {
     client(api.getCityByProvince)({
-      provinceId
+      body: {
+        province_id: provinceId
+      }
     }).then(city => {
       this.setState({
         city,
@@ -89,14 +93,16 @@ class Search extends React.Component {
       provinceValue
     } = this.state;
 
-    // client(api.getSchoolByCondition)({
-    //   school_name: 'fudan',
-    //   country_id: countryValue,
-    //   province_id: provinceValue,
-    //   city_id: cityId,
-    // }).then(res => {
-    //   console.log(res);
-    // });
+    client(api.getSchoolByCondition)({
+      body: {
+        school_name: 'fudan',
+        country_id: countryValue,
+        province_id: provinceValue,
+        city_id: cityId,
+      }
+    }).then(res => {
+      console.log(res);
+    });
   }
 
   render() {

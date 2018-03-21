@@ -1,6 +1,7 @@
 const api = require('../common/api');
 
 module.exports = (req, res, next) => {
+  return next();
   const headers = {};
 
   if (req.cookies && req.cookies.token) {
@@ -10,5 +11,5 @@ module.exports = (req, res, next) => {
   api.getStudent({ headers }).then(user => {
     req.user = user;
     next();
-  }, () => next());
+  }, next);
 };

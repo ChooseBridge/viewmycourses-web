@@ -13,7 +13,7 @@ import {
   Card,
   Form,
   Slider,
-  Input,
+  Input
 } from 'antd';
 import cla from 'classnames';
 import style from '../../common/style/rate.css';
@@ -47,16 +47,17 @@ class SchoolRate extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     this.props.form.validateFields();
 
-    // client(api.getSchoolDetail)({
-    //   schoolId: 5
-    // }).then(school => {
-    //   this.setState({
-    //     school,
-    //   });
-    // });
+    client(api.getSchoolDetail)({
+      body: {
+        schoolId: 5
+      }
+    }).then(school => {
+      this.setState({
+        school
+      });
+    });
   }
 
   handleSubmit(e) {
@@ -71,18 +72,18 @@ class SchoolRate extends React.Component {
   onSliderChangeHandler() {
     const valueObj = this.props.form.getFieldsValue();
     const avgPoints = (valueObj['social_reputation'] +
-    valueObj['academic_level'] +
-    valueObj['network_services'] +
-    valueObj['accommodation'] +
-    valueObj['food_quality'] +
-    valueObj['campus_location'] +
-    valueObj['extracurricular_activities'] +
-    valueObj['campus_infrastructure'] +
-    valueObj['life_happiness_index'] +
-    valueObj['school_students_relations']) / 10;
+      valueObj['academic_level'] +
+      valueObj['network_services'] +
+      valueObj['accommodation'] +
+      valueObj['food_quality'] +
+      valueObj['campus_location'] +
+      valueObj['extracurricular_activities'] +
+      valueObj['campus_infrastructure'] +
+      valueObj['life_happiness_index'] +
+      valueObj['school_students_relations']) / 10;
 
     this.setState({
-      avgPoints,
+      avgPoints
     });
   }
 
@@ -156,7 +157,7 @@ class SchoolRate extends React.Component {
                 <Col span={12}>
                   <h2
                     className={commonStyle.colorBlue}
-                    style={{fontSize:35}}>
+                    style={{ fontSize: 35 }}>
                     Rating Do's and Don'ts
                   </h2>
                 </Col>
@@ -170,15 +171,21 @@ class SchoolRate extends React.Component {
               <Row type="flex" justify="space-between" align="top">
                 <Col span={8}>
                   <h2 className={style.doTitle}>Do</h2>
-                  <div className={style.doText}>Double check your comments before posting. It never hurts to check your grammar.</div>
+                  <div className={style.doText}>Double check your comments before posting. It never hurts to check your
+                    grammar.
+                  </div>
                 </Col>
                 <Col span={8}>
                   <h2 className={style.doTitle}>Do</h2>
-                  <div className={style.doText}>Refer to the rating categories to help you better elaborate your comments.</div>
+                  <div className={style.doText}>Refer to the rating categories to help you better elaborate your
+                    comments.
+                  </div>
                 </Col>
                 <Col span={8}>
                   <h2 className={style.doTitle}>Do</h2>
-                  <div className={style.doText}>Reference existing comments or comments that have been deleted by our moderators.</div>
+                  <div className={style.doText}>Reference existing comments or comments that have been deleted by our
+                    moderators.
+                  </div>
                 </Col>
               </Row>
             </Card>
@@ -197,9 +204,9 @@ class SchoolRate extends React.Component {
                       size="large"
                       style={{ width: 250 }}
                       placeholder="请选择校区">
-                        <Option value="1">校区1</Option>
-                        <Option value="2">校区2</Option>
-                        <Option value="3">校区3</Option>
+                      <Option value="1">校区1</Option>
+                      <Option value="2">校区2</Option>
+                      <Option value="3">校区3</Option>
                     </Select>
                   )}
                 </FormItem>
@@ -208,7 +215,7 @@ class SchoolRate extends React.Component {
                   validateStatus={socialError ? 'error' : ''}
                   help={socialError || ''}
                   label="社会声誉">
-                  {getFieldDecorator('social_reputation',{
+                  {getFieldDecorator('social_reputation', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -231,7 +238,7 @@ class SchoolRate extends React.Component {
                   validateStatus={academicError ? 'error' : ''}
                   help={academicError || ''}
                   label="学术水平">
-                  {getFieldDecorator('academic_level',{
+                  {getFieldDecorator('academic_level', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -254,7 +261,7 @@ class SchoolRate extends React.Component {
                   validateStatus={networkError ? 'error' : ''}
                   help={networkError || ''}
                   label="网络服务">
-                  {getFieldDecorator('network_services',{
+                  {getFieldDecorator('network_services', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -277,7 +284,7 @@ class SchoolRate extends React.Component {
                   validateStatus={accommodationError ? 'error' : ''}
                   help={accommodationError || ''}
                   label="住宿条件">
-                  {getFieldDecorator('accommodation',{
+                  {getFieldDecorator('accommodation', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -300,7 +307,7 @@ class SchoolRate extends React.Component {
                   validateStatus={foodError ? 'error' : ''}
                   help={foodError || ''}
                   label="餐饮质量">
-                  {getFieldDecorator('food_quality',{
+                  {getFieldDecorator('food_quality', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -323,7 +330,7 @@ class SchoolRate extends React.Component {
                   validateStatus={campusError ? 'error' : ''}
                   help={campusError || ''}
                   label="校园地理位置">
-                  {getFieldDecorator('campus_location',{
+                  {getFieldDecorator('campus_location', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -346,7 +353,7 @@ class SchoolRate extends React.Component {
                   validateStatus={extracurricularError ? 'error' : ''}
                   help={extracurricularError || ''}
                   label="校园课外活动">
-                  {getFieldDecorator('extracurricular_activities',{
+                  {getFieldDecorator('extracurricular_activities', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -369,7 +376,7 @@ class SchoolRate extends React.Component {
                   validateStatus={infrastructureError ? 'error' : ''}
                   help={infrastructureError || ''}
                   label="校园基础设施">
-                  {getFieldDecorator('campus_infrastructure',{
+                  {getFieldDecorator('campus_infrastructure', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -392,7 +399,7 @@ class SchoolRate extends React.Component {
                   validateStatus={lifeError ? 'error' : ''}
                   help={lifeError || ''}
                   label="生活幸福指数">
-                  {getFieldDecorator('life_happiness_index',{
+                  {getFieldDecorator('life_happiness_index', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -415,7 +422,7 @@ class SchoolRate extends React.Component {
                   validateStatus={relationsError ? 'error' : ''}
                   help={relationsError || ''}
                   label="校方与学生群体关系">
-                  {getFieldDecorator('school_students_relations',{
+                  {getFieldDecorator('school_students_relations', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -441,14 +448,14 @@ class SchoolRate extends React.Component {
                   {getFieldDecorator('comment', {
                     rules: [{ required: true, message: '请填写点评' }]
                   })(
-                    <TextArea rows={4}  style={{resize:'none'}}/>
+                    <TextArea rows={4} style={{ resize: 'none' }} />
                   )}
                 </FormItem>
 
                 <FormItem
                   {...formItemLayout}
                   label="综合得分">
-                  <h2 style={{fontSize:40}}>{avgPoints}</h2>
+                  <h2 style={{ fontSize: 40 }}>{avgPoints}</h2>
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
                   <Button

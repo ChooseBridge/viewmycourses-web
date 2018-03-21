@@ -15,6 +15,7 @@ import {
 import cla from 'classnames';
 import style from '../../common/style/home.css';
 import commonStyle from '../../common/style/index.css';
+import Share from '../../components/share';
 
 const {
   Content
@@ -74,7 +75,10 @@ class Professor extends React.Component {
                       </Row>
                       <Row>
                         <Col span={9}><Button type="primary">点评它的课程</Button></Col>
-                        <Col span={7}><Button type="primary" style={{backgroundColor:'#737373',border:'none'}}>分享</Button></Col>
+                        <Col span={7}>
+                          <Button type="primary" style={{backgroundColor:'#737373',border:'none'}}>分享</Button>
+                          <Share/>
+                        </Col>
                       </Row>
                     </Col>
                   </Row>
