@@ -50,13 +50,13 @@ class SchoolRate extends React.Component {
     console.log(this.props);
     this.props.form.validateFields();
 
-    client(api.getSchoolDetail)({
-      schoolId: 5
-    }).then(school => {
-      this.setState({
-        school,
-      });
-    });
+    // client(api.getSchoolDetail)({
+    //   schoolId: 5
+    // }).then(school => {
+    //   this.setState({
+    //     school,
+    //   });
+    // });
   }
 
   handleSubmit(e) {
