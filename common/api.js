@@ -45,7 +45,7 @@ module.exports = {
    * 获取学校详细信息
    */
   getSchoolDetail: opt => makeApi({
-    url: '/api/get-school-detail',
+    url: '/open-api/get-school-detail',
   }, opt),
 
   /**

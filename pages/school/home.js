@@ -120,9 +120,11 @@ class School extends React.Component {
                 {
                   schoolInfo &&
                   <Row type="flex" justify="space-around" align="middle">
-                    <Col span={8} className={cla(commonStyle.textCenter)}>
-                      <div>平均努力指数</div>
-                      <div className={style.points}>{schoolInfo.effort}</div>
+                    <Col span={8} className={commonStyle.textCenter}>
+                      <div>综合得分</div>
+                      <div className={style.points}>
+                        {schoolInfo.school_score}
+                      </div>
                     </Col>
                     <Col span={16}>
                       <Row>
@@ -152,7 +154,11 @@ class School extends React.Component {
                       <div className={style.schoolStyle}>Snbino 安东尼</div>
                       <div style={{color:'#9e9e9e'}}>189条评论</div>
                     </Col>
-                    <Col span={8} className={cla(commonStyle.textRight, style.schoolStyle)}>5.0</Col>
+                    <Col
+                      span={8}
+                      className={cla(commonStyle.textRight, style.schoolStyle)}>
+                      5.0
+                    </Col>
                   </Row>
                 </Col>
               </Row>
@@ -169,7 +175,7 @@ class School extends React.Component {
 
             {
               ratesInfo &&
-              <Card className={cla(style.wrap)}>
+              <Card className={style.wrap}>
                 <Row className={style.rowWrap}>
                   <Col span={24} className={style.textWrap}>{ratesInfo.length}位同学的点评</Col>
                 </Row>
@@ -179,7 +185,7 @@ class School extends React.Component {
                       key={`${item.school_district_name}${index}`}
                       type="flex"
                       className={style.rowWrap}>
-                      <Card.Grid style={{width:'20%'}}>
+                      <Card.Grid style={{width:'15%'}}>
                         <Col>
                           <div className={commonStyle.textCenter}>
                             <div>综合得分</div>
@@ -192,7 +198,7 @@ class School extends React.Component {
                         </Col>
                       </Card.Grid>
 
-                      <Card.Grid style={{width:'35%'}}>
+                      <Card.Grid style={{width:'40%'}}>
                         <Col>
                           <div>{item.comment}</div>
                           <div className={style.likeWrap}>
@@ -229,6 +235,20 @@ class School extends React.Component {
                 }
               </Card>
             }
+
+            <Card className={style.wrap}>
+              <h1>这些评论对你有用吗?帮助你的同学</h1>
+              <div>
+                <a href={`/school/rate?id=${this.props.url.query.id}`}>
+                  <Button
+                    size="large"
+                    style={{ width: 250 }}
+                    type="primary">
+                    为这个校园评分
+                  </Button>
+                </a>
+              </div>
+            </Card>
           </div>
         </Content>
       </ALayout>
