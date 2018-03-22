@@ -15,7 +15,7 @@ import Base from '../base/index.js';
 import commonStyle from '../../common/style/index.css';
 import style from './style.css';
 import cla from 'classnames';
-import RegionCascader from '../../components/region-cascader';
+import SearchSchool from './search-school'
 
 const {
   Header,
@@ -38,10 +38,6 @@ export default class extends React.Component {
       professorChoose: 'proName',
       rateChoose: 'presonal'
     };
-
-    this.onRadioChangeHandler = this.onRadioChangeHandler.bind(this);
-    this.onSelectChangeHandler = this.onSelectChangeHandler.bind(this);
-    this.onInputChangeHandler = this.onInputChangeHandler.bind(this);
   }
 
   componentDidMount() {
@@ -66,7 +62,7 @@ export default class extends React.Component {
     });
   }
 
-  onRadioChangeHandler(e) {
+  onRadioChangeHandler = (e) => {
     const {
       menuContentKey
     } = this.state;
@@ -88,85 +84,6 @@ export default class extends React.Component {
         });
         return;
     }
-  }
-
-  onSelectChangeHandler(e) {
-    console.log(e);
-  }
-
-  onInputChangeHandler(e) {
-    console.log(e);
-  }
-
-  renderFindSchool() {
-    const {
-      schoolChoose
-    } = this.state;
-
-    return (
-      <div className={style.menuWrap}>
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <h2>查找你的学校</h2>
-          </Col>
-        </Row>
-
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <RadioGroup onChange={this.onRadioChangeHandler} value={schoolChoose}>
-              <RadioButton value="name">按名称</RadioButton>
-              <RadioButton value="region">按区域</RadioButton>
-            </RadioGroup>
-          </Col>
-        </Row>
-
-        {
-          schoolChoose == 'name' ? <Row className={style.row}>
-              <Col
-                className={cla(commonStyle.textCenter)}
-                span={12}
-                offset={6}>
-                <AutoComplete
-                  style={{ width: 200, height: 32 }}
-                  placeholder="学校名称"
-                  onChange={this.onInputChangeHandler} />
-              </Col>
-            </Row>
-            : <Row className={style.row}>
-              <Col
-                className={cla(commonStyle.textCenter)}
-                span={12}
-                offset={6}>
-                <RegionCascader style={{ width: 200 }} onChange={e => console.log(e)} />
-              </Col>
-            </Row>
-        }
-
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <Button style={{ width: 200 }} type="primary">搜索</Button>
-          </Col>
-        </Row>
-
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <a href="javascript:;" onClick={this.closeAll}>关闭</a>
-          </Col>
-        </Row>
-      </div>
-    );
   }
 
   renderFindProfessor() {
@@ -383,7 +300,7 @@ export default class extends React.Component {
   renderMenuContent(key) {
     switch (key) {
       case '2':
-        return this.renderFindSchool();
+        return <SearchSchool closeAll={this.closeAll} onSubmit={query => console.log(query)} />;
       case '3':
         return this.renderFindProfessor();
       case '4':
