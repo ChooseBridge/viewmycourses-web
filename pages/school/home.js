@@ -5,14 +5,13 @@ import {
   Breadcrumb,
   Button,
   Icon,
-  Avatar,
   Row,
   Col,
-  Tag,
-  Select,
   Card,
 } from 'antd';
 import cla from 'classnames';
+import client from '../../common/client';
+import api from '../../common/api';
 import style from '../../common/style/home.css';
 import commonStyle from '../../common/style/index.css';
 
@@ -20,139 +19,95 @@ const {
   Content
 } = Layout;
 
-const Option = Select.Option;
-
-const tabList = [{
-  key: 'tab1',
-  tab: '综合评分',
-}, {
-  key: 'tab2',
-  tab: '邯郸路校区',
-},{
-  key: 'tab3',
-  tab: '世界路校区',
-},{
-  key: 'tab4',
-  tab: '中原路校区',
-}];
-
-const contentList = {
-  tab1: <Row type="flex" justify="space-around" align="middle">
-    <Col span={6} className={commonStyle.textCenter}>
-      <div>综合得分</div>
-      <div style={{fontSize:50}} className={style.schoolStyle}>4.5</div>
-    </Col>
-    <Col span={6}>
-      <div>社会声誉：4</div>
-      <div>学术水平：4</div>
-      <div>网络服务：4.5</div>
-      <div>住宿条件：5</div>
-      <div>餐饮质量：5</div>
-    </Col>
-    <Col span={6}>
-      <div>校园地理位置：4.0</div>
-      <div>校园课外活动：4.5</div>
-      <div>校园基础设施：5</div>
-      <div>生活幸福指数：4</div>
-      <div>校方与学生群体关系：5</div>
-    </Col>
-  </Row>,
-  tab2: <Row type="flex" justify="space-around" align="middle">
-    <Col span={6} className={commonStyle.textCenter}>
-      <div>综合得分</div>
-      <div style={{fontSize:50}} className={style.schoolStyle}>4.5</div>
-    </Col>
-    <Col span={6}>
-      <div>社会声誉：4</div>
-      <div>学术水平：4</div>
-      <div>网络服务：4.5</div>
-      <div>住宿条件：5</div>
-      <div>餐饮质量：5</div>
-    </Col>
-    <Col span={6}>
-      <div>校园地理位置：4.0</div>
-      <div>校园课外活动：4.5</div>
-      <div>校园基础设施：5</div>
-      <div>生活幸福指数：4</div>
-      <div>校方与学生群体关系：5</div>
-    </Col>
-  </Row>,
-  tab3: <Row type="flex" justify="space-around" align="middle">
-    <Col span={6} className={commonStyle.textCenter}>
-      <div>综合得分</div>
-      <div style={{fontSize:50}} className={style.schoolStyle}>4.5</div>
-    </Col>
-    <Col span={6}>
-      <div>社会声誉：4</div>
-      <div>学术水平：4</div>
-      <div>网络服务：4.5</div>
-      <div>住宿条件：5</div>
-      <div>餐饮质量：5</div>
-    </Col>
-    <Col span={6}>
-      <div>校园地理位置：4.0</div>
-      <div>校园课外活动：4.5</div>
-      <div>校园基础设施：5</div>
-      <div>生活幸福指数：4</div>
-      <div>校方与学生群体关系：5</div>
-    </Col>
-  </Row>,
-  tab4: <Row type="flex" justify="space-around" align="middle">
-    <Col span={6} className={commonStyle.textCenter}>
-      <div>综合得分</div>
-      <div style={{fontSize:50}} className={style.schoolStyle}>4.5</div>
-    </Col>
-    <Col span={6}>
-      <div>社会声誉：4</div>
-      <div>学术水平：4</div>
-      <div>网络服务：4.5</div>
-      <div>住宿条件：5</div>
-      <div>餐饮质量：5</div>
-    </Col>
-    <Col span={6}>
-      <div>校园地理位置：4.0</div>
-      <div>校园课外活动：4.5</div>
-      <div>校园基础设施：5</div>
-      <div>生活幸福指数：4</div>
-      <div>校方与学生群体关系：5</div>
-    </Col>
-  </Row>,
-};
-
-const gridStyle = {
-  // width: '25%',
-  textAlign: 'center',
-};
+function renderDistrict(item) {
+  return (
+    <Row type="flex" justify="space-around" align="middle">
+      <Col span={6} className={commonStyle.textCenter}>
+        <div>综合得分</div>
+        <div
+          style={{fontSize:50}}
+          className={style.schoolStyle}>
+          {item.school_district_score}
+        </div>
+      </Col>
+      <Col span={6}>
+        <div>社会声誉：{item.social_reputation}</div>
+        <div>学术水平：{item.academic_level}</div>
+        <div>网络服务：{item.network_services}</div>
+        <div>住宿条件：{item.accommodation}</div>
+        <div>餐饮质量：{item.food_quality}</div>
+      </Col>
+      <Col span={6}>
+        <div>校园地理位置：{item.campus_location}</div>
+        <div>校园课外活动：{item.extracurricular_activities}</div>
+        <div>校园基础设施：{item.campus_infrastructure}</div>
+        <div>生活幸福指数：{item.life_happiness_index}</div>
+        <div>校方与学生群体关系：{item.school_students_relations}</div>
+      </Col>
+    </Row>
+  );
+}
 
 class School extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      key: 'tab1',
+      key: '',
+      school: {},
+      tabList: [],
     };
 
-    this.handleChange = this.handleChange.bind(this);
     this.onTabChange = this.onTabChange.bind(this);
   }
 
   componentDidMount() {
+    client(api.getSchoolDetail)({
+      query: {
+        school_id: this.props.url.query.id
+      }
+    }).then(school => {
+      let contentList = {};
 
-  }
+      school.schoolDistrictInfo.map(item => {
+        contentList[item.school_district_name] = renderDistrict(item);
+      });
 
-  handleChange(e) {
-    console.log(e);
+      this.setState({
+        school,
+        contentList,
+        key: school.schoolDistrictInfo[0].school_district_name,
+        tabList: school.schoolDistrictInfo.map(item => {
+          return {
+            key: item.school_district_name,
+            tab: item.school_district_name,
+          };
+        })
+      });
+    });
   }
 
   onTabChange(key, type) {
-    console.log(key, type);
-    this.setState({ [type]: key });
+    this.setState({
+      [type]: key
+    });
   }
 
   render() {
     const {
       url
     } = this.props;
+
+    const {
+      school,
+      tabList,
+      contentList,
+    } = this.state;
+
+    const {
+      schoolInfo,
+      ratesInfo,
+    } = school;
 
     return (
       <ALayout title='学校主页' url={url}>
@@ -162,19 +117,21 @@ class School extends React.Component {
             <Card className={style.wrap}>
               <Row style={{position:'relative'}}>
                 <Col span={12}>
+                {
+                  schoolInfo &&
                   <Row type="flex" justify="space-around" align="middle">
                     <Col span={8} className={cla(commonStyle.textCenter)}>
                       <div>平均努力指数</div>
-                      <div className={style.points}>4.5</div>
+                      <div className={style.points}>{schoolInfo.effort}</div>
                     </Col>
                     <Col span={16}>
                       <Row>
                         <Col span={16}>
-                          <span style={{fontSize:32}}>圣约翰大学</span>
+                          <span style={{fontSize:32}}>{schoolInfo.school_name}</span>
                         </Col>
                       </Row>
                       <Row>
-                        <Col span={16}>牙买加 纽约 <span className={style.colorBlue}>网站</span></Col>
+                        <Col span={16}>{schoolInfo.country} {schoolInfo.province} <span className={style.colorBlue}><a href={schoolInfo.website_url}>网站</a></span></Col>
                       </Row>
                       <Row>
                         <Col span={16} className={commonStyle.colorBlue} style={{marginBottom:20}}>提交修正</Col>
@@ -185,6 +142,7 @@ class School extends React.Component {
                       </Row>
                     </Col>
                   </Row>
+                }
                 </Col>
                 <Col className={style.tagWrap} span={12}>
                   <div><h2>每日推荐</h2></div>
@@ -206,61 +164,71 @@ class School extends React.Component {
               tabList={tabList}
               activeTabKey={this.state.key}
               onTabChange={key => this.onTabChange(key, 'key')}>
-              {contentList[this.state.key]}
+              {contentList && contentList[this.state.key]}
             </Card>
 
-            <Card className={cla(style.wrap)}>
-              <Row>
-                <Col span={24} className={style.textWrap}>2位同学的点评</Col>
-              </Row>
+            {
+              ratesInfo &&
+              <Card className={cla(style.wrap)}>
+                <Row className={style.rowWrap}>
+                  <Col span={24} className={style.textWrap}>{ratesInfo.length}位同学的点评</Col>
+                </Row>
+                {
+                  ratesInfo.map((item, index) =>
+                    <Row
+                      key={`${item.school_district_name}${index}`}
+                      type="flex"
+                      className={style.rowWrap}>
+                      <Card.Grid style={{width:'20%'}}>
+                        <Col>
+                          <div className={commonStyle.textCenter}>
+                            <div>综合得分</div>
+                            <div className={style.schoolStyle}>{item.score}</div>
+                          </div>
+                          <div>
+                            <div>{item.student_name}</div>
+                            <div>{item.school_district_name}</div>
+                          </div>
+                        </Col>
+                      </Card.Grid>
 
-              <Row className={style.rowWrap}>
-                <Col span={4}>
-                  <Card>
-                    <div className={commonStyle.textCenter}>
-                      <div>综合得分</div>
-                      <div className={style.schoolStyle}>4.5</div>
-                    </div>
-                    <div>
-                      <div>2018</div>
-                      <div>心理学专业</div>
-                      <div>邯郸路校区</div>
-                    </div>
-                  </Card>
-                </Col>
-                <Col span={10}>
-                  <Card>
-                    <div>伟大的大学，它来这里工作很好，并且教授真的有你，并帮助你获得实习和工作。</div>
-                    <div className={style.likeWrap}>
-                      <span style={{marginRight: 6}}>
-                        <Icon type="like-o" style={{color:'red'}}/>98% 的人认为有用
-                      </span>
-                      <Icon type="dislike-o" />2% 的人认为没用
-                    </div>
-                  </Card>
-                </Col>
-                <Col span={10}>
-                  <Card>
-                    <Row>
-                      <Col span={12}>
-                        <div>社会声誉：4</div>
-                        <div>学术水平：4</div>
-                        <div>网络服务：4.5</div>
-                        <div>住宿条件：5</div>
-                        <div>餐饮质量：5</div>
-                      </Col>
-                      <Col span={12}>
-                        <div>校园地理位置：4.0</div>
-                        <div>校园课外活动：4.5</div>
-                        <div>校园基础设施：5</div>
-                        <div>生活幸福指数：4</div>
-                        <div>校方与学生群体关系：5</div>
-                      </Col>
+                      <Card.Grid style={{width:'35%'}}>
+                        <Col>
+                          <div>{item.comment}</div>
+                          <div className={style.likeWrap}>
+                            <span style={{marginRight: 6}}>
+                              <Icon type="like-o" style={{color:'red'}}/>98% 的人认为有用
+                            </span>
+                            <Icon type="dislike-o" />2% 的人认为没用
+                          </div>
+                        </Col>
+                      </Card.Grid>
+
+                      <Card.Grid style={{width:'45%'}}>
+                        <Col>
+                          <Row>
+                            <Col span={12}>
+                              <div>社会声誉：{item.social_reputation}</div>
+                              <div>学术水平：{item.academic_level}</div>
+                              <div>网络服务：{item.network_services}</div>
+                              <div>住宿条件：{item.accommodation}</div>
+                              <div>餐饮质量：{item.food_quality}</div>
+                            </Col>
+                            <Col span={12}>
+                              <div>校园地理位置：{item.campus_location}</div>
+                              <div>校园课外活动：{item.extracurricular_activities}</div>
+                              <div>校园基础设施：{item.campus_infrastructure}</div>
+                              <div>生活幸福指数：{item.life_happiness_index}</div>
+                              <div>校方与学生群体关系：{item.school_students_relations}</div>
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Card.Grid>
                     </Row>
-                  </Card>
-                </Col>
-              </Row>
-            </Card>
+                  )
+                }
+              </Card>
+            }
           </div>
         </Content>
       </ALayout>
