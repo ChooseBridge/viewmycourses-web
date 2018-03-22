@@ -13,6 +13,8 @@ import {
   Card,
 } from 'antd';
 import cla from 'classnames';
+import client from '../../common/client';
+import api from '../../common/api';
 import style from '../../common/style/home.css';
 import commonStyle from '../../common/style/index.css';
 import Share from '../../components/share';
@@ -27,13 +29,23 @@ class Professor extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      professor: {}
+    };
 
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-
+    client(api.getProfessorDetail)({
+      query: {
+        professor_id: this.props.url.query.id
+      }
+    }).then(professor => {
+      this.setState({
+        professor,
+      })
+    });
   }
 
   handleChange(e) {
@@ -45,166 +57,172 @@ class Professor extends React.Component {
       url
     } = this.props;
 
+    const {
+      professor
+    } = this.state;
+
+    const {
+      professorInfo,
+      rateInfo,
+      coursesInfo,
+      schoolCategoryInfo,
+      tagsInfo,
+    } = professor;
+
     return (
       <ALayout title='教授主页' url={url}>
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={commonStyle.bgWrap}>
             <Card className={style.wrap}>
+            {
+              professorInfo &&
               <Row style={{position:'relative'}}>
                 <Col span={12}>
                   <Row>
                     <Col span={4}><Avatar size="large" icon="user" /></Col>
-                    <Col span={20}>
-                      <Row>
-                        <Col span={16}>
-                          <span style={{fontSize:32,marginRight:6}}>刘强东</span>
-                          <Icon type="heart-o" />
-                          <Icon type="heart" style={{color:'red'}}/>
-                          132
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col span={16}>纽约新泽西州 圣约翰大学</Col>
-                      </Row>
-                      <Row>
-                        <Col span={16}>心理学教授</Col>
-                      </Row>
-                      <Row>
-                        <Col span={16} className={commonStyle.colorBlue} style={{marginBottom:20}}>提交修正</Col>
-                      </Row>
-                      <Row>
-                        <Col span={9}><Button type="primary">点评它的课程</Button></Col>
-                        <Col span={7}>
-                          <Button type="primary" style={{backgroundColor:'#737373',border:'none'}}>分享</Button>
-                          <Share/>
-                        </Col>
-                      </Row>
-                    </Col>
+                      <Col span={20}>
+                        <Row>
+                          <Col span={16}>
+                            <span style={{fontSize:32,marginRight:6}}>{professorInfo.professor_full_name}</span>
+                            <Icon type="heart-o" />
+                            <Icon type="heart" style={{color:'red'}}/>
+                            132
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={16}>{professorInfo.country}{professorInfo.province} {professorInfo.school}</Col>
+                        </Row>
+                        <Row>
+                          <Col span={16}>心理学教授</Col>
+                        </Row>
+                        <Row>
+                          <Col span={16} className={commonStyle.colorBlue} style={{marginBottom:20}}>提交修正</Col>
+                        </Row>
+                        <Row>
+                          <Col span={9}><Button type="primary">点评它的课程</Button></Col>
+                          <Col span={7}>
+                            <Button type="primary" style={{backgroundColor:'#737373',border:'none'}}>分享</Button>
+                            <Share/>
+                          </Col>
+                        </Row>
+                      </Col>
                   </Row>
                 </Col>
                 <Col className={style.tagWrap} span={12}>
-                  <Tag color="#ddd" className={style.tag}>爱心（2）</Tag>
-                  <Tag color="#ddd" className={style.tag}>责任心（2）</Tag>
-                  <Tag color="#ddd" className={style.tag}>上课好（3）</Tag>
-                  <Tag color="#ddd" className={style.tag}>厉害（2）</Tag>
-                  <Tag color="#ddd" className={style.tag}>有趣（5）</Tag>
-                  <Tag color="#ddd" className={style.tag}>幽默（2）</Tag>
-                  <Tag color="#ddd" className={style.tag}>提供教材（7）</Tag>
-                  <Tag color="#ddd" className={style.tag}>风趣（1）</Tag>
-                  <Tag color="#ddd" className={style.tag}>内容详细（2）</Tag>
-                  <Tag color="#ddd" className={style.tag}>不做作（9）</Tag>
-                  <Tag color="#ddd" className={style.tag}>上进心（12）</Tag>
+                  {
+                    Object.keys(tagsInfo).map(key =>
+                      <Tag
+                        key={key}
+                        color="#ddd"
+                        className={style.tag}>{key}（{tagsInfo[key]}）
+                      </Tag>
+                    )
+                  }
                 </Col>
               </Row>
+            }
             </Card>
 
-
             <Card className={cla(style.wrap) }>
-              <Row>
-                <Col span={4} className={cla(commonStyle.textCenter, style.pointWrap)}>
+              <Row type="flex">
+                <Col span={6} className={commonStyle.textCenter}>
                   <div>平均努力指数</div>
-                  <div className={style.points}>4.5</div>
+                  {
+                    professorInfo &&
+                    <div className={style.points}>{professorInfo.effort}</div>
+                  }
                 </Col>
-                <Col span={20} className={style.classWrap}>
+
+                <Col span={18} className={style.classWrap}>
                   <h2>所教课程</h2>
-                  <div>看看其他同学对这位教授的评分情况</div>
+                  <div style={{marginBottom: 10}}>看看其他同学对这位教授的评分情况</div>
                   <Row>
-                    <Col span={6}>4.5 <span className={commonStyle.colorBlue}>PCS0001</span></Col>
-                    <Col span={6}>4.5 <span className={commonStyle.colorBlue}>PCS0001</span></Col>
-                    <Col span={6}>4.5 <span className={commonStyle.colorBlue}>PCS0001</span></Col>
-                    <Col span={6}>4.5 <span className={commonStyle.colorBlue}>PCS0001</span></Col>
-                    <Col span={6}>4.5 <span className={commonStyle.colorBlue}>PCS0001</span></Col>
-                    <Col span={6}>4.5 <span className={commonStyle.colorBlue}>PCS0001</span></Col>
-                    <Col span={6}>4.5 <span className={commonStyle.colorBlue}>PCS0001</span></Col>
-                    <Col span={6}>4.5 <span className={commonStyle.colorBlue}>PCS0001</span></Col>
+                    {
+                      coursesInfo &&
+                      coursesInfo.map(item =>
+                        <Col key={item.course_id} span={6}>
+                          {item.effort} <span className={commonStyle.colorBlue}>{item.course_code}</span>
+                        </Col>
+                      )
+                    }
                   </Row>
                 </Col>
               </Row>
             </Card>
 
-            <Card className={cla(style.wrap)}>
-              <Row>
-                <Col span={12} className={style.textWrap}>2位同学的点评</Col>
+            <Card className={style.wrap}>
+              <Row className={style.rowWrap}>
+                {
+                  rateInfo &&
+                  <Col span={12} className={style.textWrap}>{rateInfo.length}位同学的点评</Col>
+                }
                 <Col span={12} className={commonStyle.textRight}>
                   <Select
                     placeholder="按课程筛选"
                     style={{ width: 200 }}
                     onChange={this.handleChange}>
-                    <Option value="jack">Jack</Option>
-                    <Option value="lucy">Lucy</Option>
-                    <Option value="Yiminghe">yiminghe</Option>
+                    {
+                      coursesInfo &&
+                      coursesInfo.map(item =>
+                        <Option
+                          key={item.course_id}
+                          value={item.course_id}>{item.course_code}
+                        </Option>
+                      )
+                    }
                   </Select>
                 </Col>
               </Row>
 
-              <Row className={cla(style.rowWrap)}>
-                <Col span={4} className={cla(commonStyle.textCenter, style.pointWrap)}>
-                  <div>努力指数</div>
-                  <div className={style.points}>4.5</div>
-                </Col>
-                <Col span={20} className={style.rateWrap}>
-                  <Row>
-                    <Col span={6}>PYS100C</Col>
-                    <Col span={18}>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col span={6}>是否记录出勤：是</Col>
-                    <Col span={18}>
-                      人们说Hogan博士的课程比实际要容易得多。不要轻易接受A，记笔记，参加课堂并审阅他发布的幻灯片。他在每次考试前发表评论表，如果你知道他们的一切，你应该没问题。提前至少2天给自己学习。即使事实听起来没用，研究它们
-                      <div className={style.likeWrap}>
-                        <span style={{marginRight: 6}}>
-                          <Icon type="like-o" style={{color:'red'}}/>98% 的人认为有用
-                        </span>
-                        <Icon type="dislike-o" />2% 的人认为没用
-                      </div>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
+              {
+                rateInfo &&
+                rateInfo.map((item, index) =>
+                  <Row
+                    key={index}
+                    type="flex"
+                    className={style.rowWrap}>
+                    <Card.Grid style={{width:'20%',position:'relative'}}>
+                      <Col className={cla(commonStyle.textCenter, commonStyle.verticalHorizontalCenter)}>
+                        <div>努力指数</div>
+                        <div className={style.points}>{item.effort}</div>
+                      </Col>
+                    </Card.Grid>
 
-              <Row className={cla(style.rowWrap)}>
-                <Col span={4} className={cla(commonStyle.textCenter, style.pointWrap)}>
-                  <div>努力指数</div>
-                  <div className={style.points}>4.5</div>
-                </Col>
-                <Col span={20} className={style.rateWrap}>
-                  <Row>
-                    <Col span={6}>PYS100C</Col>
-                    <Col span={18}>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                      <Tag color="#ddd" className={style.tag}>爱心</Tag>
-                    </Col>
+                    <Card.Grid style={{width:'80%'}}>
+                      <Col className={style.rateWrap}>
+                        <Row>
+                          <Col span={6}>{item.course_code}</Col>
+                          <Col span={18}>
+                            {
+                              item.tag.split(',').map(tag =>
+                                <Tag
+                                  key={tag}
+                                  color="#ddd"
+                                  className={style.tag}>
+                                  {tag}
+                                </Tag>
+                              )
+                            }
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={6}>是否记录出勤：{item.is_attend == 1 ? '是' : '否'}</Col>
+                          <Col span={18}>
+                            {item.comment}
+                            <div className={style.likeWrap}>
+                              <span style={{marginRight: 6}}>
+                                <Icon type="like-o" style={{color:'red'}}/>98% 的人认为有用
+                              </span>
+                              <Icon type="dislike-o" />2% 的人认为没用
+                            </div>
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Card.Grid>
                   </Row>
-                  <Row>
-                    <Col span={6}>是否记录出勤：是</Col>
-                    <Col span={18}>
-                      人们说Hogan博士的课程比实际要容易得多。不要轻易接受A，记笔记，参加课堂并审阅他发布的幻灯片。他在每次考试前发表评论表，如果你知道他们的一切，你应该没问题。提前至少2天给自己学习。即使事实听起来没用，研究它们
-                      <div className={style.likeWrap}>
-                        <span style={{marginRight: 6}}>
-                          <Icon type="like-o" style={{color:'red'}}/>98% 的人认为有用
-                        </span>
-                        <Icon type="dislike-o" />2% 的人认为没用
-                      </div>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
+                )
+              }
             </Card>
           </div>
         </Content>
