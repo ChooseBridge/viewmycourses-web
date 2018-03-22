@@ -46,9 +46,9 @@ app.prepare()
       next();
     });
 
-    server.use(userInfo);
+    // server.use(userInfo);
 
-    server.get('/', (req, res) => {
+    server.get('/', userInfo, (req, res) => {
       render(req, res, '/index', { user: req.user });
     });
 
@@ -61,51 +61,51 @@ app.prepare()
     //
     // });
 
-    server.get('/professor/create', checkLogin, (req, res) => {
+    server.get('/professor/create', userInfo, checkLogin, (req, res) => {
       render(req, res, '/professor/create', { user: req.user });
     });
 
-    server.get('/professor/rate', checkLogin, (req, res) => {
+    server.get('/professor/rate', userInfo, checkLogin, (req, res) => {
       render(req, res, '/professor/rate', {
         user: req.user,
         id: req.param('id'),
       });
     });
 
-    server.get('/professor/:id', (req, res) => {
+    server.get('/professor/:id', userInfo, (req, res) => {
       render(req, res, '/professor/home', {
         user: req.user,
         id: req.params.id,
       });
     });
 
-    server.get('/school/create', checkLogin, (req, res) => {
+    server.get('/school/create', userInfo, checkLogin, (req, res) => {
       render(req, res, '/school/create', { user: req.user });
     });
 
-    server.get('/school/rate', checkLogin, (req, res) => {
+    server.get('/school/rate', userInfo, checkLogin, (req, res) => {
       render(req, res, '/school/rate', {
         user: req.user,
         id: req.param('id'),
       });
     });
 
-    server.get('/school/:id', (req, res) => {
+    server.get('/school/:id', userInfo, (req, res) => {
       render(req, res, '/school/home', {
         user: req.user,
         id: req.params.id,
       });
     });
 
-    server.get('/user/message', (req, res) => {
+    server.get('/user/message', userInfo, (req, res) => {
       render(req, res, '/user/message', { user: req.user });
     });
 
-    server.get('/user/:id', (req, res) => {
+    server.get('/user/:id', userInfo, (req, res) => {
       render(req, res, '/user/home', { user: req.user });
     });
 
-    server.get('/search', (req, res) => {
+    server.get('/search', userInfo, (req, res) => {
       render(req, res, '/search', { user: req.user });
     });
 
