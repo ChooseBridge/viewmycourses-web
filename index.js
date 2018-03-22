@@ -78,11 +78,17 @@ app.prepare()
     });
 
     server.get('/school/rate', checkLogin, (req, res) => {
-      render(req, res, '/school/rate', { user: req.user });
+      render(req, res, '/school/rate', {
+        user: req.user,
+        id: req.param('id'),
+      });
     });
 
     server.get('/school/:id', (req, res) => {
-      render(req, res, '/school/home', { user: req.user });
+      render(req, res, '/school/home', {
+        user: req.user,
+        id: req.params.id,
+      });
     });
 
     server.get('/user/message', (req, res) => {

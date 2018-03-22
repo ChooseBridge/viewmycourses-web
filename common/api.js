@@ -50,7 +50,7 @@ module.exports = {
 
   /**
    * 根据条件获取学校
-   * @param opt 参数包括（关键字，国家，省/州，城市的Id）
+   * @param opt 参数包括（关键字，国家，省/州，城市Id）
    */
   getSchoolByCondition: opt => makeApi({ url: '/api/get-school-by-condition' }, opt),
 
@@ -70,6 +70,15 @@ module.exports = {
   getCollegeBySchool: opt => makeApi({
     url: '/api/get-college-by-school',
     type: 'POST'
-  }, opt)
+  }, opt),
+
+  /**
+   * 创建学校评价
+   * @param opt
+   */
+  createSchoolRate: opt => makeApi({
+    url: '/api/school-rate/create',
+    type: 'POST'
+  }, opt),
 
 };

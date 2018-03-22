@@ -13,7 +13,8 @@ import {
   Card,
   Form,
   Slider,
-  Input
+  Input,
+  Modal,
 } from 'antd';
 import cla from 'classnames';
 import style from '../../common/style/rate.css';
@@ -50,8 +51,8 @@ class SchoolRate extends React.Component {
     this.props.form.validateFields();
 
     client(api.getSchoolDetail)({
-      body: {
-        schoolId: 5
+      query: {
+        school_id: this.props.url.query.id
       }
     }).then(school => {
       this.setState({
@@ -64,7 +65,23 @@ class SchoolRate extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        console.log(values);
+
+        const body = Object.assign({}, {
+          school_id: this.props.url.query.id,
+        }, values);
+
+        client(api.createSchoolRate)({
+          body
+        }).then(res => {
+          if (res == '创建成功') {
+            Modal.success({
+              title: '创建成功',
+              content: '感谢您的点评',
+              okText: '确定'
+            });
+          }
+        });
       }
     });
   }
@@ -94,8 +111,14 @@ class SchoolRate extends React.Component {
 
     const {
       loading,
-      avgPoints
+      avgPoints,
+      school,
     } = this.state;
+
+    const {
+      schoolInfo,
+      schoolDistrictInfo,
+    } = school;
 
     const {
       getFieldDecorator,
@@ -146,11 +169,14 @@ class SchoolRate extends React.Component {
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={commonStyle.bgWrap}>
-            <Card className={style.wrap}>
-              <div>评价高校</div>
-              <h2>复旦大学</h2>
-              <div>中国上海杨浦区</div>
-            </Card>
+            {
+              schoolInfo &&
+              <Card className={style.wrap}>
+                <div>评价高校</div>
+                <h2>{schoolInfo.school_name}</h2>
+                <div>{schoolInfo.country} {schoolInfo.province} {schoolInfo.city}</div>
+              </Card>
+            }
 
             <Card className={style.wrap}>
               <Row type="flex" justify="space-between" align="middle">
@@ -204,9 +230,14 @@ class SchoolRate extends React.Component {
                       size="large"
                       style={{ width: 250 }}
                       placeholder="请选择校区">
-                      <Option value="1">校区1</Option>
-                      <Option value="2">校区2</Option>
-                      <Option value="3">校区3</Option>
+                      {
+                        schoolDistrictInfo &&
+                        schoolDistrictInfo.map(item =>
+                          <Option
+                            key={item.school_district_id}
+                            value={item.school_district_id}>{item.school_district_name}
+                          </Option>)
+                      }
                     </Select>
                   )}
                 </FormItem>
