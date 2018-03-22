@@ -12,6 +12,7 @@ import {
   Card,
   Pagination,
   Select,
+  Radio,
 } from 'antd';
 import cla from 'classnames';
 import api from '../common/api';
@@ -23,6 +24,9 @@ const {
   Content
 } = Layout;
 
+const RadioGroup = Radio.Group;
+const { Option } = Select;
+
 class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -30,11 +34,13 @@ class Search extends React.Component {
     this.state = {
       country: [],
       province: [],
-      city: []
+      city: [],
+      mode: '',
     };
 
     this.onShowSizeChange = this.onShowSizeChange.bind(this);
     this.onPageChange = this.onPageChange.bind(this);
+    this.onModeChange = this.onModeChange.bind(this);
   }
 
   componentDidMount() {
@@ -105,6 +111,12 @@ class Search extends React.Component {
     });
   }
 
+  onModeChange(e) {
+    this.setState({
+      mode: e.target.value,
+    });
+  }
+
   render() {
     const {
       url
@@ -117,7 +129,14 @@ class Search extends React.Component {
       countryValue,
       provinceValue,
       cityValue,
+      mode,
     } = this.state;
+
+    const radioStyle = {
+      display: 'block',
+      height: '30px',
+      lineHeight: '30px',
+    };
 
     return (
       <ALayout title='搜索结果' url={url}>
@@ -139,35 +158,86 @@ class Search extends React.Component {
                 defaultCurrent={1}
                 total={1200} />
               <div>结果可按照下列条件筛选</div>
-              <div>
-                <Select
-                  style={{ width: 250 }}
-                  placeholder="国家"
-                  onSelect={this.countryChange}
-                  value={countryValue}>
+              <Row>
+                <Col span={4}>
+                  <RadioGroup onChange={this.onModeChange}>
+                    <Radio style={radioStyle} value="professor">Professor</Radio>
+                    <Radio style={radioStyle} value="school">School</Radio>
+                  </RadioGroup>
+                </Col>
+                <Col span={20}>
                   {
-                    country.map(c => <Option key={c.country_id} value={c.country_id}>{c.country_name}</Option>)
+                    mode == 'professor' &&
+                    <div>
+                      <Select
+                        style={{ width: 150 }}
+                        placeholder="国家"
+                        onSelect={this.countryChange}
+                        value={countryValue}>
+                        {
+                          country.map(c => <Option key={c.country_id} value={c.country_id}>{c.country_name}</Option>)
+                        }
+                      </Select>
+                      <Select
+                        style={{ width: 150 }}
+                        placeholder="洲/省"
+                        onSelect={this.provinceChange}
+                        value={provinceValue}>
+                        {
+                          province.map(p => <Option key={p.province_id} value={p.province_id}>{p.province_name}</Option>)
+                        }
+                      </Select>
+                      <Select
+                        style={{ width: 150 }}
+                        placeholder="城市"
+                        onSelect={this.cityChange}
+                        value={cityValue}>
+                        {
+                          city.map(c => <Option key={c.city_id} value={c.city_id}>{c.city_name}</Option>)
+                        }
+                      </Select>
+                      <Select
+                        style={{ width: 150 }}
+                        placeholder="学校">
+                        <Option value='1'>1</Option>
+                        <Option value='2'>2</Option>
+                      </Select>
+                    </div>
                   }
-                </Select>
-                <Select
-                  style={{ width: 250 }}
-                  placeholder="洲/省"
-                  onSelect={this.provinceChange}
-                  value={provinceValue}>
                   {
-                    province.map(p => <Option key={p.province_id} value={p.province_id}>{p.province_name}</Option>)
+                    mode == 'school' &&
+                    <div>
+                      <Select
+                        style={{ width: 150 }}
+                        placeholder="国家"
+                        onSelect={this.countryChange}
+                        value={countryValue}>
+                        {
+                          country.map(c => <Option key={c.country_id} value={c.country_id}>{c.country_name}</Option>)
+                        }
+                      </Select>
+                      <Select
+                        style={{ width: 150 }}
+                        placeholder="洲/省"
+                        onSelect={this.provinceChange}
+                        value={provinceValue}>
+                        {
+                          province.map(p => <Option key={p.province_id} value={p.province_id}>{p.province_name}</Option>)
+                        }
+                      </Select>
+                      <Select
+                        style={{ width: 150 }}
+                        placeholder="城市"
+                        onSelect={this.cityChange}
+                        value={cityValue}>
+                        {
+                          city.map(c => <Option key={c.city_id} value={c.city_id}>{c.city_name}</Option>)
+                        }
+                      </Select>
+                    </div>
                   }
-                </Select>
-                <Select
-                  style={{ width: 250 }}
-                  placeholder="城市"
-                  onSelect={this.cityChange}
-                  value={cityValue}>
-                  {
-                    city.map(c => <Option key={c.city_id} value={c.city_id}>{c.city_name}</Option>)
-                  }
-                </Select>
-              </div>
+                </Col>
+              </Row>
             </Card>
           </div>
         </Content>
