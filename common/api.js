@@ -6,11 +6,19 @@ function makeApi(defaultOpt, opt) {
 
 module.exports = {
   /**
-   * 获取所有学生
+   * 获取所有用户
    * @param opt
    */
   getStudent: opt => makeApi({
     url: '/api/get-student'
+  }, opt),
+
+  /**
+   * 获取用户信息
+   * @param opt
+   */
+  getStudentMessage: opt => makeApi({
+    url: '/api/get-student-message',
   }, opt),
 
   /**
