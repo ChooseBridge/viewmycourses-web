@@ -16,8 +16,11 @@ import {
   Input,
   Radio,
   AutoComplete,
+  Modal,
 } from 'antd';
 import cla from 'classnames';
+import client from '../../common/client';
+import api from '../../common/api';
 import style from '../../common/style/rate.css';
 import commonStyle from '../../common/style/index.css';
 
@@ -44,27 +47,79 @@ class ProfessorRate extends React.Component {
       loading: false,
       effort: 0,
       selectedTags: [],
+      professor: {}
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-    console.log(this.props);
     this.props.form.validateFields();
+
+    client(api.getProfessorDetail)({
+      query: {
+        professor_id: this.props.url.query.id
+      }
+    }).then(professor => {
+      professor.coursesInfo.forEach(item => {
+        item.course_id = item.course_id + '';
+      });
+
+      professor.schoolCategoryInfo.forEach(item => {
+        item.course_category_id = item.course_category_id + '';
+      });
+
+      this.setState({
+        professor,
+      });
+    });
   }
 
   handleSubmit(e) {
     e.preventDefault();
 
     const {
-      selectedTags
+      selectedTags,
+      professor,
     } = this.state;
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
         values.tag = selectedTags.join(',');
-        console.log('Received values of form: ', values);
+
+        const courseCode = values.course_code;
+        const courseCategoryName = values.course_category_name;
+
+        //判断传id或传code和name
+        professor.coursesInfo.forEach(item => {
+          if(item.course_code == courseCode) {
+            values.course_id = item.course_id;
+            delete values.course_code;
+          }
+        });
+
+        professor.schoolCategoryInfo.forEach(item => {
+          if(item.course_category_name == courseCategoryName) {
+            values.course_category_id = item.course_category_id;
+            delete values.course_category_name;
+          }
+        })
+
+        const body = Object.assign({}, {
+          professor_id: this.props.url.query.id,
+        }, values);
+
+        client(api.createProfessorRate)({
+          body,
+        }).then(res => {
+          if (res == '创建成功') {
+            Modal.success({
+              title: '创建成功',
+              content: '感谢您的点评',
+              okText: '确定'
+            });
+          }
+        });
       }
     });
   }
@@ -111,8 +166,15 @@ class ProfessorRate extends React.Component {
     const {
       loading,
       effort,
-      selectedTags
+      selectedTags,
+      professor,
     } = this.state;
+
+    const {
+      professorInfo,
+      coursesInfo,
+      schoolCategoryInfo,
+    } = professor;
 
     const {
       getFieldDecorator,
@@ -145,8 +207,8 @@ class ProfessorRate extends React.Component {
       }
     };
 
-    const categorysError = isFieldTouched('course_category_id') && getFieldError('course_category_id');
-    const courseIdError = isFieldTouched('course_id') && getFieldError('course_id');
+    const categorysError = isFieldTouched('course_category_name') && getFieldError('course_category_name');
+    const courseCodeError = isFieldTouched('course_code') && getFieldError('course_code');
     const courseNameError = isFieldTouched('course_name') && getFieldError('course_name');
     const attendError = isFieldTouched('is_attend') && getFieldError('is_attend');
     const difficultError = isFieldTouched('difficult_level') && getFieldError('difficult_level');
@@ -165,8 +227,10 @@ class ProfessorRate extends React.Component {
           <div className={commonStyle.bgWrap}>
             <Card className={style.wrap}>
               <div>评价课程</div>
-              <h2>PCS0001</h2>
-              <div>复旦大学 刘强东教授</div>
+              {
+                professorInfo &&
+                <div>{professorInfo.school} {professorInfo.professor_full_name}</div>
+              }
             </Card>
 
             <Card className={style.wrap}>
@@ -208,32 +272,48 @@ class ProfessorRate extends React.Component {
                   validateStatus={categorysError ? 'error' : ''}
                   help={categorysError || ''}
                   label="课程类别">
-                  {getFieldDecorator('course_category_id', {
+                  {getFieldDecorator('course_category_name', {
                     rules: [{ required: true, message: '请选择课程类别' }]
                   })(
                     <Select
                       mode="combobox"
                       placeholder="请选择课程类别"
                       style={{ width: 200 }}>
-                      <Option value="类别1">类别1</Option>
-                      <Option value="类别2">类别2</Option>
+                      {
+                        schoolCategoryInfo &&
+                        schoolCategoryInfo.map(item =>
+                          <Option
+                            key={item.course_category_id}
+                            value={item.course_category_name}>
+                            {item.course_category_name}
+                          </Option>
+                        )
+                      }
                     </Select>
                   )}
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={courseIdError ? 'error' : ''}
-                  help={courseIdError || ''}
+                  validateStatus={courseCodeError ? 'error' : ''}
+                  help={courseCodeError || ''}
                   label="课程编号">
-                  {getFieldDecorator('course_id', {
+                  {getFieldDecorator('course_code', {
                     rules: [{ required: true, message: '请选择课程编号' }]
                   })(
                     <Select
                       mode="combobox"
                       placeholder="请选择课程编号"
                       style={{ width: 200 }}>
-                      <Option value="PCS0001">PCS0001</Option>
-                      <Option value="PCS0002">PCS0002</Option>
+                      {
+                        coursesInfo &&
+                        coursesInfo.map(item =>
+                          <Option
+                          key={item.course_id}
+                          value={item.course_code}>
+                          {item.course_code}
+                          </Option>
+                        )
+                      }
                     </Select>
                   )}
                 </FormItem>
