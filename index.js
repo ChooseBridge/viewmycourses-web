@@ -66,11 +66,17 @@ app.prepare()
     });
 
     server.get('/professor/rate', checkLogin, (req, res) => {
-      render(req, res, '/professor/rate', { user: req.user });
+      render(req, res, '/professor/rate', {
+        user: req.user,
+        id: req.param('id'),
+      });
     });
 
     server.get('/professor/:id', (req, res) => {
-      render(req, res, '/professor/home', { user: req.user });
+      render(req, res, '/professor/home', {
+        user: req.user,
+        id: req.params.id,
+      });
     });
 
     server.get('/school/create', checkLogin, (req, res) => {
