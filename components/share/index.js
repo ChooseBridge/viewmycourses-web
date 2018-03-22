@@ -20,7 +20,7 @@ export default () => {
            target="_blank"></a>
         <a className="jiathis_counter_style"></a>
       </div>
-      <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+      <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charSet="utf-8"></script>
     </div>
   );
 }
