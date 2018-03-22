@@ -16,6 +16,7 @@ import commonStyle from '../../common/style/index.css';
 import style from './style.css';
 import cla from 'classnames';
 import SearchSchool from './search-school'
+import queryString from 'query-string'
 
 const {
   Header,
@@ -300,7 +301,7 @@ export default class extends React.Component {
   renderMenuContent(key) {
     switch (key) {
       case '2':
-        return <SearchSchool closeAll={this.closeAll} onSubmit={query => console.log(query)} />;
+        return <SearchSchool closeAll={this.closeAll} onSubmit={this.goSearch} />;
       case '3':
         return this.renderFindProfessor();
       case '4':
@@ -308,6 +309,10 @@ export default class extends React.Component {
       default:
         return <div></div>;
     }
+  }
+
+  goSearch(query) {
+    location.href = '/search?' + queryString.stringify(query)
   }
 
   render() {

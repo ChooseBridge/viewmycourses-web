@@ -12,7 +12,7 @@ import {
   Card,
   Pagination,
   Select,
-  Radio,
+  Radio
 } from 'antd';
 import cla from 'classnames';
 import api from '../common/api';
@@ -35,7 +35,7 @@ class Search extends React.Component {
       country: [],
       province: [],
       city: [],
-      mode: '',
+      mode: ''
     };
 
     this.onShowSizeChange = this.onShowSizeChange.bind(this);
@@ -44,6 +44,7 @@ class Search extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.url.query.condition); // 搜索条件
     client(api.getAllCountry)().then(country => {
       this.setState({
         country: country
@@ -70,7 +71,7 @@ class Search extends React.Component {
         countryValue: countryId,
         provinceValue: '',
         city: [],
-        cityValue: '',
+        cityValue: ''
       });
     });
   };
@@ -91,7 +92,7 @@ class Search extends React.Component {
 
   cityChange = cityId => {
     this.setState({
-      cityValue: cityId,
+      cityValue: cityId
     });
 
     const {
@@ -104,16 +105,16 @@ class Search extends React.Component {
         school_name: 'fudan',
         country_id: countryValue,
         province_id: provinceValue,
-        city_id: cityId,
+        city_id: cityId
       }
     }).then(res => {
       console.log(res);
     });
-  }
+  };
 
   onModeChange(e) {
     this.setState({
-      mode: e.target.value,
+      mode: e.target.value
     });
   }
 
@@ -129,13 +130,13 @@ class Search extends React.Component {
       countryValue,
       provinceValue,
       cityValue,
-      mode,
+      mode
     } = this.state;
 
     const radioStyle = {
       display: 'block',
       height: '30px',
-      lineHeight: '30px',
+      lineHeight: '30px'
     };
 
     return (
@@ -149,7 +150,7 @@ class Search extends React.Component {
               <div>
                 <a href="/professor/create">创建教授</a>或<a href="/school/create">创建学校</a>
               </div>
-              <div style={{margin: '10px 0'}}><h2>每页将展示20条结果，共1200条</h2></div>
+              <div style={{ margin: '10px 0' }}><h2>每页将展示20条结果，共1200条</h2></div>
               <Pagination
                 showSizeChanger
                 showQuickJumper
@@ -184,7 +185,8 @@ class Search extends React.Component {
                         onSelect={this.provinceChange}
                         value={provinceValue}>
                         {
-                          province.map(p => <Option key={p.province_id} value={p.province_id}>{p.province_name}</Option>)
+                          province.map(p => <Option key={p.province_id}
+                                                    value={p.province_id}>{p.province_name}</Option>)
                         }
                       </Select>
                       <Select
@@ -222,7 +224,8 @@ class Search extends React.Component {
                         onSelect={this.provinceChange}
                         value={provinceValue}>
                         {
-                          province.map(p => <Option key={p.province_id} value={p.province_id}>{p.province_name}</Option>)
+                          province.map(p => <Option key={p.province_id}
+                                                    value={p.province_id}>{p.province_name}</Option>)
                         }
                       </Select>
                       <Select

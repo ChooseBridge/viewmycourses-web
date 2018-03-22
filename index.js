@@ -106,7 +106,7 @@ app.prepare()
     });
 
     server.get('/search', userInfo, (req, res) => {
-      render(req, res, '/search', { user: req.user });
+      render(req, res, '/search', { user: req.user, condition: req.query });
     });
 
     server.get('*', (req, res) => {
