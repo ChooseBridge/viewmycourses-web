@@ -101,7 +101,7 @@ module.exports = {
   /**
    * 获取教授详细信息
    */
-  getSchoolDetail: opt => makeApi({
+  getProfessorDetail: opt => makeApi({
     url: '/open-api/get-professor-detail',
   }, opt),
 
@@ -109,7 +109,7 @@ module.exports = {
    * 创建教授评价
    * @param opt
    */
-  createSchoolRate: opt => makeApi({
+  createProfessorRate: opt => makeApi({
     type: 'POST',
     url: '/api/professor-rate/create',
   }, opt),
