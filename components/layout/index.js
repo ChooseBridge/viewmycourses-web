@@ -15,6 +15,7 @@ import Base from '../base/index.js';
 import commonStyle from '../../common/style/index.css';
 import style from './style.css';
 import cla from 'classnames';
+import RegionCascader from '../../components/region-cascader';
 
 const {
   Header,
@@ -142,15 +143,7 @@ export default class extends React.Component {
                 className={cla(commonStyle.textCenter)}
                 span={12}
                 offset={6}>
-                <Select
-                  placeholder="请选择区域"
-                  style={{ width: 200, height: 32 }}
-                  onChange={this.onSelectChangeHandler}>
-                  <Option value="上海">上海</Option>
-                  <Option value="北京">北京</Option>
-                  <Option value="广州">广州</Option>
-                  <Option value="新疆">新疆</Option>
-                </Select>
+                <RegionCascader style={{ width: 200 }} onChange={e => console.log(e)} />
               </Col>
             </Row>
         }
@@ -417,7 +410,7 @@ export default class extends React.Component {
           <Header className={style.header}>
             <Row style={{ flex: 1 }}>
               <Col lg={{ span: 4 }} md={{ span: 5 }}>
-                <h2 className={style.logo}><a href="">桥选®校园</a></h2>
+                <h2 className={style.logo}><a href="/">桥选®校园</a></h2>
               </Col>
 
               <Col lg={{ span: 20 }} md={{ span: 19 }}>
