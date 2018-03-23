@@ -36,6 +36,7 @@ class Search extends React.Component {
       province: [],
       city: [],
       schools: [],
+      college:[],
       mode: '',
       currentPage: 1,
       pageSize: 10,
@@ -47,8 +48,8 @@ class Search extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     console.log(this.props.url.query.condition); // 搜索条件
+
     client(api.getAllCountry)().then(country => {
       this.setState({
         country: country
@@ -81,7 +82,9 @@ class Search extends React.Component {
         city: [],
         cityValue: '',
         schools: [],
-        schoolValue: ''
+        schoolValue: '',
+        college: [],
+        collegeValue: '',
       });
     });
   };
@@ -98,43 +101,110 @@ class Search extends React.Component {
         cityValue: '',
         schools:[],
         schoolValue: '',
+        college: [],
+        collegeValue: '',
       });
     });
   };
 
   cityChange = cityId => {
-    this.setState({
-      cityValue: cityId
-    });
-
     const {
       countryValue,
       provinceValue
     } = this.state;
 
     client(api.getSchoolByCondition)({
-      body: {
+      query: {
         country_id: countryValue,
         province_id: provinceValue,
         city_id: cityId
       }
     }).then(res => {
       this.setState({
+        cityValue: cityId,
         schools: res.schools,
+        schoolValue: '',
+        college: [],
+        collegeValue: ''
       });
     });
   };
 
   schoolChange = schoolId => {
+    client(api.getCollegeBySchool)({
+      body: {
+        school_id: schoolId
+      }
+    }).then(college => {
+      this.setState({
+        schoolValue: schoolId,
+        collegeValue: '',
+        college,
+      })
+    });
+  };
+
+  collegeChange = collegeId => {
     this.setState({
-      schoolValue: schoolId
+      collegeValue: collegeId
+    });
+  };
+
+  searchSchool() {
+    const {
+      countryValue,
+      provinceValue,
+      cityValue,
+    } = this.state;
+
+    client(api.getSchoolByCondition)({
+      query: {
+        country_id: countryValue,
+        province_id: provinceValue,
+        city_id: cityValue,
+        school_name: this.props.url.query.condition,
+      }
+    }).then(res => {
+      console.log(res);
+      // this.setState({
+      //   schoolResult: res.schools,
+      // });
     });
   }
 
+  searchProfessor() {
+    const {
+      schoolValue,
+      collegeValue,
+    } = this.state;
+
+      client(api.getProfessorByCondition)({
+        query: {
+          school_id: schoolValue,
+          college_id: collegeValue,
+          professor_name: this.props.url.query.condition,
+        }
+      }).then(res => {
+        console.log(res);
+        // this.setState({
+        //  professorResult: res.professors,
+      // });
+      })
+  }
+
   onModeChange(e) {
+    const mode = e.target.value;
     this.setState({
-      mode: e.target.value
+      mode
     });
+
+    if (mode == 'school') {
+      this.searchSchool();
+    }
+
+    if (mode == 'professor') {
+      this.searchProfessor();
+    }
   }
 
   render() {
@@ -147,10 +217,12 @@ class Search extends React.Component {
       province,
       city,
       schools,
+      college,
       countryValue,
       provinceValue,
       cityValue,
       schoolValue,
+      collegeValue,
       mode,
       currentPage,
       pageSize
@@ -173,7 +245,9 @@ class Search extends React.Component {
               <div>
                 <a href="/professor/create">创建教授</a>或<a href="/school/create">创建学校</a>
               </div>
-              <div style={{ margin: '10px 0' }}><h2>每页将展示20条结果，共1200条</h2></div>
+              <div style={{ margin: '10px 0' }}>
+                <h2>每页将展示20条结果，共1200条</h2>
+              </div>
               <Pagination
                 showSizeChanger
                 showQuickJumper
@@ -196,7 +270,7 @@ class Search extends React.Component {
                     mode == 'professor' &&
                     <div>
                       <Select
-                        style={{ width: 150 }}
+                        className={style.searchSelect}
                         placeholder="国家"
                         onSelect={this.countryChange}
                         value={countryValue}>
@@ -211,7 +285,7 @@ class Search extends React.Component {
                         }
                       </Select>
                       <Select
-                        style={{ width: 150 }}
+                        className={style.searchSelect}
                         placeholder="洲/省"
                         onSelect={this.provinceChange}
                         value={provinceValue}>
@@ -226,7 +300,7 @@ class Search extends React.Component {
                         }
                       </Select>
                       <Select
-                        style={{ width: 150 }}
+                        className={style.searchSelect}
                         placeholder="城市"
                         onSelect={this.cityChange}
                         value={cityValue}>
@@ -241,7 +315,7 @@ class Search extends React.Component {
                         }
                       </Select>
                       <Select
-                        style={{ width: 150 }}
+                        className={style.searchSelect}
                         placeholder="学校"
                         onSelect={this.schoolChange}
                         value={schoolValue}>
@@ -255,13 +329,28 @@ class Search extends React.Component {
                           )
                         }
                       </Select>
+                      <Select
+                        className={style.searchSelect}
+                        placeholder="学院"
+                        onSelect={this.collegeChange}
+                        value={collegeValue}>
+                        {
+                          college.map(c =>
+                            <Option
+                              key={c.college_id}
+                              value={c.college_id}>
+                              {c.college_name}
+                            </Option>
+                          )
+                        }
+                      </Select>
                     </div>
                   }
                   {
                     mode == 'school' &&
                     <div>
                       <Select
-                        style={{ width: 150 }}
+                        className={style.searchSelect}
                         placeholder="国家"
                         onSelect={this.countryChange}
                         value={countryValue}>
@@ -270,7 +359,7 @@ class Search extends React.Component {
                         }
                       </Select>
                       <Select
-                        style={{ width: 150 }}
+                        className={style.searchSelect}
                         placeholder="洲/省"
                         onSelect={this.provinceChange}
                         value={provinceValue}>
@@ -280,7 +369,7 @@ class Search extends React.Component {
                         }
                       </Select>
                       <Select
-                        style={{ width: 150 }}
+                        className={style.searchSelect}
                         placeholder="城市"
                         onSelect={this.cityChange}
                         value={cityValue}>

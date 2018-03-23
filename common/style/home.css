@@ -72,3 +72,9 @@
 	font-weight: 500;
 	color: #000;
 }
+
+/*search.js*/
+.searchSelect {
+	width: 120px;
+	margin-right: 10px;
+}
