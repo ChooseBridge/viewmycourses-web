@@ -39,6 +39,10 @@ class Professor extends React.Component {
 
   componentDidMount() {
     console.log(this.props);
+    this.getProfessorDetail();
+  }
+
+  getProfessorDetail() {
     client(api.getProfessorDetail)({
       query: {
         professor_id: this.props.url.query.id
@@ -46,7 +50,13 @@ class Professor extends React.Component {
     }).then(professor => {
       this.setState({
         professor,
-      })
+      });
+    });
+  }
+
+  getStudent() {
+    client(api.getStudent)({}).then(res => {
+      console.log(res);
     });
   }
 
@@ -61,6 +71,7 @@ class Professor extends React.Component {
       }
     }).then(res => {
       console.log(res);
+      this.getProfessorDetail();
     });
   }
 
@@ -99,9 +110,18 @@ class Professor extends React.Component {
                             <span style={{fontSize:32,marginRight:6}}>
                               {professorInfo.professor_full_name}
                             </span>
-                            <Icon onClick={this.thumbsProfessor} type="heart-o" />
-                            <Icon type="heart" style={{color:'red'}}/>
-                            132
+                            {
+                              professorInfo.is_thumbs_up ?
+                              <Icon
+                                onClick={this.thumbsProfessor}
+                                type="heart"
+                                style={{color:'red'}}/>
+                              :
+                              <Icon
+                                onClick={this.thumbsProfessor}
+                                type="heart-o" />
+                            }
+                            <span style={{marginLeft:5}}>{professorInfo.thumbs_up_num}</span>
                           </Col>
                         </Row>
                         <Row>
