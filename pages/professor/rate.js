@@ -103,7 +103,7 @@ class ProfessorRate extends React.Component {
             values.course_category_id = item.course_category_id;
             delete values.course_category_name;
           }
-        })
+        });
 
         const body = Object.assign({}, {
           professor_id: this.props.url.query.id,
@@ -130,10 +130,12 @@ class ProfessorRate extends React.Component {
 
     if (valueObj['course_related_quiz'] != 0) {
       if (valueObj['spend_course_time_at_week'] && valueObj['quiz_num']) {
-        const effort = valueObj['difficult_level'] *
+        let effort = valueObj['difficult_level'] *
           valueObj['spend_course_time_at_week'] *
-          valueObj['quiz_num'] *
-          (5 / valueObj['course_related_quiz']);
+          (valueObj['quiz_num'] / 4) *
+          (5 / valueObj['course_related_quiz']) / 3750 * 100;
+
+        effort = effort.toFixed(2);
 
         this.setState({
           effort
