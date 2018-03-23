@@ -52,15 +52,6 @@ app.prepare()
       render(req, res, '/index', { user: req.user });
     });
 
-    // error handler
-    // server.use((err, req, res) => {
-    //   // console.log(err);
-    //   // res.send(err);
-    //
-    //   return res.send(err);
-    //
-    // });
-
     server.get('/professor/create', userInfo, checkLogin, (req, res) => {
       render(req, res, '/professor/create', { user: req.user });
     });
@@ -111,6 +102,10 @@ app.prepare()
 
     server.get('*', (req, res) => {
       return handle(req, res);
+    });
+
+    server.use((err, req, res) => {
+      return res.send(JSON.stringify(err));
     });
 
     server.listen(3000, (err) => {

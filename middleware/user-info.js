@@ -13,5 +13,7 @@ module.exports = (req, res, next) => {
   api.getStudent({ headers }).then(user => {
     req.user = user;
     next();
-  }, next);
+  }, () => {
+    next();
+  });
 };
