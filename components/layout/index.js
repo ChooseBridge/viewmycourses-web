@@ -37,7 +37,7 @@ export default class extends React.Component {
       menuContentKey: '',
       schoolChoose: 'name',
       professorChoose: 'proName',
-      rateChoose: 'presonal'
+      rateChoose: 'professor'
     };
   }
 
