@@ -36,19 +36,19 @@ class Search extends Component {
         if (values.region) {
           values.region.forEach((id, i) => {
             if (i === 0) {
-              result['country_id'] = id;
+              result['country_id'] = encodeURIComponent(id);
             }
             else if (i === 1) {
-              result['province_id'] = id;
+              result['province_id'] = encodeURIComponent(id);
             }
             else {
-              result['city_id'] = id;
+              result['city_id'] = encodeURIComponent(id);
             }
           });
         }
 
         if (values.name) {
-          result['school_name'] = name;
+          result['school_name'] = encodeURIComponent(name);
         }
         this.props.onSubmit(result);
       }
@@ -74,16 +74,7 @@ class Search extends Component {
               className={cla(commonStyle.textCenter)}
               span={12}
               offset={6}>
-              <h2>查找你的学校</h2>
-            </Col>
-          </Row>
-
-          <Row className={style.row}>
-            <Col
-              className={cla(commonStyle.textCenter)}
-              span={12}
-              offset={6}>
-              <RadioGroup onChange={this.onRadioChangeHandler} value={schoolChoose}>
+              <RadioGroup size="large" onChange={this.onRadioChangeHandler} value={schoolChoose}>
                 <RadioButton value="name">按名称</RadioButton>
                 <RadioButton value="region">按区域</RadioButton>
               </RadioGroup>
@@ -99,7 +90,8 @@ class Search extends Component {
 
                   {getFieldDecorator('name', {})(
                     <AutoComplete
-                      style={{ width: 200, height: 32 }}
+                      size="large"
+                      style={{ width: 300 }}
                       placeholder="学校名称" />
                   )}
                 </Col>
@@ -111,7 +103,7 @@ class Search extends Component {
                   offset={6}>
 
                   {getFieldDecorator('region', {})(
-                    <RegionCascader style={{ width: 200 }} />
+                    <RegionCascader placeholder="请选择区域" size="large" style={{ width: 300 }} />
                   )}
 
                 </Col>
@@ -123,7 +115,7 @@ class Search extends Component {
               className={cla(commonStyle.textCenter)}
               span={12}
               offset={6}>
-              <Button style={{ width: 200 }} htmlType="submit" type="primary">搜索</Button>
+              <Button size="large" style={{ width: 300 }} htmlType="submit" type="primary">搜索</Button>
             </Col>
           </Row>
 

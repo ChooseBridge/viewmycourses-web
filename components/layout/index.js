@@ -16,6 +16,7 @@ import commonStyle from '../../common/style/index.css';
 import style from './style.css';
 import cla from 'classnames';
 import SearchSchool from './search-school'
+import SearchProfessor from './search-professor';
 import queryString from 'query-string'
 
 const {
@@ -303,7 +304,7 @@ export default class extends React.Component {
       case '2':
         return <SearchSchool closeAll={this.closeAll} onSubmit={this.goSearch} />;
       case '3':
-        return this.renderFindProfessor();
+        return <SearchProfessor closeAll={this.closeAll} onSubmit={this.goSearch} />;
       case '4':
         return this.renderComment();
       default:
