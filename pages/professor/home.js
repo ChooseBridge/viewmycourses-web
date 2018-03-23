@@ -54,12 +54,6 @@ class Professor extends React.Component {
     });
   }
 
-  getStudent() {
-    client(api.getStudent)({}).then(res => {
-      console.log(res);
-    });
-  }
-
   handleChange(e) {
     console.log(e);
   }
@@ -70,7 +64,7 @@ class Professor extends React.Component {
         professor_id: this.props.url.query.id
       }
     }).then(res => {
-      console.log(res);
+      // console.log(res);
       this.getProfessorDetail();
     });
   }
