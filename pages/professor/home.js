@@ -34,9 +34,11 @@ class Professor extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.thumbsProfessor = this.thumbsProfessor.bind(this);
   }
 
   componentDidMount() {
+    console.log(this.props);
     client(api.getProfessorDetail)({
       query: {
         professor_id: this.props.url.query.id
@@ -50,6 +52,16 @@ class Professor extends React.Component {
 
   handleChange(e) {
     console.log(e);
+  }
+
+  thumbsProfessor() {
+    client(api.thumbsUpProfessor)({
+      query: {
+        professor_id: this.props.url.query.id
+      }
+    }).then(res => {
+      console.log(res);
+    });
   }
 
   render() {
@@ -84,8 +96,10 @@ class Professor extends React.Component {
                       <Col span={20}>
                         <Row>
                           <Col span={16}>
-                            <span style={{fontSize:32,marginRight:6}}>{professorInfo.professor_full_name}</span>
-                            <Icon type="heart-o" />
+                            <span style={{fontSize:32,marginRight:6}}>
+                              {professorInfo.professor_full_name}
+                            </span>
+                            <Icon onClick={this.thumbsProfessor} type="heart-o" />
                             <Icon type="heart" style={{color:'red'}}/>
                             132
                           </Col>
