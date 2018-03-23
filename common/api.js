@@ -131,4 +131,44 @@ module.exports = {
     url: '/api/get-professor-by-condition',
   }, opt),
 
+  /**
+   * 给教授点赞
+   * @param opt
+   */
+  thumbsUpProfessor: opt => makeApi({
+    url: '/api/thumbs-up-professor',
+  }, opt),
+
+  /**
+   * 给教授的点评点赞
+   * @param opt
+   */
+  thumbsUpProfessorRate: opt => makeApi({
+    url: '/api/thumbs-up-professor-rate',
+  }, opt),
+
+  /**
+   * 给教授的点评点踩
+   * @param opt
+   */
+  thumbsDownProfessorRate: opt => makeApi({
+    url: '/api/thumbs-down-professor-rate',
+  }, opt),
+
+  /**
+   * 给学校的点评点赞
+   * @param opt
+   */
+  thumbsUpSchoolRate: opt => makeApi({
+    url: '/api/thumbs-up-school-rate',
+  }, opt),
+
+  /**
+   * 给学校的点评点踩
+   * @param opt
+   */
+  thumbsDownSchoolRate: opt => makeApi({
+    url: '/api/thumbs-down-school-rate',
+  }, opt),
+
 };
