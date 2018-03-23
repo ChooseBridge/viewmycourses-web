@@ -35,6 +35,7 @@ class Search extends React.Component {
       country: [],
       province: [],
       city: [],
+      schools: [],
       mode: '',
       currentPage: 1,
       pageSize: 10,
@@ -78,7 +79,9 @@ class Search extends React.Component {
         countryValue: countryId,
         provinceValue: '',
         city: [],
-        cityValue: ''
+        cityValue: '',
+        schools: [],
+        schoolValue: ''
       });
     });
   };
@@ -92,7 +95,9 @@ class Search extends React.Component {
       this.setState({
         city,
         provinceValue: provinceId,
-        cityValue: ''
+        cityValue: '',
+        schools:[],
+        schoolValue: '',
       });
     });
   };
@@ -107,17 +112,24 @@ class Search extends React.Component {
       provinceValue
     } = this.state;
 
-    // client(api.getSchoolByCondition)({
-    //   body: {
-    //     school_name: 'fudan',
-    //     country_id: countryValue,
-    //     province_id: provinceValue,
-    //     city_id: cityId
-    //   }
-    // }).then(res => {
-    //   console.log(res);
-    // });
+    client(api.getSchoolByCondition)({
+      body: {
+        country_id: countryValue,
+        province_id: provinceValue,
+        city_id: cityId
+      }
+    }).then(res => {
+      this.setState({
+        schools: res.schools,
+      });
+    });
   };
+
+  schoolChange = schoolId => {
+    this.setState({
+      schoolValue: schoolId
+    });
+  }
 
   onModeChange(e) {
     this.setState({
@@ -134,9 +146,11 @@ class Search extends React.Component {
       country,
       province,
       city,
+      schools,
       countryValue,
       provinceValue,
       cityValue,
+      schoolValue,
       mode,
       currentPage,
       pageSize
@@ -187,7 +201,13 @@ class Search extends React.Component {
                         onSelect={this.countryChange}
                         value={countryValue}>
                         {
-                          country.map(c => <Option key={c.country_id} value={c.country_id}>{c.country_name}</Option>)
+                          country.map(c =>
+                            <Option
+                              key={c.country_id}
+                              value={c.country_id}>
+                            {c.country_name}
+                            </Option>
+                          )
                         }
                       </Select>
                       <Select
@@ -196,8 +216,13 @@ class Search extends React.Component {
                         onSelect={this.provinceChange}
                         value={provinceValue}>
                         {
-                          province.map(p => <Option key={p.province_id}
-                                                    value={p.province_id}>{p.province_name}</Option>)
+                          province.map(p =>
+                            <Option
+                              key={p.province_id}
+                              value={p.province_id}>
+                              {p.province_name}
+                            </Option>
+                          )
                         }
                       </Select>
                       <Select
@@ -206,14 +231,29 @@ class Search extends React.Component {
                         onSelect={this.cityChange}
                         value={cityValue}>
                         {
-                          city.map(c => <Option key={c.city_id} value={c.city_id}>{c.city_name}</Option>)
+                          city.map(c =>
+                            <Option
+                              key={c.city_id}
+                              value={c.city_id}>
+                            {c.city_name}
+                            </Option>
+                          )
                         }
                       </Select>
                       <Select
                         style={{ width: 150 }}
-                        placeholder="学校">
-                        <Option value='1'>1</Option>
-                        <Option value='2'>2</Option>
+                        placeholder="学校"
+                        onSelect={this.schoolChange}
+                        value={schoolValue}>
+                        {
+                          schools.map(s =>
+                            <Option
+                              key={s.school_id}
+                              value={s.school_id}>
+                              {s.school_name}
+                            </Option>
+                          )
+                        }
                       </Select>
                     </div>
                   }
