@@ -35,7 +35,9 @@ class Search extends React.Component {
       country: [],
       province: [],
       city: [],
-      mode: ''
+      mode: '',
+      currentPage: 1,
+      pageSize: 10,
     };
 
     this.onShowSizeChange = this.onShowSizeChange.bind(this);
@@ -44,6 +46,7 @@ class Search extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     console.log(this.props.url.query.condition); // 搜索条件
     client(api.getAllCountry)().then(country => {
       this.setState({
@@ -53,11 +56,15 @@ class Search extends React.Component {
   }
 
   onShowSizeChange(current, pageSize) {
-    console.log(current, pageSize);
+    this.setState({
+      pageSize,
+    })
   }
 
   onPageChange(pageNumber) {
-    console.log(pageNumber);
+    this.setState({
+      currentPage: pageNumber,
+    })
   }
 
   countryChange = countryId => {
@@ -100,16 +107,16 @@ class Search extends React.Component {
       provinceValue
     } = this.state;
 
-    client(api.getSchoolByCondition)({
-      body: {
-        school_name: 'fudan',
-        country_id: countryValue,
-        province_id: provinceValue,
-        city_id: cityId
-      }
-    }).then(res => {
-      console.log(res);
-    });
+    // client(api.getSchoolByCondition)({
+    //   body: {
+    //     school_name: 'fudan',
+    //     country_id: countryValue,
+    //     province_id: provinceValue,
+    //     city_id: cityId
+    //   }
+    // }).then(res => {
+    //   console.log(res);
+    // });
   };
 
   onModeChange(e) {
@@ -130,7 +137,9 @@ class Search extends React.Component {
       countryValue,
       provinceValue,
       cityValue,
-      mode
+      mode,
+      currentPage,
+      pageSize
     } = this.state;
 
     const radioStyle = {
@@ -144,7 +153,7 @@ class Search extends React.Component {
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={commonStyle.bgWrap}>
-            <Card>
+            <Card className={style.wrap}>
               <div><h3>搜索“刘强东”的结果</h3></div>
               <div>没有你想找的学习或教授？</div>
               <div>
@@ -156,8 +165,10 @@ class Search extends React.Component {
                 showQuickJumper
                 onShowSizeChange={this.onShowSizeChange}
                 onChange={this.onPageChange}
-                defaultCurrent={1}
+                current={currentPage}
+                pageSize={pageSize}
                 total={1200} />
+
               <div>结果可按照下列条件筛选</div>
               <Row>
                 <Col span={4}>
@@ -241,6 +252,44 @@ class Search extends React.Component {
                   }
                 </Col>
               </Row>
+            </Card>
+
+            <Card>
+              <Row>
+                <Col span={8}><h2>种类</h2></Col>
+                <Col span={16}><h2>名字</h2></Col>
+              </Row>
+
+              <Row type="flex" align="middle" className={style.wrap}>
+                <Col span={2}>
+                  <Icon style={{ fontSize: 40, color: '#66dc66' }} type="book" />
+                </Col>
+                <Col span={6}>学校</Col>
+                <Col span={16}>
+                  <div><h2>复旦大学</h2></div>
+                  <div>中国 上海 上海市</div>
+                </Col>
+              </Row>
+
+              <Row type="flex" align="middle" className={style.wrap}>
+                <Col span={2}>
+                  <Icon style={{ fontSize: 40, color: '#66dc66' }} type="idcard" />
+                </Col>
+                <Col span={6}>教授</Col>
+                <Col span={16}>
+                  <div><h2>刘强东</h2></div>
+                  <div>复旦大学 教授</div>
+                </Col>
+              </Row>
+
+              <Pagination
+                showSizeChanger
+                showQuickJumper
+                onShowSizeChange={this.onShowSizeChange}
+                onChange={this.onPageChange}
+                current={currentPage}
+                pageSize={pageSize}
+                total={1200} />
             </Card>
           </div>
         </Content>
