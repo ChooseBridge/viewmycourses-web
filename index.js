@@ -15,13 +15,6 @@ app.prepare()
   .then(() => {
     const server = express();
 
-    // server.use((req, res, next) => {
-    //   res.locals({
-    //     loginUrl: 'https://i.viewmycourses.com/oauth/authorize?client_id=bridge-campus&redirect_uri=http://school.anyquestion.top/callback&response_type=code&state=http://test.com'
-    //   });
-    //   next();
-    // });
-
     const render = (req, res, page, params = {}) => {
       const uri = req.protocol + '://' + req.get('host') + req.originalUrl;
       return app.render(req, res, page, Object.assign({}, params, {
@@ -60,14 +53,17 @@ app.prepare()
     server.get('/professor/:id/rate', userInfo, checkLogin, (req, res) => {
       render(req, res, '/professor/rate', {
         user: req.user,
-        id: req.params.id,
+        id: req.params.id
       });
     });
 
-    server.get('/professor/:id', userInfo, (req, res) => {
+    server.get('/professor/:id', userInfo, (req, res, next) => {
       api.getProfessorDetail({
         query: {
           professor_id: req.params.id
+        },
+        headers: {
+          token: req.cookies.token
         }
       }).then(professor => {
         render(req, res, '/professor/home', {
@@ -75,6 +71,8 @@ app.prepare()
           professor,
           id: req.params.id
         });
+      }, () => {
+        next('')
       });
     });
 
@@ -85,14 +83,14 @@ app.prepare()
     server.get('/school/rate', userInfo, checkLogin, (req, res) => {
       render(req, res, '/school/rate', {
         user: req.user,
-        id: req.param('id'),
+        id: req.param('id')
       });
     });
 
     server.get('/school/:id', userInfo, (req, res) => {
       render(req, res, '/school/home', {
         user: req.user,
-        id: req.params.id,
+        id: req.params.id
       });
     });
 
@@ -112,16 +110,8 @@ app.prepare()
       return handle(req, res);
     });
 
-    server.use((err, req, res) => {
-      return res.send(JSON.stringify(err));
-    });
-
     server.listen(3000, (err) => {
       if (err) throw err;
       console.log('> Ready on http://localhost:3000');
     });
-  })
-  .catch((ex) => {
-    console.error(ex.stack);
-    process.exit(1);
   });
