@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   Card,
+  message,
 } from 'antd';
 import cla from 'classnames';
 import client from '../../common/client';
@@ -84,6 +85,18 @@ class School extends React.Component {
     });
   }
 
+  getSchoolDetail() {
+    client(api.getSchoolDetail)({
+      query: {
+        school_id: this.props.url.query.id
+      }
+    }).then(school => {
+      this.setState({
+        school,
+      });
+    });
+  }
+
   onThumbsUp(school_rate_id) {
     client(api.thumbsUpSchoolRate)({
       query: {
@@ -91,11 +104,9 @@ class School extends React.Component {
       }
     }).then(res => {
       // console.log(res);
-      this.getSchoolDetail().then(school =>{
-        this.setState({
-          school,
-        });
-      });
+      this.getSchoolDetail();
+    }).catch(() => {
+      message.error('您已经点击过没用了');
     });
   }
 
@@ -106,11 +117,9 @@ class School extends React.Component {
       }
     }).then(res => {
       // console.log(res);
-      this.getSchoolDetail().then(school =>{
-        this.setState({
-          school,
-        });
-      });
+      this.getSchoolDetail();
+    }).catch(() => {
+      message.error('您已经点击过有用了');
     });
   }
 

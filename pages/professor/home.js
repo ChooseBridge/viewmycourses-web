@@ -10,7 +10,8 @@ import {
   Col,
   Tag,
   Select,
-  Card
+  Card,
+  message
 } from 'antd';
 import cla from 'classnames';
 import client from '../../common/client';
@@ -76,6 +77,8 @@ class Professor extends React.Component {
     }).then(res => {
       // console.log(res);
       this.getProfessorDetail();
+    }).catch(() => {
+      message.error('您已经点击过没用了');
     });
   }
 
@@ -87,6 +90,8 @@ class Professor extends React.Component {
     }).then(res => {
       // console.log(res);
       this.getProfessorDetail();
+    }).catch(() => {
+      message.error('您已经点击过有用了');
     });
   }
 
