@@ -8,18 +8,37 @@ import style from './style.css';
 import cln from 'classnames';
 import Typed from 'react-typed';
 import SearchBar from './search-bar';
+import trim from 'trim';
 
 const { Content } = Layout;
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showInput: false,
+      kw: ''
+    };
   }
+
+  focusHandler = () => {
+    //TODO 判断登录
+    this.setState({
+      showInput: true
+    });
+
+    setTimeout(() => {
+
+      document.getElementsByClassName(style.input)[0].getElementsByTagName('input')[0].focus();
+    }, 300);
+  };
 
   render() {
     const {
       url
     } = this.props;
+
+    const { showInput } = this.state;
 
     return (
       <ALayout title='首页' url={url}>
@@ -28,22 +47,40 @@ class Home extends React.Component {
             <div className={style.headline}>
               <h1>我们想未来所想<br />而你，就是未来</h1>
               <div>输入学校名或教授名</div>
-              <Typed
-                strings={[
-                  '北京大学',
-                  'University of Cambridge',
-                  '中国人民大学',
-                  'Stanford University',
-                  '中国人民大学',
-                  'California Institute of Technology']}
-                typeSpeed={40}
-                backSpeed={50}
-                attr="placeholder"
-                loop>
-                <input type="text" className={style.input} />
-              </Typed>
 
-              <SearchBar/>
+              {(!showInput) && (
+                <Typed
+                  strings={[
+                    '北京大学',
+                    'University of Cambridge',
+                    '中国人民大学',
+                    'Stanford University',
+                    '中国人民大学',
+                    'California Institute of Technology']}
+                  typeSpeed={40}
+                  backSpeed={50}
+                  attr="placeholder"
+                  loop>
+                  <input type="text" className={style.input} onFocus={this.focusHandler} />
+                </Typed>
+              )}
+
+              {
+                showInput &&
+                <div onKeyDown={e => {
+                  if (e.keyCode === 13) {
+                    const kw = trim(document.getElementsByClassName(style.input)[0].getElementsByTagName('input')[0].value);
+                    location.href = '/search?mode=all&name=' + kw;
+                  }
+                }}>
+                  <SearchBar
+                    className={style.input}
+                    onBlur={() => {
+                      this.setState({ showInput: trim(document.getElementsByClassName(style.input)[0].getElementsByTagName('input')[0].value) !== '' });
+                    }}
+                    onSelect={e => location.href = '/search?mode=all&name=' + trim(e)} />
+                </div>
+              }
 
             </div>
           </Content>

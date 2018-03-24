@@ -49,6 +49,21 @@
   /*padding: 0 20px;*/
 }
 
+.input :global(.ant-select-selection) {
+  background-color: transparent;
+}
+
+.input :global(.ant-select-selection) input{
+  border: none;
+
+  background-color: transparent!important;;
+  height: 60px!important;
+  font-weight: bold;
+  font-size: 45px;
+  outline: none;
+  color: #fff;
+}
+
 .input::placeholder {
   color: rgba(255, 255, 255, .6);
 }

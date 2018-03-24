@@ -1,9 +1,10 @@
-import { Select, Spin } from 'antd';
+import { AutoComplete, Select } from 'antd';
 import debounce from 'debounce';
 import api from '../../common/api';
 import client from '../../common/client';
 
-const { Option, OptGroup } = Select.Option;
+const { Option, OptGroup } = Select;
+
 export default class UserRemoteSelect extends React.Component {
   constructor(props) {
     super(props);
@@ -18,6 +19,9 @@ export default class UserRemoteSelect extends React.Component {
   };
 
   fetchData = (value) => {
+    if (this.props.onChange) {
+      this.props.onChange(value);
+    }
     this.lastFetchId += 1;
     const fetchId = this.lastFetchId;
     this.setState({ data: [], fetching: true });
@@ -32,10 +36,10 @@ export default class UserRemoteSelect extends React.Component {
 
       const data = [{
         title: '学校',
-        children: school.schools.map(s => ({ name: s.school_name, value: s.school_id }))
+        children: school.schools.map(s => ({ title: s.school_name, value: s.school_id }))
       }, {
         title: '教授',
-        children: professor.professors.map(p => ({ name: p.professor_full_name, value: s.professor_id }))
+        children: professor.professors.map(p => ({ title: p.professor_full_name, value: p.professor_id }))
       }];
 
       this.setState({ data, fetching: false });
@@ -51,28 +55,27 @@ export default class UserRemoteSelect extends React.Component {
 
   render() {
     const { fetching, data, value } = this.state;
-    console.log(data);
+
     return (
-      <Select
-        mode="multiple"
-        labelInValue
-        value={value}
-        placeholder="Select users"
-        notFoundContent={fetching ? <Spin size="small" /> : null}
-        filterOption={false}
-        onSearch={this.fetchData}
-        onChange={this.handleChange}
-        style={{ width: '100%' }} >
-        {data.map(d => <OptGroup
-            key={d.title}
-            label={d.title}>
-            {d.children.map(i => <Option
-              key={i.value}
-              value={i.value}>{i.name}
-            </Option>)}
-          </OptGroup>
-        )}
-      </Select>
+      <AutoComplete
+        {...this.props}
+        onChange={this.fetchData}>
+        {
+          data.map(group => (
+            <OptGroup
+              key={group.title}
+              label={group.title}>
+              {group.children.map(item => (
+                <option
+                  key={item.value}
+                  value={String(item.title)}>
+                  {item.title}
+                </option>
+              ))}
+            </OptGroup>
+          ))
+        }
+      </AutoComplete>
     );
   }
 }
