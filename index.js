@@ -43,7 +43,7 @@ app.prepare()
     // server.use(userInfo);
 
     server.get('/', userInfo, (req, res) => {
-      render(req, res, '/index', { user: req.user });
+      render(req, res, '/home/home', { user: req.user });
     });
 
     server.get('/professor/create', userInfo, checkLogin, (req, res) => {

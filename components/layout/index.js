@@ -87,7 +87,7 @@ export default class extends React.Component {
     } = this.state;
 
     return (
-      <Base title={title}>
+      <Base title={title} className={this.props.className}>
         <Layout>
           <Header className={style.header}>
             <Row style={{ flex: 1 }}>
