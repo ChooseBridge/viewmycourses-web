@@ -31,12 +31,29 @@ class Professor extends React.Component {
     super(props);
     console.log(props);
 
+    this.state = {
+      professor: this.props.url.query.professor
+    };
+
     this.handleChange = this.handleChange.bind(this);
     this.thumbsProfessor = this.thumbsProfessor.bind(this);
   }
 
   handleChange(e) {
     console.log(e);
+
+  }
+
+  getProfessorDetail() {
+    client(api.getProfessorDetail)({
+      query: {
+        professor_id: this.props.url.query.id
+      }
+    }).then(professor => {
+      this.setState({
+        professor,
+      })
+    });
   }
 
   thumbsProfessor() {
@@ -54,7 +71,10 @@ class Professor extends React.Component {
     const {
       url
     } = this.props;
-    const { professor } = url.query;
+
+    const {
+      professor
+    } = this.state;
 
     const {
       professorInfo,
