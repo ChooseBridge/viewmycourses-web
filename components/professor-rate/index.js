@@ -6,7 +6,6 @@ import cln from 'classnames';
 export default class extends Component {
   render() {
     const { dark, rate } = this.props;
-    console.log(this.props.rate);
 
     return (
       <div className={cln(style.wrap, { [style.dark]: dark })}>

@@ -18,7 +18,7 @@ import api from '../../common/api';
 import style from '../../common/style/home.css';
 import commonStyle from '../../common/style/index.css';
 import Share from '../../components/share';
-import ProfessorRate from '../../components/professor-rate';
+import ProfessorRate from '../../components/professor-rate/index';
 
 const {
   Content
