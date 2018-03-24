@@ -12,8 +12,9 @@ import {
   Card,
   Pagination,
   Select,
-  Radio
+  Radio,
 } from 'antd';
+import queryString from 'query-string';
 import cla from 'classnames';
 import api from '../common/api';
 import client from '../common/client';
@@ -25,7 +26,12 @@ const {
 } = Layout;
 
 const RadioGroup = Radio.Group;
-const { Option } = Select;
+
+const {
+  Option
+} = Select;
+
+const FormItem = Form.Item;
 
 class Search extends React.Component {
   constructor(props) {
@@ -36,7 +42,7 @@ class Search extends React.Component {
       province: [],
       city: [],
       schools: [],
-      college:[],
+      college: [],
       mode: '',
       currentPage: 1,
       pageSize: 10,
@@ -50,10 +56,22 @@ class Search extends React.Component {
   componentDidMount() {
     console.log(this.props.url.query.condition); // 搜索条件
 
+    const {
+      country_id,
+      province_id,
+      city_id,
+      school_name,
+      professor_name,
+    } = this.props.url.query.condition;
+
     client(api.getAllCountry)().then(country => {
       this.setState({
+        mode: 'school',
         country: country
       });
+
+      // this.countryChange(country_id);
+      // this.provinceChange(province_id);
     });
   }
 
@@ -86,6 +104,10 @@ class Search extends React.Component {
         college: [],
         collegeValue: '',
       });
+
+      if (mode == 'school') {
+        this.searchSchool();
+      }
     });
   };
 
@@ -104,6 +126,10 @@ class Search extends React.Component {
         college: [],
         collegeValue: '',
       });
+
+      if (mode == 'school') {
+        this.searchSchool();
+      }
     });
   };
 
@@ -127,6 +153,10 @@ class Search extends React.Component {
         college: [],
         collegeValue: ''
       });
+
+      if (mode == 'school') {
+        this.searchSchool();
+      }
     });
   };
 
@@ -140,7 +170,9 @@ class Search extends React.Component {
         schoolValue: schoolId,
         collegeValue: '',
         college,
-      })
+      });
+
+      this.searchProfessor();
     });
   };
 
@@ -148,6 +180,8 @@ class Search extends React.Component {
     this.setState({
       collegeValue: collegeId
     });
+
+    this.searchProfessor();
   };
 
   searchSchool() {
@@ -260,60 +294,60 @@ class Search extends React.Component {
               <div>结果可按照下列条件筛选</div>
               <Row>
                 <Col span={4}>
-                  <RadioGroup onChange={this.onModeChange}>
+                  <RadioGroup onChange={this.onModeChange} value={mode}>
                     <Radio style={radioStyle} value="professor">Professor</Radio>
                     <Radio style={radioStyle} value="school">School</Radio>
                   </RadioGroup>
                 </Col>
                 <Col span={20}>
+                  <Select
+                    className={style.searchSelect}
+                    placeholder="国家"
+                    onSelect={this.countryChange}
+                    value={countryValue}>
+                    {
+                      country.map(c =>
+                        <Option
+                          key={c.country_id}
+                          value={c.country_id}>
+                        {c.country_name}
+                        </Option>
+                      )
+                    }
+                  </Select>
+                  <Select
+                    className={style.searchSelect}
+                    placeholder="洲/省"
+                    onSelect={this.provinceChange}
+                    value={provinceValue}>
+                    {
+                      province.map(p =>
+                        <Option
+                          key={p.province_id}
+                          value={p.province_id}>
+                          {p.province_name}
+                        </Option>
+                      )
+                    }
+                  </Select>
+                  <Select
+                    className={style.searchSelect}
+                    placeholder="城市"
+                    onSelect={this.cityChange}
+                    value={cityValue}>
+                    {
+                      city.map(c =>
+                        <Option
+                          key={c.city_id}
+                          value={c.city_id}>
+                        {c.city_name}
+                        </Option>
+                      )
+                    }
+                  </Select>
                   {
                     mode == 'professor' &&
-                    <div>
-                      <Select
-                        className={style.searchSelect}
-                        placeholder="国家"
-                        onSelect={this.countryChange}
-                        value={countryValue}>
-                        {
-                          country.map(c =>
-                            <Option
-                              key={c.country_id}
-                              value={c.country_id}>
-                            {c.country_name}
-                            </Option>
-                          )
-                        }
-                      </Select>
-                      <Select
-                        className={style.searchSelect}
-                        placeholder="洲/省"
-                        onSelect={this.provinceChange}
-                        value={provinceValue}>
-                        {
-                          province.map(p =>
-                            <Option
-                              key={p.province_id}
-                              value={p.province_id}>
-                              {p.province_name}
-                            </Option>
-                          )
-                        }
-                      </Select>
-                      <Select
-                        className={style.searchSelect}
-                        placeholder="城市"
-                        onSelect={this.cityChange}
-                        value={cityValue}>
-                        {
-                          city.map(c =>
-                            <Option
-                              key={c.city_id}
-                              value={c.city_id}>
-                            {c.city_name}
-                            </Option>
-                          )
-                        }
-                      </Select>
+                    <span>
                       <Select
                         className={style.searchSelect}
                         placeholder="学校"
@@ -344,40 +378,7 @@ class Search extends React.Component {
                           )
                         }
                       </Select>
-                    </div>
-                  }
-                  {
-                    mode == 'school' &&
-                    <div>
-                      <Select
-                        className={style.searchSelect}
-                        placeholder="国家"
-                        onSelect={this.countryChange}
-                        value={countryValue}>
-                        {
-                          country.map(c => <Option key={c.country_id} value={c.country_id}>{c.country_name}</Option>)
-                        }
-                      </Select>
-                      <Select
-                        className={style.searchSelect}
-                        placeholder="洲/省"
-                        onSelect={this.provinceChange}
-                        value={provinceValue}>
-                        {
-                          province.map(p => <Option key={p.province_id}
-                                                    value={p.province_id}>{p.province_name}</Option>)
-                        }
-                      </Select>
-                      <Select
-                        className={style.searchSelect}
-                        placeholder="城市"
-                        onSelect={this.cityChange}
-                        value={cityValue}>
-                        {
-                          city.map(c => <Option key={c.city_id} value={c.city_id}>{c.city_name}</Option>)
-                        }
-                      </Select>
-                    </div>
+                    </span>
                   }
                 </Col>
               </Row>
