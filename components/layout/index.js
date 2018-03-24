@@ -1,31 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Layout,
   Menu,
-  Breadcrumb,
   Row,
   Col,
-  Button,
-  Radio,
-  AutoComplete,
-  Select
+  Button
 } from 'antd';
 import Base from '../base/index.js';
-import commonStyle from '../../common/style/index.css';
 import style from './style.css';
-import cla from 'classnames';
+import SearchSchool from './search-school'
+import SearchProfessor from './search-professor';
+import queryString from 'query-string'
+import SearchRate from './search-rate';
 
 const {
   Header,
   Footer,
-  Content
 } = Layout;
-
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
-
-const Option = Select.Option;
 
 export default class extends React.Component {
   constructor(props) {
@@ -35,12 +26,8 @@ export default class extends React.Component {
       menuContentKey: '',
       schoolChoose: 'name',
       professorChoose: 'proName',
-      rateChoose: 'presonal'
+      rateChoose: 'professor'
     };
-
-    this.onRadioChangeHandler = this.onRadioChangeHandler.bind(this);
-    this.onSelectChangeHandler = this.onSelectChangeHandler.bind(this);
-    this.onInputChangeHandler = this.onInputChangeHandler.bind(this);
   }
 
   componentDidMount() {
@@ -53,7 +40,13 @@ export default class extends React.Component {
   };
 
   MenuClickHandler(item) {
-    if (this.state.menuContentKey == item.key) {
+    if (item.key === '3' || item.key === '4') {
+      if (!this.props.url.query.user) {
+        return location.href = this.props.url.query.loginUrl
+      }
+    }
+
+    if (this.state.menuContentKey === item.key) {
       this.setState({
         menuContentKey: ''
       });
@@ -65,339 +58,21 @@ export default class extends React.Component {
     });
   }
 
-  onRadioChangeHandler(e) {
-    const {
-      menuContentKey
-    } = this.state;
-
-    switch (menuContentKey) {
-      case '2':
-        this.setState({
-          schoolChoose: e.target.value
-        });
-        return;
-      case '3':
-        this.setState({
-          professorChoose: e.target.value
-        });
-        return;
-      case '4':
-        this.setState({
-          rateChoose: e.target.value
-        });
-        return;
-    }
-  }
-
-  onSelectChangeHandler(e) {
-    console.log(e);
-  }
-
-  onInputChangeHandler(e) {
-    console.log(e);
-  }
-
-  renderFindSchool() {
-    const {
-      schoolChoose
-    } = this.state;
-
-    return (
-      <div className={style.menuWrap}>
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <h2>查找你的学校</h2>
-          </Col>
-        </Row>
-
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <RadioGroup onChange={this.onRadioChangeHandler} value={schoolChoose}>
-              <RadioButton value="name">按名称</RadioButton>
-              <RadioButton value="region">按区域</RadioButton>
-            </RadioGroup>
-          </Col>
-        </Row>
-
-        {
-          schoolChoose == 'name' ? <Row className={style.row}>
-              <Col
-                className={cla(commonStyle.textCenter)}
-                span={12}
-                offset={6}>
-                <AutoComplete
-                  style={{ width: 200, height: 32 }}
-                  placeholder="学校名称"
-                  onChange={this.onInputChangeHandler} />
-              </Col>
-            </Row>
-            : <Row className={style.row}>
-              <Col
-                className={cla(commonStyle.textCenter)}
-                span={12}
-                offset={6}>
-                <Select
-                  placeholder="请选择区域"
-                  style={{ width: 200, height: 32 }}
-                  onChange={this.onSelectChangeHandler}>
-                  <Option value="上海">上海</Option>
-                  <Option value="北京">北京</Option>
-                  <Option value="广州">广州</Option>
-                  <Option value="新疆">新疆</Option>
-                </Select>
-              </Col>
-            </Row>
-        }
-
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <Button style={{ width: 200 }} type="primary">搜索</Button>
-          </Col>
-        </Row>
-
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <a href="javascript:;" onClick={this.closeAll}>关闭</a>
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-
-  renderFindProfessor() {
-    const {
-      professorChoose
-    } = this.state;
-
-    return (
-      <div className={style.menuWrap}>
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <h2>查找你的教授</h2>
-          </Col>
-        </Row>
-
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <RadioGroup onChange={this.onRadioChangeHandler} value={professorChoose}>
-              <RadioButton value="proName">按名称</RadioButton>
-              <RadioButton value="school">按学校</RadioButton>
-            </RadioGroup>
-          </Col>
-        </Row>
-
-        {
-          professorChoose == 'proName' ? <div>
-              <Row className={style.row}>
-                <Col
-                  className={cla(commonStyle.textCenter)}
-                  span={12}
-                  offset={6}>
-                  <div>I'm looking for a professor at</div>
-                </Col>
-              </Row>
-
-              <Row className={style.row}>
-                <Col
-                  className={cla(commonStyle.textCenter)}
-                  span={12}
-                  offset={6}>
-                  <AutoComplete
-                    style={{ width: 200, height: 32 }}
-                    placeholder="学校名称"
-                    onChange={this.onInputChangeHandler} />
-                </Col>
-              </Row>
-
-              <Row className={style.row}>
-                <Col
-                  className={cla(commonStyle.textCenter)}
-                  span={12}
-                  offset={6}>
-                  <div>named</div>
-                </Col>
-              </Row>
-
-              <Row className={style.row}>
-                <Col
-                  className={cla(commonStyle.textCenter)}
-                  span={12}
-                  offset={6}>
-                  <AutoComplete
-                    style={{ width: 200, height: 32 }}
-                    placeholder="教授名字"
-                    onChange={this.onInputChangeHandler} />
-                </Col>
-              </Row>
-            </div>
-            : <div>
-              <Row className={style.row}>
-                <Col
-                  className={cla(commonStyle.textCenter)}
-                  span={12}
-                  offset={6}>
-                  I'm looking for a professor at
-                  <AutoComplete
-                    style={{ width: 200, height: 32, paddingLeft: 4 }}
-                    placeholder="学校名字"
-                    onChange={this.onInputChangeHandler} />
-                </Col>
-              </Row>
-
-              <Row className={style.row}>
-                <Col
-                  className={cla(commonStyle.textCenter)}
-                  span={12}
-                  offset={6}>
-                  in the
-                  <Select
-                    placeholder="请选择学校"
-                    style={{ width: 200, height: 32, paddingLeft: 4, paddingRight: 4 }}
-                    onChange={this.onSelectChangeHandler}>
-                    <Option value="学校1">学校1</Option>
-                    <Option value="学校2">学校2</Option>
-                    <Option value="学校3">学校3</Option>
-                    <Option value="学校4">学校4</Option>
-                  </Select>
-                  department
-                </Col>
-              </Row>
-            </div>
-        }
-
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <Button style={{ width: 200 }} type="primary">搜索</Button>
-          </Col>
-        </Row>
-
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <a href="javascript:;" onClick={this.closeAll}>关闭</a>
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-
-  renderComment() {
-    const {
-      rateChoose
-    } = this.state;
-
-    return (
-      <div className={style.menuWrap}>
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <h2>我要点评</h2>
-          </Col>
-        </Row>
-
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <RadioGroup onChange={this.onRadioChangeHandler} value={rateChoose}>
-              <RadioButton value="professor">教授</RadioButton>
-              <RadioButton value="school">学校</RadioButton>
-            </RadioGroup>
-          </Col>
-        </Row>
-
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <div>I want to rate</div>
-          </Col>
-        </Row>
-
-        {
-          rateChoose == 'professor' ? <Row className={style.row}>
-              <Col
-                className={cla(commonStyle.textCenter)}
-                span={12}
-                offset={6}>
-                <AutoComplete
-                  style={{ width: 200, height: 32 }}
-                  placeholder="教授名字"
-                  onChange={this.onInputChangeHandler} />
-              </Col>
-            </Row>
-            : <Row className={style.row}>
-              <Col
-                className={cla(commonStyle.textCenter)}
-                span={12}
-                offset={6}>
-                <AutoComplete
-                  style={{ width: 200, height: 32 }}
-                  placeholder="学校名称"
-                  onChange={this.onInputChangeHandler} />
-              </Col>
-            </Row>
-        }
-
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <Button style={{ width: 200 }} type="primary">搜索</Button>
-          </Col>
-        </Row>
-
-        <Row className={style.row}>
-          <Col
-            className={cla(commonStyle.textCenter)}
-            span={12}
-            offset={6}>
-            <a href="javascript:;" onClick={this.closeAll}>关闭</a>
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-
   renderMenuContent(key) {
     switch (key) {
       case '2':
-        return this.renderFindSchool();
+        return <SearchSchool closeAll={this.closeAll} onSubmit={this.goSearch} />;
       case '3':
-        return this.renderFindProfessor();
+        return <SearchProfessor closeAll={this.closeAll} onSubmit={this.goSearch} />;
       case '4':
-        return this.renderComment();
+        return <SearchRate closeAll={this.closeAll} onSubmit={this.goSearch} />;
       default:
-        return <div></div>;
+        return false;
     }
+  }
+
+  goSearch(query) {
+    location.href = '/search?' + queryString.stringify(query)
   }
 
   render() {
@@ -412,15 +87,15 @@ export default class extends React.Component {
     } = this.state;
 
     return (
-      <Base title={title}>
+      <Base title={title} className={this.props.className}>
         <Layout>
           <Header className={style.header}>
             <Row style={{ flex: 1 }}>
-              <Col lg={{ span: 4 }} md={{span: 5}}>
-                <h2 className={style.logo}><a href="">桥选®校园</a></h2>
+              <Col lg={{ span: 4 }} md={{ span: 5 }}>
+                <h2 className={style.logo}><a href="/">桥选®校园</a></h2>
               </Col>
 
-              <Col lg={{ span: 20 }} md={{span: 19}}>
+              <Col lg={{ span: 20 }} md={{ span: 19 }}>
                 <Menu
                   theme="dark"
                   mode="horizontal"
@@ -450,8 +125,15 @@ export default class extends React.Component {
 
           {children}
 
-          <Footer style={{ textAlign: 'center' }}>
-            Ant Design ©2016 Created by Ant UED
+          <Footer className={style.footer}>
+            <div>
+              <a href="">关于我们</a>
+              <a href="">加入我们</a>
+              <a href="">联系我们</a>
+              <a href="">使用规范</a>
+              <a href="">隐私政策</a>
+            </div>
+            <div>备案号 xxxxxxxx</div>
           </Footer>
         </Layout>
       </Base>

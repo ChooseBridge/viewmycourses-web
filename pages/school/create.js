@@ -8,7 +8,8 @@ import {
   Checkbox,
   Button,
   Select,
-  Modal
+  Modal,
+  message
 } from 'antd';
 import style from '../../common/style/create.css';
 import api from '../../common/api';
@@ -54,23 +55,27 @@ class SchoolForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         this.setState({ loading: true });
-        client(api.createSchool)({
-          body: values
-        }).then(() => {
+        client(api.createSchool)({body: values}).then(() => {
           Modal.success({
             title: '提交成功',
             content: '我们将对你提交的资料进行审核，审核结果将会发送到你的邮箱',
             onOk: () => history.back()
           });
+        }, e => {
+          message.error(e.errorMsg);
+          this.setState({ loading: false });
         });
       }
     });
   }
 
   countryChange = countryId => {
-    client(api.getProvinceByCountry)({ countryId }).then(province => {
+    client(api.getProvinceByCountry)({
+      body: {
+        country_id: countryId
+      }
+    }).then(province => {
       this.setState({
         province,
         countryValue: countryId
@@ -80,7 +85,11 @@ class SchoolForm extends React.Component {
   };
 
   provinceChange = provinceId => {
-    client(api.getCityByProvince)({ provinceId }).then(city => {
+    client(api.getCityByProvince)({
+      body: {
+        province_id: provinceId
+      }
+    }).then(city => {
       this.setState({
         city,
         provinceValue: provinceId
@@ -91,14 +100,14 @@ class SchoolForm extends React.Component {
 
   render() {
     const {
-      url,
-      loading
+      url
     } = this.props;
 
     const {
       country,
       province,
-      city
+      city,
+      loading
     } = this.state;
 
     const {

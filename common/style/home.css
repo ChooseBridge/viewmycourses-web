@@ -6,11 +6,6 @@
 	border: 1px solid #000;
 }
 
-.bgWrap {
-	margin: 0 auto;
-	width: 875px;
-}
-
 .tag {
 	color: #000;
 	margin-bottom: 4px;
@@ -43,7 +38,11 @@
 	color: #000;
 }
 
-.rowWrapPadding{
+.rowWrap {
+	margin-bottom: 20px;
+}
+
+.rowWrapPadding {
 	padding: 20px;
 }
 
@@ -58,4 +57,24 @@
 .schoolStyle {
 	font-size: 28px;
 	color: #000;
+}
+
+/*user-home*/
+.schoolName {
+	padding: 10px;
+	margin: 10px 0;
+	background-color: #eee;
+	color: #a6a6a2;
+}
+
+.schoolPoints {
+	font-size: 32px;
+	font-weight: 500;
+	color: #000;
+}
+
+/*search.js*/
+.searchSelect {
+	width: 120px;
+	margin-right: 10px;
 }

@@ -7,3 +7,12 @@
 	font-size: 14px;
 	color: #a6a6a2;
 }
+
+.wrap {
+	margin-bottom: 10px;
+}
+
+.bgWrap {
+	margin: 0 auto;
+	width: 875px;
+}

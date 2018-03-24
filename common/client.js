@@ -5,12 +5,18 @@ function getCookie(name) {
 }
 
 module.exports = api => opt => {
-  return api(Object.assign({}, {
-    headers: { token: getCookie('token') }
-  }, opt))
-    .catch(e => {
-      if (e.errorCode === 1002) {
-        location.href = document.getElementById('login-url').value
-      }
-    });
+
+  return new Promise((resolve, reject) => {
+    api(Object.assign({}, {
+      headers: { token: getCookie('token') }
+    }, opt))
+      .then(resolve, e => {
+        if (e.errorCode === 1002) {
+          return location.href = document.getElementById('login-url').value
+        }
+
+        reject(e)
+      });
+  })
+
 };

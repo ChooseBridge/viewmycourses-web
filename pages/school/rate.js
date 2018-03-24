@@ -14,10 +14,13 @@ import {
   Form,
   Slider,
   Input,
+  Modal,
 } from 'antd';
 import cla from 'classnames';
 import style from '../../common/style/rate.css';
 import commonStyle from '../../common/style/index.css';
+import client from '../../common/client';
+import api from '../../common/api';
 
 const {
   Content
@@ -38,40 +41,66 @@ class SchoolRate extends React.Component {
     this.state = {
       loading: false,
       avgPoints: 0,
+      school: {}
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-    console.log(this.props);
     this.props.form.validateFields();
+
+    client(api.getSchoolDetail)({
+      query: {
+        school_id: this.props.url.query.id
+      }
+    }).then(school => {
+      this.setState({
+        school
+      });
+    });
   }
 
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        console.log(values);
+
+        const body = Object.assign({}, {
+          school_id: this.props.url.query.id,
+        }, values);
+
+        client(api.createSchoolRate)({
+          body
+        }).then(res => {
+          if (res == '创建成功') {
+            Modal.success({
+              title: '创建成功',
+              content: '感谢您的点评',
+              okText: '确定'
+            });
+          }
+        });
       }
     });
   }
 
   onSliderChangeHandler() {
     const valueObj = this.props.form.getFieldsValue();
-    const avgPoints = (valueObj['slide'] +
-    valueObj['slide1'] +
-    valueObj['slide2'] +
-    valueObj['slide3'] +
-    valueObj['slide4'] +
-    valueObj['slide5'] +
-    valueObj['slide6'] +
-    valueObj['slide7'] +
-    valueObj['slide8'] +
-    valueObj['slide9']) / 10;
+    const avgPoints = (valueObj['social_reputation'] +
+      valueObj['academic_level'] +
+      valueObj['network_services'] +
+      valueObj['accommodation'] +
+      valueObj['food_quality'] +
+      valueObj['campus_location'] +
+      valueObj['extracurricular_activities'] +
+      valueObj['campus_infrastructure'] +
+      valueObj['life_happiness_index'] +
+      valueObj['school_students_relations']) / 10;
 
     this.setState({
-      avgPoints,
+      avgPoints
     });
   }
 
@@ -82,8 +111,14 @@ class SchoolRate extends React.Component {
 
     const {
       loading,
-      avgPoints
+      avgPoints,
+      school,
     } = this.state;
+
+    const {
+      schoolInfo,
+      schoolDistrictInfo,
+    } = school;
 
     const {
       getFieldDecorator,
@@ -116,36 +151,39 @@ class SchoolRate extends React.Component {
       }
     };
 
-    const collegeError = isFieldTouched('college_id') && getFieldError('college_id');
-    const slideError = isFieldTouched('slide') && getFieldError('slide');
-    const slide1Error = isFieldTouched('slide1') && getFieldError('slide1');
-    const slide2Error = isFieldTouched('slide2') && getFieldError('slide2');
-    const slide3Error = isFieldTouched('slide3') && getFieldError('slide3');
-    const slide4Error = isFieldTouched('slide4') && getFieldError('slide4');
-    const slide5Error = isFieldTouched('slide5') && getFieldError('slide5');
-    const slide6Error = isFieldTouched('slide6') && getFieldError('slide6');
-    const slide7Error = isFieldTouched('slide7') && getFieldError('slide7');
-    const slide8Error = isFieldTouched('slide8') && getFieldError('slide8');
-    const slide9Error = isFieldTouched('slide9') && getFieldError('slide9');
-    const textError = isFieldTouched('textarea') && getFieldError('textarea');
+    const schoolError = isFieldTouched('school_district_id') && getFieldError('school_district_id');
+    const socialError = isFieldTouched('social_reputation') && getFieldError('social_reputation');
+    const academicError = isFieldTouched('academic_level') && getFieldError('academic_level');
+    const networkError = isFieldTouched('network_services') && getFieldError('network_services');
+    const accommodationError = isFieldTouched('accommodation') && getFieldError('accommodation');
+    const foodError = isFieldTouched('food_quality') && getFieldError('food_quality');
+    const campusError = isFieldTouched('campus_location') && getFieldError('campus_location');
+    const extracurricularError = isFieldTouched('extracurricular_activities') && getFieldError('extracurricular_activities');
+    const infrastructureError = isFieldTouched('campus_infrastructure') && getFieldError('campus_infrastructure');
+    const lifeError = isFieldTouched('life_happiness_index') && getFieldError('life_happiness_index');
+    const relationsError = isFieldTouched('school_students_relations') && getFieldError('school_students_relations');
+    const commentError = isFieldTouched('comment') && getFieldError('comment');
 
     return (
       <ALayout title='学校点评页' url={url}>
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
-          <div className={style.bgWrap}>
-            <Card className={style.wrap}>
-              <div>评价高校</div>
-              <h2>复旦大学</h2>
-              <div>中国上海杨浦区</div>
-            </Card>
+          <div className={commonStyle.bgWrap}>
+            {
+              schoolInfo &&
+              <Card className={style.wrap}>
+                <div>评价高校</div>
+                <h2>{schoolInfo.school_name}</h2>
+                <div>{schoolInfo.country} {schoolInfo.province} {schoolInfo.city}</div>
+              </Card>
+            }
 
             <Card className={style.wrap}>
               <Row type="flex" justify="space-between" align="middle">
                 <Col span={12}>
                   <h2
                     className={commonStyle.colorBlue}
-                    style={{fontSize:35}}>
+                    style={{ fontSize: 35 }}>
                     Rating Do's and Don'ts
                   </h2>
                 </Col>
@@ -159,15 +197,21 @@ class SchoolRate extends React.Component {
               <Row type="flex" justify="space-between" align="top">
                 <Col span={8}>
                   <h2 className={style.doTitle}>Do</h2>
-                  <div className={style.doText}>Double check your comments before posting. It never hurts to check your grammar.</div>
+                  <div className={style.doText}>Double check your comments before posting. It never hurts to check your
+                    grammar.
+                  </div>
                 </Col>
                 <Col span={8}>
                   <h2 className={style.doTitle}>Do</h2>
-                  <div className={style.doText}>Refer to the rating categories to help you better elaborate your comments.</div>
+                  <div className={style.doText}>Refer to the rating categories to help you better elaborate your
+                    comments.
+                  </div>
                 </Col>
                 <Col span={8}>
                   <h2 className={style.doTitle}>Do</h2>
-                  <div className={style.doText}>Reference existing comments or comments that have been deleted by our moderators.</div>
+                  <div className={style.doText}>Reference existing comments or comments that have been deleted by our
+                    moderators.
+                  </div>
                 </Col>
               </Row>
             </Card>
@@ -176,28 +220,33 @@ class SchoolRate extends React.Component {
               <Form layout="horizontal" onSubmit={this.handleSubmit}>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={collegeError ? 'error' : ''}
-                  help={collegeError || ''}
+                  validateStatus={schoolError ? 'error' : ''}
+                  help={schoolError || ''}
                   label="选择校区">
-                  {getFieldDecorator('college_id', {
+                  {getFieldDecorator('school_district_id', {
                     rules: [{ required: true, message: '请选择校区' }]
                   })(
                     <Select
                       size="large"
                       style={{ width: 250 }}
                       placeholder="请选择校区">
-                        <Option value="1">校区1</Option>
-                        <Option value="2">校区2</Option>
-                        <Option value="3">校区3</Option>
+                      {
+                        schoolDistrictInfo &&
+                        schoolDistrictInfo.map(item =>
+                          <Option
+                            key={item.school_district_id}
+                            value={item.school_district_id}>{item.school_district_name}
+                          </Option>)
+                      }
                     </Select>
                   )}
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={slideError ? 'error' : ''}
-                  help={slideError || ''}
+                  validateStatus={socialError ? 'error' : ''}
+                  help={socialError || ''}
                   label="社会声誉">
-                  {getFieldDecorator('slide',{
+                  {getFieldDecorator('social_reputation', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -217,10 +266,10 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={slide1Error ? 'error' : ''}
-                  help={slide1Error || ''}
+                  validateStatus={academicError ? 'error' : ''}
+                  help={academicError || ''}
                   label="学术水平">
-                  {getFieldDecorator('slide1',{
+                  {getFieldDecorator('academic_level', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -240,10 +289,10 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={slide2Error ? 'error' : ''}
-                  help={slide2Error || ''}
+                  validateStatus={networkError ? 'error' : ''}
+                  help={networkError || ''}
                   label="网络服务">
-                  {getFieldDecorator('slide2',{
+                  {getFieldDecorator('network_services', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -263,10 +312,10 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={slide3Error ? 'error' : ''}
-                  help={slide3Error || ''}
+                  validateStatus={accommodationError ? 'error' : ''}
+                  help={accommodationError || ''}
                   label="住宿条件">
-                  {getFieldDecorator('slide3',{
+                  {getFieldDecorator('accommodation', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -286,10 +335,10 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={slide4Error ? 'error' : ''}
-                  help={slide4Error || ''}
+                  validateStatus={foodError ? 'error' : ''}
+                  help={foodError || ''}
                   label="餐饮质量">
-                  {getFieldDecorator('slide4',{
+                  {getFieldDecorator('food_quality', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -309,10 +358,10 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={slide5Error ? 'error' : ''}
-                  help={slide5Error || ''}
+                  validateStatus={campusError ? 'error' : ''}
+                  help={campusError || ''}
                   label="校园地理位置">
-                  {getFieldDecorator('slide5',{
+                  {getFieldDecorator('campus_location', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -332,10 +381,10 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={slide6Error ? 'error' : ''}
-                  help={slide6Error || ''}
+                  validateStatus={extracurricularError ? 'error' : ''}
+                  help={extracurricularError || ''}
                   label="校园课外活动">
-                  {getFieldDecorator('slide6',{
+                  {getFieldDecorator('extracurricular_activities', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -355,14 +404,13 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={slide7Error ? 'error' : ''}
-                  help={slide7Error || ''}
+                  validateStatus={infrastructureError ? 'error' : ''}
+                  help={infrastructureError || ''}
                   label="校园基础设施">
-                  {getFieldDecorator('slide7',{
+                  {getFieldDecorator('campus_infrastructure', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
-                        console.log(value);
                         if (value == 0) {
                           callback(true);
                         }
@@ -379,14 +427,13 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={slide8Error ? 'error' : ''}
-                  help={slide8Error || ''}
+                  validateStatus={lifeError ? 'error' : ''}
+                  help={lifeError || ''}
                   label="生活幸福指数">
-                  {getFieldDecorator('slide8',{
+                  {getFieldDecorator('life_happiness_index', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
-                        console.log(value);
                         if (value == 0) {
                           callback(true);
                         }
@@ -403,14 +450,13 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={slide9Error ? 'error' : ''}
-                  help={slide9Error || ''}
+                  validateStatus={relationsError ? 'error' : ''}
+                  help={relationsError || ''}
                   label="校方与学生群体关系">
-                  {getFieldDecorator('slide9',{
+                  {getFieldDecorator('school_students_relations', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
-                        console.log(value);
                         if (value == 0) {
                           callback(true);
                         }
@@ -427,20 +473,20 @@ class SchoolRate extends React.Component {
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={textError ? 'error' : ''}
-                  help={textError || ''}
+                  validateStatus={commentError ? 'error' : ''}
+                  help={commentError || ''}
                   label="文字点评">
-                  {getFieldDecorator('textarea', {
+                  {getFieldDecorator('comment', {
                     rules: [{ required: true, message: '请填写点评' }]
                   })(
-                    <TextArea rows={4}  style={{resize:'none'}}/>
+                    <TextArea rows={4} style={{ resize: 'none' }} />
                   )}
                 </FormItem>
 
                 <FormItem
                   {...formItemLayout}
                   label="综合得分">
-                  <h2 style={{fontSize:40}}>{avgPoints}</h2>
+                  <h2 style={{ fontSize: 40 }}>{avgPoints}</h2>
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
                   <Button

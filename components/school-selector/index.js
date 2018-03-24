@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-  AutoComplete
+  AutoComplete,
+  Select
 } from 'antd';
 import adapter from './adapter';
 
@@ -22,17 +23,24 @@ export default class extends Component {
     ));
 
     return (
-      <AutoComplete
+      <Select
         placeholder="请选择学校"
-        {...this.props}
-        dataSource={options}
-        filterOption={(inputValue, option) => {
-          const value = option.props.children.toUpperCase();
-          const _v = inputValue.toUpperCase();
-          const nickname = option.props.nickname.toUpperCase();
+        {...this.props} >
+        {options}
+      </Select>
 
-          return value.indexOf(_v) !== -1 || nickname.indexOf(_v) !== -1
-        }} />
+    // return (
+    //   <AutoComplete
+    //     placeholder="请选择学校"
+    //     {...this.props}
+    //     dataSource={options}
+    //     filterOption={(inputValue, option) => {
+    //       const value = option.props.children.toUpperCase();
+    //       const _v = inputValue.toUpperCase();
+    //       const nickname = option.props.nickname.toUpperCase();
+    //
+    //       return value.indexOf(_v) !== -1 || nickname.indexOf(_v) !== -1
+    //     }} />
     );
   }
 }

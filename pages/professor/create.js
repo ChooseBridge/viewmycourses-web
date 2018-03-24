@@ -7,12 +7,17 @@ import {
   Input,
   Checkbox,
   Button,
+  Modal,
+  Select,
+  message
 } from 'antd';
 import style from '../../common/style/create.css';
 import api from '../../common/api';
 import client from '../../common/client';
 import SchoolSelector from '../../components/school-selector';
-import commonStyle from '../../common/style/index.css'
+import commonStyle from '../../common/style/index.css';
+
+const { Option } = Select;
 
 const FormItem = Form.Item;
 
@@ -29,7 +34,9 @@ class ProfessorForm extends React.Component {
     super(props);
 
     this.state = {
-      schools: []
+      schools: [],
+      collage: [],
+      loading: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,7 +49,7 @@ class ProfessorForm extends React.Component {
 
         this.setState({
           schools: res
-        })
+        });
       });
   }
 
@@ -50,20 +57,31 @@ class ProfessorForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        this.setState({ loading: true });
+        client(api.createProfessor)({ body: values }).then(() => {
+          Modal.success({
+            title: '提交成功',
+            content: '我们将对你提交的资料进行审核，审核结果将会发送到你的邮箱',
+            onOk: () => history.back()
+          });
+        }, e => {
+          message.error(e.errorMsg);
+          this.setState({ loading: false });
+        });
       }
     });
   }
 
-  handleSearch = (value) => {
-    // let result;
-    // if (!value || value.indexOf('@') >= 0) {
-    //   result = [];
-    // } else {
-    //   result = ['gmail.com', '163.com', 'qq.com'].map(domain => `${value}@${domain}`);
-    // }
-    // this.setState({ result });
-  }
+  handleSearch = id => {
+    client(api.getCollegeBySchool)({
+      body: { school_id: id }
+    })
+      .then(collage => {
+        this.setState({
+          collage
+        });
+      });
+  };
 
   render() {
     const {
@@ -101,11 +119,11 @@ class ProfessorForm extends React.Component {
       }
     };
 
-    const firstNameError = isFieldTouched('prefessor_first_Name') && getFieldError('prefessor_first_Name');
-    const secondNameError = isFieldTouched('prefessor_second_Name') && getFieldError('prefessor_second_Name');
+    const firstNameError = isFieldTouched('professor_fisrt_name') && getFieldError('professor_fisrt_name');
+    const secondNameError = isFieldTouched('professor_second_name') && getFieldError('professor_second_name');
     const schoolError = isFieldTouched('school_id') && getFieldError('school_id');
     const collegeError = isFieldTouched('college_id') && getFieldError('college_id');
-    const webSiteError = isFieldTouched('professor_web_Site') && getFieldError('professor_web_Site');
+    const webSiteError = isFieldTouched('professor_web_site') && getFieldError('professor_web_site');
     const agreeError = isFieldTouched('agreement') && getFieldError('agreement');
 
     return (
@@ -122,7 +140,7 @@ class ProfessorForm extends React.Component {
                 validateStatus={firstNameError ? 'error' : ''}
                 help={firstNameError || ''}
                 label="名：">
-                {getFieldDecorator('prefessor_first_Name', {
+                {getFieldDecorator('professor_fisrt_name', {
                   rules: [{ required: true, message: '请填写名' }]
                 })(
                   <Input size="large" style={{ width: 250 }} placeholder="名" />
@@ -133,7 +151,7 @@ class ProfessorForm extends React.Component {
                 validateStatus={secondNameError ? 'error' : ''}
                 help={secondNameError || ''}
                 label="姓：">
-                {getFieldDecorator('prefessor_second_Name', {
+                {getFieldDecorator('professor_second_name', {
                   rules: [{ required: true, message: '请填写姓!' }]
                 })(
                   <Input size="large" style={{ width: 250 }} placeholder="姓" />
@@ -150,7 +168,7 @@ class ProfessorForm extends React.Component {
                   <SchoolSelector
                     size="large"
                     style={{ width: 250 }}
-                    onSearch={this.handleSearch}
+                    onChange={this.handleSearch}
                     placeholder="学校"
                     dataSource={this.state.schools} />
                 )}
@@ -163,7 +181,15 @@ class ProfessorForm extends React.Component {
                 {getFieldDecorator('college_id', {
                   rules: [{ required: true, message: '请填写学院' }]
                 })(
-                  <Input size="large" style={{ width: 250 }} placeholder="学院" />
+                  <Select
+                    size="large"
+                    style={{ width: 250 }}
+                    placeholder="学院">
+                    {
+                      this.state.collage.map(clg => <Option key={clg.college_id}
+                                                            value={clg.college_id}>{clg.college_name}</Option>)
+                    }
+                  </Select>
                 )}
               </FormItem>
               <FormItem
@@ -171,9 +197,7 @@ class ProfessorForm extends React.Component {
                 validateStatus={webSiteError ? 'error' : ''}
                 help={webSiteError || ''}
                 label="个人主页：">
-                {getFieldDecorator('professor_web_Site', {
-                  rules: [{ required: true, message: '请填写个人主页' }]
-                })(
+                {getFieldDecorator('professor_web_site')(
                   <Input size="large" style={{ width: 250 }} placeholder="http://" />
                 )}
               </FormItem>
@@ -196,6 +220,7 @@ class ProfessorForm extends React.Component {
               </FormItem>
               <FormItem {...tailFormItemLayout}>
                 <Button
+                  loading={this.state.loading}
                   size="large"
                   style={{ width: 250 }}
                   type="primary"

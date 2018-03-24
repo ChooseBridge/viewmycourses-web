@@ -9,17 +9,11 @@ const url = require('url');
 const userInfo = require('./middleware/user-info');
 const config = require('./config');
 const checkLogin = require('./middleware/check-login');
+const api = require('./common/api');
 
 app.prepare()
   .then(() => {
     const server = express();
-
-    // server.use((req, res, next) => {
-    //   res.locals({
-    //     loginUrl: 'https://i.viewmycourses.com/oauth/authorize?client_id=bridge-campus&redirect_uri=http://school.anyquestion.top/callback&response_type=code&state=http://test.com'
-    //   });
-    //   next();
-    // });
 
     const render = (req, res, page, params = {}) => {
       const uri = req.protocol + '://' + req.get('host') + req.originalUrl;
@@ -46,43 +40,84 @@ app.prepare()
       next();
     });
 
-    server.use(userInfo);
+    // server.use(userInfo);
 
-    server.get('/', (req, res) => {
-      render(req, res, '/index', { user: req.user });
+    server.get('/', userInfo, (req, res) => {
+      render(req, res, '/home/home', { user: req.user });
     });
 
-    // error handler
-    // server.use((err, req, res) => {
-    //   // console.log(err);
-    //   // res.send(err);
-    //
-    //   return res.send(err);
-    //
-    // });
-
-    server.get('/professor/create', checkLogin, (req, res) => {
+    server.get('/professor/create', userInfo, checkLogin, (req, res) => {
       render(req, res, '/professor/create', { user: req.user });
     });
 
-    server.get('/professor/rate', checkLogin, (req, res) => {
-      render(req, res, '/professor/rate', { user: req.user });
+    server.get('/professor/:id/rate', userInfo, checkLogin, (req, res) => {
+      render(req, res, '/professor/rate', {
+        user: req.user,
+        id: req.params.id
+      });
     });
 
-    server.get('/professor/:id', (req, res) => {
-      render(req, res, '/professor/home', { user: req.user });
+    server.get('/professor/:id', userInfo, (req, res, next) => {
+      api.getProfessorDetail({
+        query: {
+          professor_id: req.params.id
+        },
+        headers: {
+          token: req.cookies && req.cookies.token
+        }
+      }).then(professor => {
+        render(req, res, '/professor/home', {
+          user: req.user,
+          professor,
+          id: req.params.id
+        });
+      }, () => {
+        next('')
+      });
     });
 
-    server.get('/school/create', checkLogin, (req, res) => {
+    server.get('/school/create', userInfo, checkLogin, (req, res) => {
       render(req, res, '/school/create', { user: req.user });
     });
 
-    server.get('/school/rate', checkLogin, (req, res) => {
-      render(req, res, '/school/rate', { user: req.user });
+    server.get('/school/rate', userInfo, checkLogin, (req, res) => {
+      render(req, res, '/school/rate', {
+        user: req.user,
+        id: req.param('id')
+      });
     });
 
-    server.get('/school/:id', (req, res) => {
-      render(req, res, '/school/home', { user: req.user });
+    server.get('/school/:id', userInfo, (req, res, next) => {
+
+      api.getSchoolDetail({
+        query: {
+          school_id: req.params.id
+          // school_name: req.params.id
+        },
+        headers: {
+          token: req.cookies && req.cookies.token
+        }
+      }).then(school => {
+        render(req, res, '/school/home', {
+          user: req.user,
+          id: req.params.id,
+          school
+        });
+      }, () => {
+        next('')
+      });
+    });
+
+    server.get('/user/message', userInfo, (req, res) => {
+      render(req, res, '/user/message', { user: req.user });
+    });
+
+    server.get('/user/:id', userInfo, (req, res) => {
+      render(req, res, '/user/home', { user: req.user });
+    });
+
+    server.get('/search', userInfo, (req, res) => {
+      render(req, res, '/search', { user: req.user, condition: req.query });
     });
 
     server.get('*', (req, res) => {
@@ -93,8 +128,4 @@ app.prepare()
       if (err) throw err;
       console.log('> Ready on http://localhost:3000');
     });
-  })
-  .catch((ex) => {
-    console.error(ex.stack);
-    process.exit(1);
   });

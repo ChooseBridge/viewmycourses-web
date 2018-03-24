@@ -19,3 +19,16 @@
 	margin: 0 auto;
 	max-width: 100%;
 }
+
+.bgWrap {
+	margin: 0 auto;
+	width: 875px;
+	max-width: 100%;
+}
+
+.verticalHorizontalCenter {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
