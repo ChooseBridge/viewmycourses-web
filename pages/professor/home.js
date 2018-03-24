@@ -10,7 +10,7 @@ import {
   Col,
   Tag,
   Select,
-  Card,
+  Card
 } from 'antd';
 import cla from 'classnames';
 import client from '../../common/client';
@@ -18,6 +18,7 @@ import api from '../../common/api';
 import style from '../../common/style/home.css';
 import commonStyle from '../../common/style/index.css';
 import Share from '../../components/share';
+import ProfessorRate from '../../components/professor-rate';
 
 const {
   Content
@@ -53,14 +54,14 @@ class Professor extends React.Component {
     const {
       url
     } = this.props;
-    const {professor} = url.query;
+    const { professor } = url.query;
 
     const {
       professorInfo,
       rateInfo,
       coursesInfo,
       schoolCategoryInfo,
-      tagsInfo,
+      tagsInfo
     } = professor;
 
     return (
@@ -69,30 +70,28 @@ class Professor extends React.Component {
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={commonStyle.bgWrap}>
             <Card className={style.wrap}>
-            {
-              professorInfo &&
-              <Row style={{position:'relative'}}>
-                <Col span={12}>
-                  <Row>
-                    <Col span={4}><Avatar size="large" icon="user" /></Col>
+              {
+                professorInfo &&
+                <Row style={{ position: 'relative' }}>
+                  <Col span={12}>
+                    <Row>
+                      <Col span={4}><Avatar size="large" icon="user" /></Col>
                       <Col span={20}>
                         <Row>
                           <Col span={16}>
-                            <span style={{fontSize:32,marginRight:6}}>
+                            <span style={{ fontSize: 32, marginRight: 6 }}>
                               {professorInfo.professor_full_name}
                             </span>
                             {
-                              professorInfo.is_thumbs_up ?
-                              <Icon
-                                onClick={this.thumbsProfessor}
-                                type="heart"
-                                style={{color:'red'}}/>
-                              :
-                              <Icon
-                                onClick={this.thumbsProfessor}
-                                type="heart-o" />
+                              professorInfo.is_thumbs_up ? <Icon
+                                  onClick={this.thumbsProfessor}
+                                  type="heart"
+                                  style={{ color: 'red' }} />
+                                : <Icon
+                                  onClick={this.thumbsProfessor}
+                                  type="heart-o" />
                             }
-                            <span style={{marginLeft:5}}>{professorInfo.thumbs_up_num}</span>
+                            <span style={{ marginLeft: 5 }}>{professorInfo.thumbs_up_num}</span>
                           </Col>
                         </Row>
                         <Row>
@@ -102,7 +101,7 @@ class Professor extends React.Component {
                           <Col span={16}>心理学教授</Col>
                         </Row>
                         <Row>
-                          <Col span={16} className={commonStyle.colorBlue} style={{marginBottom:20}}>提交修正</Col>
+                          <Col span={16} className={commonStyle.colorBlue} style={{ marginBottom: 20 }}>提交修正</Col>
                         </Row>
                         <Row>
                           <Col span={9}>
@@ -111,29 +110,29 @@ class Professor extends React.Component {
                             </a>
                           </Col>
                           <Col span={7}>
-                            <Button type="primary" style={{backgroundColor:'#737373',border:'none'}}>分享</Button>
+                            <Button type="primary" style={{ backgroundColor: '#737373', border: 'none' }}>分享</Button>
                             {/*<Share/>*/}
                           </Col>
                         </Row>
                       </Col>
-                  </Row>
-                </Col>
-                <Col className={style.tagWrap} span={12}>
-                  {
-                    Object.keys(tagsInfo).map(key =>
-                      <Tag
-                        key={key}
-                        color="#ddd"
-                        className={style.tag}>{key}（{tagsInfo[key]}）
-                      </Tag>
-                    )
-                  }
-                </Col>
-              </Row>
-            }
+                    </Row>
+                  </Col>
+                  <Col className={style.tagWrap} span={12}>
+                    {
+                      Object.keys(tagsInfo).map(key =>
+                        <Tag
+                          key={key}
+                          color="#ddd"
+                          className={style.tag}>{key}（{tagsInfo[key]}）
+                        </Tag>
+                      )
+                    }
+                  </Col>
+                </Row>
+              }
             </Card>
 
-            <Card className={cla(style.wrap) }>
+            <Card className={cla(style.wrap)}>
               <Row type="flex">
                 <Col span={6} className={commonStyle.textCenter}>
                   <div>平均努力指数</div>
@@ -145,7 +144,7 @@ class Professor extends React.Component {
 
                 <Col span={18} className={style.classWrap}>
                   <h2>所教课程</h2>
-                  <div style={{marginBottom: 10}}>看看其他同学对这位教授的评分情况</div>
+                  <div style={{ marginBottom: 10 }}>看看其他同学对这位教授的评分情况</div>
                   <Row>
                     {
                       coursesInfo &&
@@ -160,8 +159,8 @@ class Professor extends React.Component {
               </Row>
             </Card>
 
-            <Card className={style.wrap}>
-              <Row className={style.rowWrap}>
+            <Card className={style.wrap} style={{marginBottom: 0}}>
+              <Row>
                 {
                   rateInfo &&
                   <Col span={12} className={style.textWrap}>{rateInfo.length}位同学的点评</Col>
@@ -183,56 +182,15 @@ class Professor extends React.Component {
                   </Select>
                 </Col>
               </Row>
-
-              {
-                rateInfo &&
-                rateInfo.map((item, index) =>
-                  <Row
-                    key={index}
-                    type="flex"
-                    className={style.rowWrap}>
-                    <Card.Grid style={{width:'20%',position:'relative'}}>
-                      <Col className={cla(commonStyle.textCenter, commonStyle.verticalHorizontalCenter)}>
-                        <div>努力指数</div>
-                        <div className={style.points}>{item.effort}</div>
-                      </Col>
-                    </Card.Grid>
-
-                    <Card.Grid style={{width:'80%'}}>
-                      <Col className={style.rateWrap}>
-                        <Row>
-                          <Col span={6}>{item.course_code}</Col>
-                          <Col span={18}>
-                            {
-                              item.tag.split(',').map(tag =>
-                                <Tag
-                                  key={tag}
-                                  color="#ddd"
-                                  className={style.tag}>
-                                  {tag}
-                                </Tag>
-                              )
-                            }
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col span={6}>是否记录出勤：{item.is_attend == 1 ? '是' : '否'}</Col>
-                          <Col span={18}>
-                            {item.comment}
-                            <div className={style.likeWrap}>
-                              <span style={{marginRight: 6}}>
-                                <Icon type="like-o" style={{color:'red'}}/>98% 的人认为有用
-                              </span>
-                              <Icon type="dislike-o" />2% 的人认为没用
-                            </div>
-                          </Col>
-                        </Row>
-                      </Col>
-                    </Card.Grid>
-                  </Row>
-                )
-              }
             </Card>
+
+            {
+              rateInfo &&
+              rateInfo.map((item, index) =>
+                <ProfessorRate key={index} rate={item} dark={index % 2 !== 0} />
+              )
+            }
+
           </div>
         </Content>
       </ALayout>

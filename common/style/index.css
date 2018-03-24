@@ -23,6 +23,7 @@
 .bgWrap {
 	margin: 0 auto;
 	width: 875px;
+	max-width: 100%;
 }
 
 .verticalHorizontalCenter {
