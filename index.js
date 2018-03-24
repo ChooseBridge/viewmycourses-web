@@ -9,6 +9,7 @@ const url = require('url');
 const userInfo = require('./middleware/user-info');
 const config = require('./config');
 const checkLogin = require('./middleware/check-login');
+const api = require('./common/api');
 
 app.prepare()
   .then(() => {
@@ -56,17 +57,24 @@ app.prepare()
       render(req, res, '/professor/create', { user: req.user });
     });
 
-    server.get('/professor/rate', userInfo, checkLogin, (req, res) => {
+    server.get('/professor/:id/rate', userInfo, checkLogin, (req, res) => {
       render(req, res, '/professor/rate', {
         user: req.user,
-        id: req.param('id'),
+        id: req.params.id,
       });
     });
 
     server.get('/professor/:id', userInfo, (req, res) => {
-      render(req, res, '/professor/home', {
-        user: req.user,
-        id: req.params.id,
+      api.getProfessorDetail({
+        query: {
+          professor_id: req.params.id
+        }
+      }).then(professor => {
+        render(req, res, '/professor/home', {
+          user: req.user,
+          professor,
+          id: req.params.id
+        });
       });
     });
 

@@ -28,30 +28,10 @@ const Option = Select.Option;
 class Professor extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      professor: {}
-    };
+    console.log(props);
 
     this.handleChange = this.handleChange.bind(this);
     this.thumbsProfessor = this.thumbsProfessor.bind(this);
-  }
-
-  componentDidMount() {
-    console.log(this.props);
-    this.getProfessorDetail();
-  }
-
-  getProfessorDetail() {
-    client(api.getProfessorDetail)({
-      query: {
-        professor_id: this.props.url.query.id
-      }
-    }).then(professor => {
-      this.setState({
-        professor,
-      });
-    });
   }
 
   handleChange(e) {
@@ -73,10 +53,7 @@ class Professor extends React.Component {
     const {
       url
     } = this.props;
-
-    const {
-      professor
-    } = this.state;
+    const {professor} = url.query;
 
     const {
       professorInfo,
@@ -128,10 +105,14 @@ class Professor extends React.Component {
                           <Col span={16} className={commonStyle.colorBlue} style={{marginBottom:20}}>提交修正</Col>
                         </Row>
                         <Row>
-                          <Col span={9}><Button type="primary">点评它的课程</Button></Col>
+                          <Col span={9}>
+                            <a href={`/professor/${url.query.id}/rate`}>
+                              <Button type="primary">点评它的课程</Button>
+                            </a>
+                          </Col>
                           <Col span={7}>
                             <Button type="primary" style={{backgroundColor:'#737373',border:'none'}}>分享</Button>
-                            <Share/>
+                            {/*<Share/>*/}
                           </Col>
                         </Row>
                       </Col>

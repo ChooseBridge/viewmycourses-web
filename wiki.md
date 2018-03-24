@@ -38,3 +38,5 @@ const DATA_EXCEPTION = 1006; //数据异常
 
 ### 改成 open-api
 * /api/get-school-by-condition?school_name=&country_id&province_id&city_id
+
+http://school.anyquestion.top/admin/login
