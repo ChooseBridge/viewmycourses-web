@@ -59,14 +59,12 @@ class School extends React.Component {
     };
 
     this.onTabChange = this.onTabChange.bind(this);
+    this.onThumbsUp = this.onThumbsUp.bind(this);
+    this.onThumbsDown = this.onThumbsDown.bind(this);
   }
 
   componentDidMount() {
-    client(api.getSchoolDetail)({
-      query: {
-        school_id: this.props.url.query.id
-      }
-    }).then(school => {
+    this.getSchoolDetail().then(school => {
       let contentList = {};
 
       school.schoolDistrictInfo.map(item => {
@@ -87,9 +85,48 @@ class School extends React.Component {
     });
   }
 
+  getSchoolDetail() {
+    return client(api.getSchoolDetail)({
+      query: {
+        // school_id: this.props.url.query.id
+        school_name: '复旦大学'
+      }
+    });
+  }
+
   onTabChange(key, type) {
     this.setState({
       [type]: key
+    });
+  }
+
+  onThumbsUp(school_rate_id) {
+    client(api.thumbsUpSchoolRate)({
+      query: {
+        school_rate_id,
+      }
+    }).then(res => {
+      // console.log(res);
+      this.getSchoolDetail().then(school =>{
+        this.setState({
+          school,
+        });
+      });
+    });
+  }
+
+  onThumbsDown(school_rate_id) {
+    client(api.thumbsDownSchoolRate)({
+      query: {
+        school_rate_id,
+      }
+    }).then(res => {
+      // console.log(res);
+      this.getSchoolDetail().then(school =>{
+        this.setState({
+          school,
+        });
+      });
     });
   }
 
@@ -202,10 +239,18 @@ class School extends React.Component {
                         <Col>
                           <div>{item.comment}</div>
                           <div className={style.likeWrap}>
-                            <span style={{marginRight: 6}}>
-                              <Icon type="like-o" style={{color:'red'}}/>98% 的人认为有用
+                            <span style={{marginRight: 6}} onClick={() => this.onThumbsUp(item.school_rate_id)}>
+                              <a style={{color: 'inherit'}}>
+                                <Icon type="like-o"/>
+                                98% 的人认为有用
+                              </a>
                             </span>
-                            <Icon type="dislike-o" />2% 的人认为没用
+                            <span onClick={() => this.onThumbsDown(item.school_rate_id)}>
+                              <a style={{color: 'inherit'}}>
+                                <Icon type="dislike-o" />
+                                2% 的人认为没用
+                              </a>
+                            </span>
                           </div>
                         </Col>
                       </Card.Grid>
