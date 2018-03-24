@@ -13,6 +13,7 @@ import {
   Pagination,
   Select,
   Radio,
+  AutoComplete,
 } from 'antd';
 import queryString from 'query-string';
 import cla from 'classnames';
@@ -27,11 +28,7 @@ const {
 
 const RadioGroup = Radio.Group;
 
-const {
-  Option
-} = Select;
-
-const FormItem = Form.Item;
+const { OptGroup, Option } = AutoComplete;
 
 class Search extends React.Component {
   constructor(props) {
@@ -70,7 +67,7 @@ class Search extends React.Component {
         country: country
       });
 
-      // this.countryChange(country_id);
+      this.countryChange(country_id);
       // this.provinceChange(province_id);
     });
   }
