@@ -37,6 +37,8 @@ class Professor extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.thumbsProfessor = this.thumbsProfessor.bind(this);
+    this.onThumbsUp = this.onThumbsUp.bind(this);
+    this.onThumbsDown = this.onThumbsDown.bind(this);
   }
 
   handleChange(e) {
@@ -60,6 +62,28 @@ class Professor extends React.Component {
     client(api.thumbsUpProfessor)({
       query: {
         professor_id: this.props.url.query.id
+      }
+    }).then(res => {
+      // console.log(res);
+      this.getProfessorDetail();
+    });
+  }
+
+  onThumbsUp(professor_rate_id) {
+    client(api.thumbsUpProfessorRate)({
+      query: {
+        professor_rate_id,
+      }
+    }).then(res => {
+      // console.log(res);
+      this.getProfessorDetail();
+    });
+  }
+
+  onThumbsDown(professor_rate_id) {
+    client(api.thumbsDownProfessorRate)({
+      query: {
+        professor_rate_id,
       }
     }).then(res => {
       // console.log(res);
@@ -207,10 +231,14 @@ class Professor extends React.Component {
             {
               rateInfo &&
               rateInfo.map((item, index) =>
-                <ProfessorRate key={index} rate={item} dark={index % 2 !== 0} />
+                <ProfessorRate
+                  onThumbsUp={() => this.onThumbsUp(item.professor_rate_id)}
+                  onThumbsDown={() => this.onThumbsDown(item.professor_rate_id)}
+                  key={index}
+                  rate={item}
+                  dark={index % 2 !== 0} />
               )
             }
-
           </div>
         </Content>
       </ALayout>

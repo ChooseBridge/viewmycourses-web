@@ -2,10 +2,17 @@ import React, { Component } from 'react';
 import { Row, Col, Icon, Tag } from 'antd';
 import style from './style.css';
 import cln from 'classnames';
+import client from '../../common/client';
+import api from '../../common/api';
 
 export default class extends Component {
   render() {
-    const { dark, rate } = this.props;
+    const {
+      dark,
+      rate,
+      onThumbsUp,
+      onThumbsDown,
+    } = this.props;
 
     return (
       <div className={cln(style.wrap, { [style.dark]: dark })}>
@@ -46,8 +53,12 @@ export default class extends Component {
             </div>
 
             <div>
-              <a href="" className={style.like}><Icon type="like-o" />98% 的人认为有用</a>
-              <a href="" className={style.unlike}><Icon type="dislike-o" />2% 的人认为没用</a>
+              <span onClick={onThumbsUp}>
+                <a className={style.like}><Icon type="like-o" />98% 的人认为有用</a>
+              </span>
+              <span onClick={onThumbsDown}>
+                <a className={style.unlike}><Icon type="dislike-o" onClick={onThumbsDown}/>2% 的人认为没用</a>
+              </span>
             </div>
           </Col>
         </Row>
