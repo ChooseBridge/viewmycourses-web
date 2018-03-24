@@ -14,6 +14,7 @@ import client from '../../common/client';
 import api from '../../common/api';
 import style from '../../common/style/home.css';
 import commonStyle from '../../common/style/index.css';
+import SchoolRate from '../../components/school-rate';
 
 const {
   Content
@@ -200,7 +201,11 @@ class School extends React.Component {
 
             {
               ratesInfo && ratesInfo.map((item, index) =>
-                <SchoolRate rate={item} key={index} dark={index % 2 !== 0} />
+                <SchoolRate
+                  rate={item} key={index}
+                  dark={index % 2 !== 0}
+                  onThumbsDown={() => this.onThumbsDown(item.school_rate_id)}
+                  onThumbsUp={() => this.onThumbsUp(item.school_rate_id)} />
               )
             }
 

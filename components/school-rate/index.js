@@ -41,8 +41,18 @@ export default class extends Component {
             </div>
 
             <div>
-              <a href="" className={style.like}><Icon type="like-o" />98% 的人认为有用</a>
-              <a href="" className={style.unlike}><Icon type="dislike-o" />2% 的人认为没用</a>
+              <a
+                href="javascript:;"
+                className={style.like}
+                onClick={this.props.onThumbsUp}>
+                <Icon type="like-o" />98% 的人认为有用
+              </a>
+              <a
+                href="javascript:;"
+                className={style.unlike}
+                onClick={this.props.onThumbsDown}>
+                <Icon type="dislike-o" />2% 的人认为没用
+              </a>
             </div>
           </Col>
 
