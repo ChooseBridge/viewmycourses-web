@@ -57,6 +57,7 @@ class Search extends React.Component {
       country_id,
       province_id,
       city_id,
+      school_id,
       school_name,
       professor_name,
       mode,
