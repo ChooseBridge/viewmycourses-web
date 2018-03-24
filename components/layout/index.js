@@ -1,20 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Layout,
   Menu,
-  Breadcrumb,
   Row,
   Col,
-  Button,
-  Radio,
-  AutoComplete,
-  Select
+  Button
 } from 'antd';
 import Base from '../base/index.js';
-import commonStyle from '../../common/style/index.css';
 import style from './style.css';
-import cla from 'classnames';
 import SearchSchool from './search-school'
 import SearchProfessor from './search-professor';
 import queryString from 'query-string'
@@ -23,13 +16,7 @@ import SearchRate from './search-rate';
 const {
   Header,
   Footer,
-  Content
 } = Layout;
-
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
-
-const Option = Select.Option;
 
 export default class extends React.Component {
   constructor(props) {
@@ -53,7 +40,13 @@ export default class extends React.Component {
   };
 
   MenuClickHandler(item) {
-    if (this.state.menuContentKey == item.key) {
+    if (item.key === '3' || item.key === '4') {
+      if (!this.props.url.query.user) {
+        return location.href = this.props.url.query.loginUrl
+      }
+    }
+
+    if (this.state.menuContentKey === item.key) {
       this.setState({
         menuContentKey: ''
       });
@@ -65,30 +58,6 @@ export default class extends React.Component {
     });
   }
 
-  onRadioChangeHandler = (e) => {
-    const {
-      menuContentKey
-    } = this.state;
-
-    switch (menuContentKey) {
-      case '2':
-        this.setState({
-          schoolChoose: e.target.value
-        });
-        return;
-      case '3':
-        this.setState({
-          professorChoose: e.target.value
-        });
-        return;
-      case '4':
-        this.setState({
-          rateChoose: e.target.value
-        });
-        return;
-    }
-  }
-
   renderMenuContent(key) {
     switch (key) {
       case '2':
@@ -98,7 +67,7 @@ export default class extends React.Component {
       case '4':
         return <SearchRate closeAll={this.closeAll} onSubmit={this.goSearch} />;
       default:
-        return <div></div>;
+        return false;
     }
   }
 
