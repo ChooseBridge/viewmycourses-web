@@ -63,7 +63,7 @@ app.prepare()
           professor_id: req.params.id
         },
         headers: {
-          token: req.cookies.token
+          token: req.cookies && req.cookies.token
         }
       }).then(professor => {
         render(req, res, '/professor/home', {
@@ -87,10 +87,24 @@ app.prepare()
       });
     });
 
-    server.get('/school/:id', userInfo, (req, res) => {
-      render(req, res, '/school/home', {
-        user: req.user,
-        id: req.params.id
+    server.get('/school/:id', userInfo, (req, res, next) => {
+
+      api.getSchoolDetail({
+        query: {
+          school_id: req.params.id
+          // school_name: req.params.id
+        },
+        headers: {
+          token: req.cookies && req.cookies.token
+        }
+      }).then(school => {
+        render(req, res, '/school/home', {
+          user: req.user,
+          id: req.params.id,
+          school
+        });
+      }, () => {
+        next('')
       });
     });
 

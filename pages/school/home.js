@@ -51,47 +51,26 @@ function renderDistrict(item) {
 class School extends React.Component {
   constructor(props) {
     super(props);
+    let contentList = {};
+    const {school} = props.url.query;
+
+    school.schoolDistrictInfo.map(item => {
+      contentList[item.school_district_name] = renderDistrict(item);
+    });
 
     this.state = {
-      key: '',
-      school: {},
-      tabList: [],
+      key: school.schoolDistrictInfo[0].school_district_name,
+      school,
+      contentList,
+      tabList: school.schoolDistrictInfo.map(item => {
+        return {
+          key: item.school_district_name,
+          tab: item.school_district_name,
+        };
+      })
     };
 
     this.onTabChange = this.onTabChange.bind(this);
-    this.onThumbsUp = this.onThumbsUp.bind(this);
-    this.onThumbsDown = this.onThumbsDown.bind(this);
-  }
-
-  componentDidMount() {
-    this.getSchoolDetail().then(school => {
-      let contentList = {};
-
-      school.schoolDistrictInfo.map(item => {
-        contentList[item.school_district_name] = renderDistrict(item);
-      });
-
-      this.setState({
-        school,
-        contentList,
-        key: school.schoolDistrictInfo[0].school_district_name,
-        tabList: school.schoolDistrictInfo.map(item => {
-          return {
-            key: item.school_district_name,
-            tab: item.school_district_name,
-          };
-        })
-      });
-    });
-  }
-
-  getSchoolDetail() {
-    return client(api.getSchoolDetail)({
-      query: {
-        // school_id: this.props.url.query.id
-        school_name: '复旦大学'
-      }
-    });
   }
 
   onTabChange(key, type) {
@@ -212,73 +191,17 @@ class School extends React.Component {
 
             {
               ratesInfo &&
-              <Card className={style.wrap}>
-                <Row className={style.rowWrap}>
+              <Card className={style.wrap} style={{marginBottom: 0}}>
+                <Row>
                   <Col span={24} className={style.textWrap}>{ratesInfo.length}位同学的点评</Col>
                 </Row>
-                {
-                  ratesInfo.map((item, index) =>
-                    <Row
-                      key={`${item.school_district_name}${index}`}
-                      type="flex"
-                      className={style.rowWrap}>
-                      <Card.Grid style={{width:'15%'}}>
-                        <Col>
-                          <div className={commonStyle.textCenter}>
-                            <div>综合得分</div>
-                            <div className={style.schoolStyle}>{item.score}</div>
-                          </div>
-                          <div>
-                            <div>{item.student_name}</div>
-                            <div>{item.school_district_name}</div>
-                          </div>
-                        </Col>
-                      </Card.Grid>
-
-                      <Card.Grid style={{width:'40%'}}>
-                        <Col>
-                          <div>{item.comment}</div>
-                          <div className={style.likeWrap}>
-                            <span style={{marginRight: 6}} onClick={() => this.onThumbsUp(item.school_rate_id)}>
-                              <a style={{color: 'inherit'}}>
-                                <Icon type="like-o"/>
-                                98% 的人认为有用
-                              </a>
-                            </span>
-                            <span onClick={() => this.onThumbsDown(item.school_rate_id)}>
-                              <a style={{color: 'inherit'}}>
-                                <Icon type="dislike-o" />
-                                2% 的人认为没用
-                              </a>
-                            </span>
-                          </div>
-                        </Col>
-                      </Card.Grid>
-
-                      <Card.Grid style={{width:'45%'}}>
-                        <Col>
-                          <Row>
-                            <Col span={12}>
-                              <div>社会声誉：{item.social_reputation}</div>
-                              <div>学术水平：{item.academic_level}</div>
-                              <div>网络服务：{item.network_services}</div>
-                              <div>住宿条件：{item.accommodation}</div>
-                              <div>餐饮质量：{item.food_quality}</div>
-                            </Col>
-                            <Col span={12}>
-                              <div>校园地理位置：{item.campus_location}</div>
-                              <div>校园课外活动：{item.extracurricular_activities}</div>
-                              <div>校园基础设施：{item.campus_infrastructure}</div>
-                              <div>生活幸福指数：{item.life_happiness_index}</div>
-                              <div>校方与学生群体关系：{item.school_students_relations}</div>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Card.Grid>
-                    </Row>
-                  )
-                }
               </Card>
+            }
+
+            {
+              ratesInfo && ratesInfo.map((item, index) =>
+                <SchoolRate rate={item} key={index} dark={index % 2 !== 0} />
+              )
             }
 
             <Card className={style.wrap}>
