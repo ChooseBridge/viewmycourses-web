@@ -59,16 +59,30 @@ class Search extends React.Component {
       city_id,
       school_name,
       professor_name,
+      mode,
     } = this.props.url.query.condition;
 
     client(api.getAllCountry)().then(country => {
       this.setState({
-        mode: 'school',
+        mode,
         country: country
       });
 
-      this.countryChange(country_id);
-      // this.provinceChange(province_id);
+      if (country_id) {
+        this.countryChange(country_id);
+      }
+
+      if (province_id) {
+        this.provinceChange(province_id);
+      }
+
+      if (city_id) {
+        this.cityChange(city_id);
+      }
+
+      if (school_id) {
+        this.schoolChange(school_id);
+      }
     });
   }
 
@@ -102,7 +116,7 @@ class Search extends React.Component {
         collegeValue: '',
       });
 
-      if (mode == 'school') {
+      if (this.state.mode == 'school') {
         this.searchSchool();
       }
     });
@@ -124,7 +138,7 @@ class Search extends React.Component {
         collegeValue: '',
       });
 
-      if (mode == 'school') {
+      if (this.state.mode == 'school') {
         this.searchSchool();
       }
     });
@@ -151,7 +165,7 @@ class Search extends React.Component {
         collegeValue: ''
       });
 
-      if (mode == 'school') {
+      if (this.state.mode == 'school') {
         this.searchSchool();
       }
     });
@@ -169,7 +183,9 @@ class Search extends React.Component {
         college,
       });
 
-      this.searchProfessor();
+      if (this.state.mode == 'professor') {
+        this.searchProfessor();
+      }
     });
   };
 
@@ -178,7 +194,9 @@ class Search extends React.Component {
       collegeValue: collegeId
     });
 
-    this.searchProfessor();
+    if (this.state.mode == 'professor') {
+      this.searchProfessor();
+    }
   };
 
   searchSchool() {
@@ -296,88 +314,91 @@ class Search extends React.Component {
                     <Radio style={radioStyle} value="school">School</Radio>
                   </RadioGroup>
                 </Col>
-                <Col span={20}>
-                  <Select
-                    className={style.searchSelect}
-                    placeholder="国家"
-                    onSelect={this.countryChange}
-                    value={countryValue}>
+                {
+                  mode != 'all' &&
+                  <Col span={20}>
+                    <Select
+                      className={style.searchSelect}
+                      placeholder="国家"
+                      onSelect={this.countryChange}
+                      value={countryValue}>
+                      {
+                        country.map(c =>
+                          <Option
+                            key={String(c.country_id)}
+                            value={String(c.country_id)}>
+                          {c.country_name}
+                          </Option>
+                        )
+                      }
+                    </Select>
+                    <Select
+                      className={style.searchSelect}
+                      placeholder="洲/省"
+                      onSelect={this.provinceChange}
+                      value={provinceValue}>
+                      {
+                        province.map(p =>
+                          <Option
+                            key={String(p.province_id)}
+                            value={String(p.province_id)}>
+                            {p.province_name}
+                          </Option>
+                        )
+                      }
+                    </Select>
+                    <Select
+                      className={style.searchSelect}
+                      placeholder="城市"
+                      onSelect={this.cityChange}
+                      value={cityValue}>
+                      {
+                        city.map(c =>
+                          <Option
+                            key={String(c.city_id)}
+                            value={String(c.city_id)}>
+                          {c.city_name}
+                          </Option>
+                        )
+                      }
+                    </Select>
                     {
-                      country.map(c =>
-                        <Option
-                          key={c.country_id}
-                          value={c.country_id}>
-                        {c.country_name}
-                        </Option>
-                      )
+                      mode == 'professor' &&
+                      <span>
+                        <Select
+                          className={style.searchSelect}
+                          placeholder="学校"
+                          onSelect={this.schoolChange}
+                          value={schoolValue}>
+                          {
+                            schools.map(s =>
+                              <Option
+                                key={String(s.school_id)}
+                                value={String(s.school_id)}>
+                                {s.school_name}
+                              </Option>
+                            )
+                          }
+                        </Select>
+                        <Select
+                          className={style.searchSelect}
+                          placeholder="学院"
+                          onSelect={this.collegeChange}
+                          value={collegeValue}>
+                          {
+                            college.map(c =>
+                              <Option
+                                key={String(c.college_id)}
+                                value={String(c.college_id)}>
+                                {c.college_name}
+                              </Option>
+                            )
+                          }
+                        </Select>
+                      </span>
                     }
-                  </Select>
-                  <Select
-                    className={style.searchSelect}
-                    placeholder="洲/省"
-                    onSelect={this.provinceChange}
-                    value={provinceValue}>
-                    {
-                      province.map(p =>
-                        <Option
-                          key={p.province_id}
-                          value={p.province_id}>
-                          {p.province_name}
-                        </Option>
-                      )
-                    }
-                  </Select>
-                  <Select
-                    className={style.searchSelect}
-                    placeholder="城市"
-                    onSelect={this.cityChange}
-                    value={cityValue}>
-                    {
-                      city.map(c =>
-                        <Option
-                          key={c.city_id}
-                          value={c.city_id}>
-                        {c.city_name}
-                        </Option>
-                      )
-                    }
-                  </Select>
-                  {
-                    mode == 'professor' &&
-                    <span>
-                      <Select
-                        className={style.searchSelect}
-                        placeholder="学校"
-                        onSelect={this.schoolChange}
-                        value={schoolValue}>
-                        {
-                          schools.map(s =>
-                            <Option
-                              key={s.school_id}
-                              value={s.school_id}>
-                              {s.school_name}
-                            </Option>
-                          )
-                        }
-                      </Select>
-                      <Select
-                        className={style.searchSelect}
-                        placeholder="学院"
-                        onSelect={this.collegeChange}
-                        value={collegeValue}>
-                        {
-                          college.map(c =>
-                            <Option
-                              key={c.college_id}
-                              value={c.college_id}>
-                              {c.college_name}
-                            </Option>
-                          )
-                        }
-                      </Select>
-                    </span>
-                  }
-                </Col>
+                  </Col>
+                }
               </Row>
             </Card>
 
