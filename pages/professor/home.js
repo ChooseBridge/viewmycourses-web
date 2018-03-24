@@ -43,7 +43,6 @@ class Professor extends React.Component {
 
   handleChange(e) {
     console.log(e);
-
   }
 
   getProfessorDetail() {
@@ -54,7 +53,7 @@ class Professor extends React.Component {
     }).then(professor => {
       this.setState({
         professor,
-      })
+      });
     });
   }
 
