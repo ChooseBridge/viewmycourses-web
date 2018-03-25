@@ -46,7 +46,7 @@ module.exports = opt => {
         resolve(res.body.data);
       }
       else {
-        reject(new Error(res.body.errorCode));
+        reject(res.body);
       }
     });
   });
