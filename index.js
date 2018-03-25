@@ -117,7 +117,13 @@ app.prepare()
     });
 
     server.get('/search', userInfo, (req, res) => {
-      render(req, res, '/search', { user: req.user, condition: req.query });
+      const query = {};
+
+      for (let i in req.query) {
+        query[i] = decodeURIComponent(req.query[i]);
+      }
+
+      render(req, res, '/search', { user: req.user, condition: query });
     });
 
     server.get('*', (req, res) => {
