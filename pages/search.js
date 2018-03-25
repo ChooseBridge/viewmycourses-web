@@ -33,6 +33,9 @@ const {
   Option
 } = AutoComplete;
 
+//默认每页显示条数
+const defaultPageSize = 2;
+
 class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -45,16 +48,19 @@ class Search extends React.Component {
       college: [],
       mode: '',
       currentPage: 1,
-      pageSize: 10,
+      pageSize: defaultPageSize,
     };
 
     this.onShowSizeChange = this.onShowSizeChange.bind(this);
     this.onPageChange = this.onPageChange.bind(this);
     this.onModeChange = this.onModeChange.bind(this);
+    this.renderProfessor = this.renderProfessor.bind(this);
+    this.renderSchool = this.renderSchool.bind(this);
   }
 
   componentDidMount() {
-    console.log(this.props.url.query.condition); // 搜索条件
+    // 搜索条件
+    console.log(this.props.url.query.condition);
 
     const {
       country_id,
@@ -65,11 +71,27 @@ class Search extends React.Component {
       college_id,
       professor_name,
       mode,
+      name,
     } = this.props.url.query.condition;
+
+    let searchText = '搜索结果如下';
+
+    if (school_name) {
+      searchText = `搜索"${school_name}"的结果`;
+    }
+
+    if (professor_name) {
+      searchText = `搜索"${professor_name}"的结果`;
+    }
+
+    if (name) {
+      searchText = `搜索"${name}"的结果`;
+    }
 
     client(api.getAllCountry)().then(country => {
       this.setState({
         mode,
+        searchText,
         country: country
       });
 
@@ -95,6 +117,14 @@ class Search extends React.Component {
 
       if (mode == 'all') {
         this.searchAllByName();
+      }
+
+      if (mode == 'professor') {
+        this.searchProfessor();
+      }
+
+      if (mode == 'school') {
+        this.searchSchool();
       }
     });
   }
@@ -251,7 +281,7 @@ class Search extends React.Component {
         console.log(res);
         this.setState({
           allResult: res.res,
-          totalPage: res.pageNum
+          total: res.total,
         });
       });
     }, 100)
@@ -280,7 +310,7 @@ class Search extends React.Component {
         console.log(res);
         this.setState({
           schoolResult: res.schools,
-          totalPage: res.pageInfo.total,
+          total: res.pageInfo.total,
         });
       });
     }, 100)
@@ -307,7 +337,7 @@ class Search extends React.Component {
         console.log(res);
         this.setState({
           professorResult: res.professors,
-          totalPage: res.pageInfo.total,
+          total: res.pageInfo.total,
         });
       });
     }, 100)
@@ -317,7 +347,9 @@ class Search extends React.Component {
     const mode = e.target.value;
 
     this.setState({
-      mode
+      mode,
+      currentPage: 1,
+      pageSize: defaultPageSize,
     });
 
     if (mode == 'school') {
@@ -327,6 +359,45 @@ class Search extends React.Component {
     if (mode == 'professor') {
       this.searchProfessor();
     }
+  }
+
+  renderSchool(item) {
+    console.log(item);
+    return (
+      <Row
+        key={item.school_id}
+        type="flex"
+        align="middle"
+        className={style.wrap}>
+        <Col span={2}>
+          <Icon style={{ fontSize: 40, color: '#66dc66' }} type="book" />
+        </Col>
+        <Col span={6}>学校</Col>
+        <Col span={16}>
+          <div><h2>{item.school_name}</h2></div>
+          <div>{item.country_name} {item.province_name} 上海市</div>
+        </Col>
+      </Row>
+    );
+  }
+
+  renderProfessor(item) {
+    return (
+      <Row
+        key={item.professor_id}
+        type="flex"
+        align="middle"
+        className={style.wrap}>
+        <Col span={2}>
+          <Icon style={{ fontSize: 40, color: '#66dc66' }} type="idcard" />
+        </Col>
+        <Col span={6}>教授</Col>
+        <Col span={16}>
+          <div><h2>{item.professor_full_name}</h2></div>
+          <div>{item.school_name} 教授</div>
+        </Col>
+      </Row>
+    );
   }
 
   render() {
@@ -348,7 +419,11 @@ class Search extends React.Component {
       mode,
       currentPage,
       pageSize,
-      totalPage,
+      total,
+      allResult,
+      professorResult,
+      schoolResult,
+      searchText,
     } = this.state;
 
     const radioStyle = {
@@ -363,13 +438,13 @@ class Search extends React.Component {
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={commonStyle.bgWrap}>
             <Card className={style.wrap}>
-              <div><h3>搜索“刘强东”的结果</h3></div>
+              <div><h3>{searchText}</h3></div>
               <div>没有你想找的学习或教授？</div>
               <div>
                 <a href="/professor/create">创建教授</a>或<a href="/school/create">创建学校</a>
               </div>
               <div style={{ margin: '10px 0' }}>
-                <h2>每页将展示{pageSize}条结果，共{totalPage}条</h2>
+                <h2>每页将展示{pageSize}条结果，共{total}条</h2>
               </div>
               <Pagination
                 showSizeChanger
@@ -378,7 +453,7 @@ class Search extends React.Component {
                 onChange={this.onPageChange}
                 current={currentPage}
                 pageSize={pageSize}
-                total={totalPage} />
+                total={total} />
 
               <div>结果可按照下列条件筛选</div>
               <Row>
@@ -481,29 +556,25 @@ class Search extends React.Component {
                 <Col span={8}><h2>种类</h2></Col>
                 <Col span={16}><h2>名字</h2></Col>
               </Row>
+              {
+                mode == 'all' && allResult &&
+                allResult.map(item =>
+                  item.type == 'school' ?
+                  this.renderSchool(item)
+                  :
+                  this.renderProfessor(item)
+                )
+              }
 
-              <Row type="flex" align="middle" className={style.wrap}>
-                <Col span={2}>
-                  <Icon style={{ fontSize: 40, color: '#66dc66' }} type="book" />
-                </Col>
-                <Col span={6}>学校</Col>
-                <Col span={16}>
-                  <div><h2>复旦大学</h2></div>
-                  <div>中国 上海 上海市</div>
-                </Col>
-              </Row>
+              {
+                mode == 'professor' && professorResult &&
+                professorResult.map(item => this.renderProfessor(item))
+              }
 
-              <Row type="flex" align="middle" className={style.wrap}>
-                <Col span={2}>
-                  <Icon style={{ fontSize: 40, color: '#66dc66' }} type="idcard" />
-                </Col>
-                <Col span={6}>教授</Col>
-                <Col span={16}>
-                  <div><h2>刘强东</h2></div>
-                  <div>复旦大学 教授</div>
-                </Col>
-              </Row>
-
+              {
+                mode == 'school' && schoolResult &&
+                schoolResult.map(item => this.renderSchool(item))
+              }
               <Pagination
                 showSizeChanger
                 showQuickJumper
@@ -511,7 +582,7 @@ class Search extends React.Component {
                 onChange={this.onPageChange}
                 current={currentPage}
                 pageSize={pageSize}
-                total={totalPage} />
+                total={total} />
             </Card>
           </div>
         </Content>
