@@ -18,7 +18,6 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 let cache = [];
 
-
 class Search extends Component {
   constructor() {
     super();
@@ -91,10 +90,17 @@ class Search extends Component {
                   className={cla(commonStyle.textCenter)}
                   span={12}
                   offset={6}>
-                  <AutoComplete
-                    size="large"
-                    style={{ width: 300 }}
-                    placeholder="教授名字"/>
+
+                  {getFieldDecorator('professor_name', {})(
+                    <AutoComplete
+                      size="large"
+                      style={{ width: 300 }}
+                      placeholder="教授名字" />
+                  )}
+
+                  {getFieldDecorator('mode', { initialValue: 'professor' })(
+                    <input type="hidden" />
+                  )}
                 </Col>
               </Row>
               : <Row className={style.row}>
@@ -110,6 +116,9 @@ class Search extends Component {
                       valueUseName
                       dataSource={this.state.schools} />
                   )}
+                  {getFieldDecorator('mode', { initialValue: 'school' })(
+                    <input type="hidden" />
+                  )}
                 </Col>
               </Row>
           }
@@ -119,7 +128,7 @@ class Search extends Component {
               className={cla(commonStyle.textCenter)}
               span={12}
               offset={6}>
-              <Button size="large" style={{ width:300 }} type="primary" htmlType="submit">搜索</Button>
+              <Button size="large" style={{ width: 300 }} type="primary" htmlType="submit">搜索</Button>
             </Col>
           </Row>
 

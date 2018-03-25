@@ -194,6 +194,11 @@ class Search extends Component {
               className={cla(commonStyle.textCenter)}
               span={12}
               offset={6}>
+
+
+              {getFieldDecorator('mode', { initialValue: 'professor' })(
+                <input type="hidden" />
+              )}
               <Button size="large" style={{ width: 300 }} htmlType="submit" type="primary">搜索</Button>
             </Col>
           </Row>

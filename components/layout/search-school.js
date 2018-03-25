@@ -32,7 +32,9 @@ class Search extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const result = {};
+        const result = {
+          mode: 'school'
+        };
         if (values.region) {
           values.region.forEach((id, i) => {
             if (i === 0) {
