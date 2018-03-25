@@ -30,10 +30,10 @@ const Option = Select.Option;
 class Professor extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
 
     this.state = {
-      professor: this.props.url.query.professor
+      professor: this.props.url.query.professor,
+      rateInfo: this.props.url.query.professor.rateInfo,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -44,6 +44,22 @@ class Professor extends React.Component {
 
   handleChange(e) {
     console.log(e);
+
+    const {
+      professor
+    } = this.state;
+
+    let rateInfo;
+
+    if (e == 'all') {
+      rateInfo = professor.rateInfo;
+    } else {
+      rateInfo = professor.rateInfo.filter(item => item.course_code == e);
+    }
+
+    this.setState({
+      rateInfo,
+    });
   }
 
   getProfessorDetail() {
@@ -101,12 +117,12 @@ class Professor extends React.Component {
     } = this.props;
 
     const {
-      professor
+      professor,
+      rateInfo
     } = this.state;
 
     const {
       professorInfo,
-      rateInfo,
       coursesInfo,
       schoolCategoryInfo,
       tagsInfo
@@ -217,16 +233,18 @@ class Professor extends React.Component {
                   <Select
                     placeholder="按课程筛选"
                     style={{ width: 200 }}
+                    defaultValue="all"
                     onChange={this.handleChange}>
-                    {
-                      coursesInfo &&
-                      coursesInfo.map(item =>
-                        <Option
-                          key={item.course_id}
-                          value={item.course_id}>{item.course_code}
-                        </Option>
-                      )
-                    }
+                      <Option value="all">全部</Option>
+                      {
+                        coursesInfo &&
+                        coursesInfo.map(item =>
+                          <Option
+                            key={item.course_id}
+                            value={item.course_code}>{item.course_code}
+                          </Option>
+                        )
+                      }
                   </Select>
                 </Col>
               </Row>
