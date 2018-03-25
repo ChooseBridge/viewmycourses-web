@@ -13,6 +13,7 @@ import SearchSchool from './search-school';
 import SearchProfessor from './search-professor';
 import queryString from 'query-string';
 import SearchRate from './search-rate';
+import Cookies from 'js-cookie';
 
 const {
   Header,
@@ -76,6 +77,11 @@ export default class extends React.Component {
     location.href = '/search?' + queryString.stringify(query);
   }
 
+  logout = () => {
+    Cookies.remove('token');
+    location.href = location.href;
+  };
+
   render() {
     const {
       title,
@@ -122,11 +128,14 @@ export default class extends React.Component {
                           <Menu.Item>
                             <a href="/user/message">消息中心</a>
                           </Menu.Item>
+                          <Menu.Item>
+                            <a href="javascript:;" onClick={this.logout}>退出登录</a>
+                          </Menu.Item>
                         </Menu>
                       )}>
                         <a href="/user" style={{ color: '#fff' }}>{url.query.user.student.name}</a>
                       </Dropdown>
-                    ) : <a href={url.query.loginUrl}><Button>登录</Button></a>
+                    ) : <a href={url.query.loginUrl}><Button ghost type="primary">登录</Button></a>
                   }
                 </div>
               </Col>
