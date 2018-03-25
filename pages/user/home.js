@@ -9,7 +9,7 @@ import {
   Row,
   Col,
   Tag,
-  Card,
+  Card
 } from 'antd';
 import cla from 'classnames';
 import client from '../../common/client';
@@ -32,7 +32,7 @@ class User extends React.Component {
     client(api.getStudent)().then(res => {
       this.setState({
         ratesInfo: res.ratesInfo,
-        student: res.student,
+        student: res.student
       });
     });
   }
@@ -52,7 +52,7 @@ class User extends React.Component {
       extracurricular_activities,
       campus_infrastructure,
       life_happiness_index,
-      school_students_relations,
+      school_students_relations
     } = item;
 
     return (
@@ -67,7 +67,7 @@ class User extends React.Component {
           </Col>
           <Col span={21}>
             <div>{comment}</div>
-            <div style={{color: '#a6a6a2',marginTop:10}}>
+            <div style={{ color: '#a6a6a2', marginTop: 10 }}>
               <Row>
                 <Col span={4}>社会声誉：{social_reputation}</Col>
                 <Col span={5}>学术水平：{academic_level}</Col>
@@ -104,7 +104,7 @@ class User extends React.Component {
       course_related_quiz,
       spend_course_time_at_week,
       grade,
-      tag,
+      tag
     } = item;
 
     return (
@@ -134,8 +134,10 @@ class User extends React.Component {
                 </Col>
               </Row>
             </div>
-            <div>伟大的大学，它来这里工作很好，并且教授真的有你，并帮助你获得实习和工作伟大的大学，它来这里工作很好，并且教授真的有你，并帮助你获得实习和工作伟大的大学，它来这里工作很好，并且教授真的有你，并帮助你获得实习和工作.</div>
-            <div style={{color: '#a6a6a2',marginTop:10}}>
+            <div>
+              伟大的大学，它来这里工作很好，并且教授真的有你，并帮助你获得实习和工作伟大的大学，它来这里工作很好，并且教授真的有你，并帮助你获得实习和工作伟大的大学，它来这里工作很好，并且教授真的有你，并帮助你获得实习和工作.
+            </div>
+            <div style={{ color: '#a6a6a2', marginTop: 10 }}>
               <Row>
                 <Col span={6}>课程类别：{course_category_name}</Col>
                 <Col span={6}>课程编号：{course_code}</Col>
@@ -180,37 +182,38 @@ class User extends React.Component {
                         <Col>
                           {
                             student &&
-                            <span style={{fontSize:32}}>{student.name}</span>
+                            <span style={{ fontSize: 32 }}>{student.name}</span>
                           }
                         </Col>
                       </Row>
                       <Row type="flex" justify="start">
-                        <Col span={5} style={{fontWeight:800}}>大学</Col>
+                        <Col span={5} style={{ fontWeight: 800 }}>大学</Col>
                         <Col span={7}>复旦大学</Col>
-                        <Col span={5} style={{fontWeight:800}}>高中</Col>
+                        <Col span={5} style={{ fontWeight: 800 }}>高中</Col>
                         <Col span={7}>杨浦高级中学</Col>
                       </Row>
                       <Row type="flex" justify="space-between">
-                        <Col span={5} style={{fontWeight:800}}>专业</Col>
+                        <Col span={5} style={{ fontWeight: 800 }}>专业</Col>
                         <Col span={7}>心理学</Col>
-                        <Col span={5} style={{fontWeight:800}}>毕业年份</Col>
+                        <Col span={5} style={{ fontWeight: 800 }}>毕业年份</Col>
                         <Col span={7}>2015</Col>
                       </Row>
                       <Row type="flex" justify="space-between">
-                        <Col span={5} style={{fontWeight:800}}>高考地</Col>
+                        <Col span={5} style={{ fontWeight: 800 }}>高考地</Col>
                         <Col span={7}>上海</Col>
                         <Col span={5}></Col>
                         <Col span={7}></Col>
                       </Row>
                       <Row type="flex" justify="space-between">
-                        <Col span={5} style={{fontWeight:800}}>毕业年份</Col>
+                        <Col span={5} style={{ fontWeight: 800 }}>毕业年份</Col>
                         <Col span={7}>2019</Col>
                         <Col span={5}></Col>
                         <Col span={7}></Col>
                       </Row>
                       <Row>
-                        <Col span={16} style={{marginTop:20}}>
-                          <Button type="primary">编辑个人资料</Button>
+                        <Col span={16} style={{ marginTop: 20 }}>
+                          {student &&
+                          <a href={`https://i.choosebridge.com/profile/${student.name}/edit`}><Button type="primary">编辑个人资料</Button></a>}
                         </Col>
                       </Row>
                     </Col>
@@ -219,7 +222,7 @@ class User extends React.Component {
               </Row>
             </Card>
 
-            <Card className={cla(style.wrap) }>
+            <Card className={cla(style.wrap)}>
               <div>我的评论</div>
               {
                 ratesInfo &&
