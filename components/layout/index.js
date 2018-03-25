@@ -4,18 +4,19 @@ import {
   Menu,
   Row,
   Col,
-  Button
+  Button,
+  Dropdown
 } from 'antd';
 import Base from '../base/index.js';
 import style from './style.css';
-import SearchSchool from './search-school'
+import SearchSchool from './search-school';
 import SearchProfessor from './search-professor';
-import queryString from 'query-string'
+import queryString from 'query-string';
 import SearchRate from './search-rate';
 
 const {
   Header,
-  Footer,
+  Footer
 } = Layout;
 
 export default class extends React.Component {
@@ -42,7 +43,7 @@ export default class extends React.Component {
   MenuClickHandler(item) {
     if (item.key === '3' || item.key === '4') {
       if (!this.props.url.query.user) {
-        return location.href = this.props.url.query.loginUrl
+        return location.href = this.props.url.query.loginUrl;
       }
     }
 
@@ -72,7 +73,7 @@ export default class extends React.Component {
   }
 
   goSearch(query) {
-    location.href = '/search?' + queryString.stringify(query)
+    location.href = '/search?' + queryString.stringify(query);
   }
 
   render() {
@@ -112,7 +113,20 @@ export default class extends React.Component {
 
                 <div style={{ float: 'right', color: '#fff' }}>
                   {
-                    url.query.user ? url.query.user.name : <a href={url.query.loginUrl}><Button>登录</Button></a>
+                    url.query.user ? (
+                      <Dropdown overlay={(
+                        <Menu>
+                          <Menu.Item>
+                            <a href="/user">个人主页</a>
+                          </Menu.Item>
+                          <Menu.Item>
+                            <a href="/user/message">消息中心</a>
+                          </Menu.Item>
+                        </Menu>
+                      )}>
+                        <a href="/user" style={{ color: '#fff' }}>{url.query.user.student.name}</a>
+                      </Dropdown>
+                    ) : <a href={url.query.loginUrl}><Button>登录</Button></a>
                   }
                 </div>
               </Col>

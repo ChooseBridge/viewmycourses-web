@@ -112,7 +112,7 @@ app.prepare()
       render(req, res, '/user/message', { user: req.user });
     });
 
-    server.get('/user/:id', userInfo, (req, res) => {
+    server.get('/user', userInfo, (req, res) => {
       render(req, res, '/user/home', { user: req.user });
     });
 
