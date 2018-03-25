@@ -48,7 +48,7 @@ class Search extends Component {
         }
 
         if (values.name) {
-          result['school_name'] = encodeURIComponent(name);
+          result['school_name'] = encodeURIComponent(values.name);
         }
         this.props.onSubmit(result);
       }
