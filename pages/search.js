@@ -28,7 +28,10 @@ const {
 
 const RadioGroup = Radio.Group;
 
-const { OptGroup, Option } = AutoComplete;
+const {
+  OptGroup,
+  Option
+} = AutoComplete;
 
 class Search extends React.Component {
   constructor(props) {
@@ -84,19 +87,45 @@ class Search extends React.Component {
       if (school_id) {
         this.schoolChange(school_id);
       }
+
+      if (mode == 'all') {
+        this.searchAllByName();
+      }
     });
+  }
+
+  onReSelect() {
+    const {
+      mode
+    } = this.state;
+
+    switch (mode) {
+      case 'all':
+        this.searchAllByName();
+        return;
+      case 'professor':
+        this.searchProfessor();
+        return;
+      case 'school':
+        this.searchSchool();
+        return;
+    }
   }
 
   onShowSizeChange(current, pageSize) {
     this.setState({
       pageSize,
-    })
+    });
+
+    this.onReSelect();
   }
 
   onPageChange(pageNumber) {
     this.setState({
       currentPage: pageNumber,
-    })
+    });
+
+    this.onReSelect();
   }
 
   countryChange = countryId => {
@@ -133,7 +162,7 @@ class Search extends React.Component {
         city,
         provinceValue: provinceId,
         cityValue: '',
-        schools:[],
+        schools: [],
         schoolValue: '',
         college: [],
         collegeValue: '',
@@ -200,50 +229,88 @@ class Search extends React.Component {
     }
   };
 
-  searchSchool() {
-    const {
-      countryValue,
-      provinceValue,
-      cityValue,
-    } = this.state;
+  searchAllByName() {
+    setTimeout(() => {
+      const {
+        pageSize,
+        currentPage
+      } = this.state;
 
-    client(api.getSchoolByCondition)({
-      query: {
-        country_id: countryValue,
-        province_id: provinceValue,
-        city_id: cityValue,
-        school_name: this.props.url.query.condition,
-      }
-    }).then(res => {
-      console.log(res);
-      // this.setState({
-      //   schoolResult: res.schools,
-      // });
-    });
+      client(api.getAllByName)({
+        query: {
+          name: this.props.url.query.condition.name,
+          pageSize,
+          page: currentPage,
+        }
+      }).then(res => {
+        console.log(res);
+        this.setState({
+          allResult: res.res,
+          totalPage: res.pageNum
+        });
+      });
+    }, 100)
+  }
+
+  searchSchool() {
+    setTimeout(() => {
+      const {
+        countryValue,
+        provinceValue,
+        cityValue,
+        pageSize,
+        currentPage,
+      } = this.state;
+
+      client(api.getSchoolByCondition)({
+        query: {
+          country_id: countryValue,
+          province_id: provinceValue,
+          city_id: cityValue,
+          school_name: this.props.url.query.condition.school_name,
+          pageSize,
+          page: currentPage,
+        }
+      }).then(res => {
+        console.log(res);
+        this.setState({
+          schoolResult: res.schools,
+          totalPage: res.pageInfo.total,
+        });
+      });
+    }, 100)
   }
 
   searchProfessor() {
-    const {
-      schoolValue,
-      collegeValue,
-    } = this.state;
+    setTimeout(() => {
+      const {
+        schoolValue,
+        collegeValue,
+        pageSize,
+        currentPage,
+      } = this.state;
 
       client(api.getProfessorByCondition)({
         query: {
           school_id: schoolValue,
           college_id: collegeValue,
-          professor_name: this.props.url.query.condition,
+          professor_name: this.props.url.query.condition.professor_name,
+          pageSize,
+          page: currentPage,
         }
       }).then(res => {
         console.log(res);
-        // this.setState({
-        //  professorResult: res.professors,
-      // });
-      })
+        this.setState({
+          professorResult: res.professors,
+          totalPage: res.pageInfo.total,
+        });
+      });
+    }, 100)
   }
 
   onModeChange(e) {
     const mode = e.target.value;
+
     this.setState({
       mode
     });
@@ -275,7 +342,8 @@ class Search extends React.Component {
       collegeValue,
       mode,
       currentPage,
-      pageSize
+      pageSize,
+      totalPage,
     } = this.state;
 
     const radioStyle = {
@@ -296,7 +364,7 @@ class Search extends React.Component {
                 <a href="/professor/create">创建教授</a>或<a href="/school/create">创建学校</a>
               </div>
               <div style={{ margin: '10px 0' }}>
-                <h2>每页将展示20条结果，共1200条</h2>
+                <h2>每页将展示{pageSize}条结果，共{totalPage}条</h2>
               </div>
               <Pagination
                 showSizeChanger
@@ -305,7 +373,7 @@ class Search extends React.Component {
                 onChange={this.onPageChange}
                 current={currentPage}
                 pageSize={pageSize}
-                total={1200} />
+                total={totalPage} />
 
               <div>结果可按照下列条件筛选</div>
               <Row>
@@ -438,7 +506,7 @@ class Search extends React.Component {
                 onChange={this.onPageChange}
                 current={currentPage}
                 pageSize={pageSize}
-                total={1200} />
+                total={totalPage} />
             </Card>
           </div>
         </Content>
