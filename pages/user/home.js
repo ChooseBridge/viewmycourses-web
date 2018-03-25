@@ -104,7 +104,8 @@ class User extends React.Component {
       course_related_quiz,
       spend_course_time_at_week,
       grade,
-      tag
+      tag,
+      comment
     } = item;
 
     return (
@@ -135,7 +136,7 @@ class User extends React.Component {
               </Row>
             </div>
             <div>
-              伟大的大学，它来这里工作很好，并且教授真的有你，并帮助你获得实习和工作伟大的大学，它来这里工作很好，并且教授真的有你，并帮助你获得实习和工作伟大的大学，它来这里工作很好，并且教授真的有你，并帮助你获得实习和工作.
+              {comment}
             </div>
             <div style={{ color: '#a6a6a2', marginTop: 10 }}>
               <Row>
