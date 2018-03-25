@@ -62,6 +62,7 @@ class Search extends React.Component {
       city_id,
       school_id,
       school_name,
+      college_id,
       professor_name,
       mode,
     } = this.props.url.query.condition;
@@ -86,6 +87,10 @@ class Search extends React.Component {
 
       if (school_id) {
         this.schoolChange(school_id);
+      }
+
+      if (college_id) {
+        this.collegeChange(college_id);
       }
 
       if (mode == 'all') {
