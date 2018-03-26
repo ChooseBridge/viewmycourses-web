@@ -215,6 +215,7 @@ class ProfessorRate extends React.Component {
     const attendError = isFieldTouched('is_attend') && getFieldError('is_attend');
     const difficultError = isFieldTouched('difficult_level') && getFieldError('difficult_level');
     const homeworkError = isFieldTouched('homework_num') && getFieldError('homework_num');
+    const writtenHomeworkError = isFieldTouched('written_homework_num') && getFieldError('written_homework_num');
     const quizError = isFieldTouched('quiz_num') && getFieldError('quiz_num');
     const relatedError = isFieldTouched('course_related_quiz') && getFieldError('course_related_quiz');
     const timeError = isFieldTouched('spend_course_time_at_week') && getFieldError('spend_course_time_at_week');
@@ -375,6 +376,28 @@ class ProfessorRate extends React.Component {
                   help={homeworkError || ''}
                   label="笔头作业量">
                   {getFieldDecorator('homework_num',{
+                    initialValue: 0,
+                    rules: [{
+                      validator: (rule, value, callback) => {
+                        if (value == 0) {
+                          callback(true);
+                        }
+                        callback();
+                      }, message: '请在1-5分中选择'
+                    }]
+                  })(
+                    <Slider
+                      dots
+                      max={5}
+                      marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
+                  )}
+                </FormItem>
+                <FormItem
+                  {...formItemLayout}
+                  validateStatus={writtenHomeworkError ? 'error' : ''}
+                  help={writtenHomeworkError || ''}
+                  label="书面作业量">
+                  {getFieldDecorator('written_homework_num',{
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
