@@ -420,7 +420,6 @@ class Search extends React.Component {
   }
 
   renderSchool(item) {
-    console.log(item);
     return (
       <Row
         key={item.school_id}
