@@ -47,6 +47,7 @@ class Search extends React.Component {
       schools: [],
       college: [],
       mode: '',
+      noResult: false,
       currentPage: Number(props.url.query.condition.page) || 1,
       pageSize: Number(props.url.query.condition.pageSize) || defaultPageSize,
     };
@@ -305,7 +306,8 @@ class Search extends React.Component {
         this.setState({
           allResult: res.res,
           total: res.total,
-          allName: this.props.url.query.condition.name
+          allName: this.props.url.query.condition.name,
+          noResult: !res.res,
         });
 
         this.resetUrl(query);
@@ -348,6 +350,7 @@ class Search extends React.Component {
         this.setState({
           schoolResult: res.schools,
           total: res.pageInfo.total,
+          noResult: res.schools.length == 0,
         });
 
         this.resetUrl(query);
@@ -408,6 +411,7 @@ class Search extends React.Component {
         this.setState({
           professorResult: res.professors,
           total: res.pageInfo.total,
+          noResult: res.professors.length == 0,
         });
 
         this.resetUrl(query);
@@ -479,6 +483,12 @@ class Search extends React.Component {
     );
   }
 
+  renderNoresult() {
+    return (
+      <div><h2>没有搜索到任何结果</h2></div>
+    );
+  }
+
   render() {
     const {
       url
@@ -503,6 +513,7 @@ class Search extends React.Component {
       professorResult,
       schoolResult,
       searchText,
+      noResult,
     } = this.state;
 
     const radioStyle = {
@@ -522,147 +533,160 @@ class Search extends React.Component {
               <div>
                 <a href="/professor/create">创建教授</a>或<a href="/school/create">创建学校</a>
               </div>
-              <div style={{ margin: '10px 0' }}>
-                <h2>每页将展示{pageSize}条结果，共{total}条</h2>
-              </div>
-              <Pagination
-                showSizeChanger
-                showQuickJumper
-                onShowSizeChange={this.onShowSizeChange}
-                onChange={this.onPageChange}
-                current={currentPage}
-                pageSize={pageSize}
-                total={total} />
 
-              <div>结果可按照下列条件筛选</div>
-              <Row>
-                <Col span={4}>
-                  <RadioGroup onChange={this.onModeChange} value={mode}>
-                    <Radio style={radioStyle} value="professor">Professor</Radio>
-                    <Radio style={radioStyle} value="school">School</Radio>
-                  </RadioGroup>
-                </Col>
-                {
-                  mode != 'all' &&
-                  <Col span={20}>
-                    <Select
-                      className={style.searchSelect}
-                      placeholder="国家"
-                      onSelect={this.countryChange}
-                      value={countryValue}>
-                      {
-                        country.map(c =>
-                          <Option
-                            key={String(c.country_id)}
-                            value={String(c.country_id)}>
-                          {c.country_name}
-                          </Option>
-                        )
-                      }
-                    </Select>
-                    <Select
-                      className={style.searchSelect}
-                      placeholder="洲/省"
-                      onSelect={this.provinceChange}
-                      value={provinceValue}>
-                      {
-                        province.map(p =>
-                          <Option
-                            key={String(p.province_id)}
-                            value={String(p.province_id)}>
-                            {p.province_name}
-                          </Option>
-                        )
-                      }
-                    </Select>
-                    <Select
-                      className={style.searchSelect}
-                      placeholder="城市"
-                      onSelect={this.cityChange}
-                      value={cityValue}>
-                      {
-                        city.map(c =>
-                          <Option
-                            key={String(c.city_id)}
-                            value={String(c.city_id)}>
-                          {c.city_name}
-                          </Option>
-                        )
-                      }
-                    </Select>
+              {
+                noResult ?
+                this.renderNoresult()
+                :
+                <div>
+                  <div style={{ margin: '10px 0' }}>
+                    <h2>每页将展示{pageSize}条结果，共{total}条</h2>
+                  </div>
+
+                  <Pagination
+                    showSizeChanger
+                    showQuickJumper
+                    onShowSizeChange={this.onShowSizeChange}
+                    onChange={this.onPageChange}
+                    current={currentPage}
+                    pageSize={pageSize}
+                    total={total} />
+
+                  <div>结果可按照下列条件筛选</div>
+
+                  <Row>
+                    <Col span={4}>
+                      <RadioGroup onChange={this.onModeChange} value={mode}>
+                        <Radio style={radioStyle} value="professor">Professor</Radio>
+                        <Radio style={radioStyle} value="school">School</Radio>
+                      </RadioGroup>
+                    </Col>
                     {
-                      mode == 'professor' &&
-                      <span>
+                      mode != 'all' &&
+                      <Col span={20}>
                         <Select
                           className={style.searchSelect}
-                          placeholder="学校"
-                          onSelect={this.schoolChange}
-                          value={schoolValue}>
+                          placeholder="国家"
+                          onSelect={this.countryChange}
+                          value={countryValue}>
                           {
-                            schools.map(s =>
+                            country.map(c =>
                               <Option
-                                key={String(s.school_id)}
-                                value={String(s.school_id)}>
-                                {s.school_name}
+                                key={String(c.country_id)}
+                                value={String(c.country_id)}>
+                              {c.country_name}
                               </Option>
                             )
                           }
                         </Select>
                         <Select
                           className={style.searchSelect}
-                          placeholder="学院"
-                          onSelect={this.collegeChange}
-                          value={collegeValue}>
+                          placeholder="洲/省"
+                          onSelect={this.provinceChange}
+                          value={provinceValue}>
                           {
-                            college.map(c =>
+                            province.map(p =>
                               <Option
-                                key={String(c.college_id)}
-                                value={String(c.college_id)}>
-                                {c.college_name}
+                                key={String(p.province_id)}
+                                value={String(p.province_id)}>
+                                {p.province_name}
                               </Option>
                             )
                           }
                         </Select>
-                      </span>
+                        <Select
+                          className={style.searchSelect}
+                          placeholder="城市"
+                          onSelect={this.cityChange}
+                          value={cityValue}>
+                          {
+                            city.map(c =>
+                              <Option
+                                key={String(c.city_id)}
+                                value={String(c.city_id)}>
+                              {c.city_name}
+                              </Option>
+                            )
+                          }
+                        </Select>
+                        {
+                          mode == 'professor' &&
+                          <span>
+                            <Select
+                              className={style.searchSelect}
+                              placeholder="学校"
+                              onSelect={this.schoolChange}
+                              value={schoolValue}>
+                              {
+                                schools.map(s =>
+                                  <Option
+                                    key={String(s.school_id)}
+                                    value={String(s.school_id)}>
+                                    {s.school_name}
+                                  </Option>
+                                )
+                              }
+                            </Select>
+                            <Select
+                              className={style.searchSelect}
+                              placeholder="学院"
+                              onSelect={this.collegeChange}
+                              value={collegeValue}>
+                              {
+                                college.map(c =>
+                                  <Option
+                                    key={String(c.college_id)}
+                                    value={String(c.college_id)}>
+                                    {c.college_name}
+                                  </Option>
+                                )
+                              }
+                            </Select>
+                          </span>
+                        }
+                      </Col>
                     }
-                  </Col>
+                  </Row>
+                </div>
+              }
+            </Card>
+
+            {
+              !noResult &&
+              <Card>
+                <Row>
+                  <Col span={8}><h2>种类</h2></Col>
+                  <Col span={16}><h2>名字</h2></Col>
+                </Row>
+                {
+                  mode == 'all' && allResult &&
+                  allResult.map(item =>
+                    item.type == 'school' ?
+                    this.renderSchool(item)
+                    :
+                    this.renderProfessor(item)
+                  )
                 }
-              </Row>
-            </Card>
 
-            <Card>
-              <Row>
-                <Col span={8}><h2>种类</h2></Col>
-                <Col span={16}><h2>名字</h2></Col>
-              </Row>
-              {
-                mode == 'all' && allResult &&
-                allResult.map(item =>
-                  item.type == 'school' ?
-                  this.renderSchool(item)
-                  :
-                  this.renderProfessor(item)
-                )
-              }
+                {
+                  mode == 'professor' && professorResult &&
+                  professorResult.map(item => this.renderProfessor(item))
+                }
 
-              {
-                mode == 'professor' && professorResult &&
-                professorResult.map(item => this.renderProfessor(item))
-              }
-
-              {
-                mode == 'school' && schoolResult &&
-                schoolResult.map(item => this.renderSchool(item))
-              }
-              <Pagination
-                showSizeChanger
-                showQuickJumper
-                onShowSizeChange={this.onShowSizeChange}
-                onChange={this.onPageChange}
-                current={currentPage}
-                pageSize={pageSize}
-                total={total} />
-            </Card>
+                {
+                  mode == 'school' && schoolResult &&
+                  schoolResult.map(item => this.renderSchool(item))
+                }
+                <Pagination
+                  showSizeChanger
+                  showQuickJumper
+                  onShowSizeChange={this.onShowSizeChange}
+                  onChange={this.onPageChange}
+                  current={currentPage}
+                  pageSize={pageSize}
+                  total={total} />
+              </Card>
+            }
           </div>
         </Content>
       </ALayout>
