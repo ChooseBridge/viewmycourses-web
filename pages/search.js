@@ -35,7 +35,6 @@ const {
 
 //默认每页显示条数
 const defaultPageSize = 2;
-const defaultCurrentPage = 1;
 
 class Search extends React.Component {
   constructor(props) {
