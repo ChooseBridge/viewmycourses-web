@@ -65,7 +65,7 @@ class School extends React.Component {
     });
 
     this.state = {
-      key: school.schoolDistrictInfo[0].school_district_name,
+      key: school.schoolDistrictInfo[0] && school.schoolDistrictInfo[0].school_district_name,
       school,
       contentList,
       tabList: school.schoolDistrictInfo.map(item => {
