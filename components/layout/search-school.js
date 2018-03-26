@@ -50,7 +50,8 @@ class Search extends Component {
         }
 
         if (values.name) {
-          result['school_name'] = encodeURIComponent(values.name);
+          // result['school_name'] = encodeURIComponent(values.name);
+          result['school_name'] = values.name;
         }
         this.props.onSubmit(result);
       }

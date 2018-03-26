@@ -306,6 +306,7 @@ class Search extends React.Component {
         this.setState({
           allResult: res.res,
           total: res.total,
+          allName: this.props.url.query.condition.name
         });
 
         this.resetUrl(query);
@@ -322,6 +323,7 @@ class Search extends React.Component {
         pageSize,
         currentPage,
         mode,
+        allName,
       } = this.state;
 
       const {
@@ -335,7 +337,7 @@ class Search extends React.Component {
         country_id: countryValue || country_id,
         province_id: provinceValue || province_id,
         city_id: cityValue || city_id,
-        school_name,
+        school_name: allName || school_name,
         pageSize,
         page: currentPage,
         mode,
@@ -365,6 +367,7 @@ class Search extends React.Component {
         pageSize,
         currentPage,
         mode,
+        allName,
       } = this.state;
 
       const {
@@ -386,7 +389,7 @@ class Search extends React.Component {
         college_id: collegeValue || college_id,
         school_name,
         college_name,
-        professor_name,
+        professor_name: allName || professor_name,
         pageSize,
         page: currentPage,
         mode,
