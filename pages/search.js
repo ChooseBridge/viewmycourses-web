@@ -35,6 +35,7 @@ const {
 
 //默认每页显示条数
 const defaultPageSize = 2;
+const defaultCurrentPage = 1;
 
 class Search extends React.Component {
   constructor(props) {
@@ -47,8 +48,8 @@ class Search extends React.Component {
       schools: [],
       college: [],
       mode: '',
-      currentPage: 1,
-      pageSize: defaultPageSize,
+      currentPage: Number(props.url.query.condition.page) || 1,
+      pageSize: Number(props.url.query.condition.pageSize) || defaultPageSize,
     };
 
     this.onShowSizeChange = this.onShowSizeChange.bind(this);
@@ -96,23 +97,23 @@ class Search extends React.Component {
       });
 
       if (country_id) {
-        this.countryChange(country_id);
+        this.countryChange(country_id, false);
       }
 
       if (province_id) {
-        this.provinceChange(province_id);
+        this.provinceChange(province_id, false);
       }
 
       if (city_id) {
-        this.cityChange(city_id);
+        this.cityChange(city_id, false);
       }
 
       if (school_id) {
-        this.schoolChange(school_id);
+        this.schoolChange(school_id, false);
       }
 
       if (college_id) {
-        this.collegeChange(college_id);
+        this.collegeChange(college_id, false);
       }
 
       if (mode == 'all') {
@@ -163,7 +164,17 @@ class Search extends React.Component {
     this.onReSelect();
   }
 
-  countryChange = countryId => {
+  countryChange = (countryId, isSearch = true) => {
+    this.setState({
+      provinceValue: '',
+      city: [],
+      cityValue: '',
+      schools: [],
+      schoolValue: '',
+      college: [],
+      collegeValue: '',
+    });
+
     client(api.getProvinceByCountry)({
       body: {
         country_id: countryId
@@ -172,22 +183,23 @@ class Search extends React.Component {
       this.setState({
         province,
         countryValue: countryId,
-        provinceValue: '',
-        city: [],
-        cityValue: '',
-        schools: [],
-        schoolValue: '',
-        college: [],
-        collegeValue: '',
       });
 
-      if (this.state.mode == 'school') {
+      if (this.state.mode == 'school' && isSearch) {
         this.searchSchool();
       }
     });
   };
 
-  provinceChange = provinceId => {
+  provinceChange = (provinceId, isSearch = true) => {
+    this.setState({
+      cityValue: '',
+      schools: [],
+      schoolValue: '',
+      college: [],
+      collegeValue: '',
+    });
+
     client(api.getCityByProvince)({
       body: {
         province_id: provinceId
@@ -196,24 +208,25 @@ class Search extends React.Component {
       this.setState({
         city,
         provinceValue: provinceId,
-        cityValue: '',
-        schools: [],
-        schoolValue: '',
-        college: [],
-        collegeValue: '',
       });
 
-      if (this.state.mode == 'school') {
+      if (this.state.mode == 'school' && isSearch) {
         this.searchSchool();
       }
     });
   };
 
-  cityChange = cityId => {
+  cityChange = (cityId, isSearch = true) => {
     const {
       countryValue,
       provinceValue
     } = this.state;
+
+    this.setState({
+      schoolValue: '',
+      college: [],
+      collegeValue: ''
+    });
 
     client(api.getSchoolByCondition)({
       query: {
@@ -225,18 +238,19 @@ class Search extends React.Component {
       this.setState({
         cityValue: cityId,
         schools: res.schools,
-        schoolValue: '',
-        college: [],
-        collegeValue: ''
       });
 
-      if (this.state.mode == 'school') {
+      if (this.state.mode == 'school' && isSearch) {
         this.searchSchool();
       }
     });
   };
 
-  schoolChange = schoolId => {
+  schoolChange = (schoolId, isSearch = true) => {
+    this.setState({
+      collegeValue: '',
+    });
+
     client(api.getCollegeBySchool)({
       body: {
         school_id: schoolId
@@ -244,45 +258,57 @@ class Search extends React.Component {
     }).then(college => {
       this.setState({
         schoolValue: schoolId,
-        collegeValue: '',
         college,
       });
 
-      if (this.state.mode == 'professor') {
+      if (this.state.mode == 'professor' && isSearch) {
         this.searchProfessor();
       }
     });
   };
 
-  collegeChange = collegeId => {
+  collegeChange = (collegeId, isSearch = true) => {
     this.setState({
       collegeValue: collegeId
     });
 
-    if (this.state.mode == 'professor') {
+    if (this.state.mode == 'professor' && isSearch) {
       this.searchProfessor();
     }
   };
+
+  resetUrl(query) {
+    let url = queryString.stringify(query);
+
+    url = `/search?${url}`;
+
+    history.replaceState({}, '搜索页面', url);
+  }
 
   searchAllByName() {
     setTimeout(() => {
       const {
         pageSize,
-        currentPage
+        currentPage,
+        mode,
       } = this.state;
 
+      const query = {
+        name: this.props.url.query.condition.name,
+        pageSize,
+        page: currentPage,
+        mode,
+      };
+
       client(api.getAllByName)({
-        query: {
-          name: this.props.url.query.condition.name,
-          pageSize,
-          page: currentPage,
-        }
+        query
       }).then(res => {
-        console.log(res);
         this.setState({
           allResult: res.res,
           total: res.total,
         });
+
+        this.resetUrl(query);
       });
     }, 100)
   }
@@ -295,23 +321,35 @@ class Search extends React.Component {
         cityValue,
         pageSize,
         currentPage,
+        mode,
       } = this.state;
 
+      const {
+        school_name,
+        country_id,
+        province_id,
+        city_id,
+      } = this.props.url.query.condition;
+
+      const query = {
+        country_id: countryValue || country_id,
+        province_id: provinceValue || province_id,
+        city_id: cityValue || city_id,
+        school_name,
+        pageSize,
+        page: currentPage,
+        mode,
+      };
+
       client(api.getSchoolByCondition)({
-        query: {
-          country_id: countryValue,
-          province_id: provinceValue,
-          city_id: cityValue,
-          school_name: this.props.url.query.condition.school_name,
-          pageSize,
-          page: currentPage,
-        }
+        query,
       }).then(res => {
-        console.log(res);
         this.setState({
           schoolResult: res.schools,
           total: res.pageInfo.total,
         });
+
+        this.resetUrl(query);
       });
     }, 100)
   }
@@ -319,26 +357,46 @@ class Search extends React.Component {
   searchProfessor() {
     setTimeout(() => {
       const {
+        countryValue,
+        provinceValue,
+        cityValue,
         schoolValue,
         collegeValue,
         pageSize,
         currentPage,
+        mode,
       } = this.state;
 
+      const {
+        country_id,
+        province_id,
+        city_id,
+        school_id,
+        college_id,
+        professor_name,
+      } = this.props.url.query.condition;
+
+      const query = {
+        country_id: countryValue || country_id,
+        province_id: provinceValue || province_id,
+        city_id: cityValue || city_id,
+        school_id: schoolValue || school_id,
+        college_id: collegeValue || college_id,
+        professor_name,
+        pageSize,
+        page: currentPage,
+        mode,
+      };
+
       client(api.getProfessorByCondition)({
-        query: {
-          school_id: schoolValue,
-          college_id: collegeValue,
-          professor_name: this.props.url.query.condition.professor_name,
-          pageSize,
-          page: currentPage,
-        }
+        query,
       }).then(res => {
-        console.log(res);
         this.setState({
           professorResult: res.professors,
           total: res.pageInfo.total,
         });
+
+        this.resetUrl(query);
       });
     }, 100)
   }
