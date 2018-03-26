@@ -436,39 +436,47 @@ class Search extends React.Component {
 
   renderSchool(item) {
     return (
-      <Row
+      <a
         key={item.school_id}
-        type="flex"
-        align="middle"
-        className={style.wrap}>
-        <Col span={2}>
-          <Icon style={{ fontSize: 40, color: '#66dc66' }} type="book" />
-        </Col>
-        <Col span={6}>学校</Col>
-        <Col span={16}>
-          <div><h2>{item.school_name}</h2></div>
-          <div>{item.country_name} {item.province_name} 上海市</div>
-        </Col>
-      </Row>
+        href={`/school/${item.school_id}`}
+        style={{color:'#000'}}>
+        <Row
+          type="flex"
+          align="middle"
+          className={style.wrap}>
+          <Col span={2}>
+            <Icon style={{ fontSize: 40, color: '#66dc66' }} type="book" />
+          </Col>
+          <Col span={6}>学校</Col>
+          <Col span={16}>
+            <div><h2>{item.school_name}</h2></div>
+            <div>{item.country_name} {item.province_name} 上海市</div>
+          </Col>
+        </Row>
+      </a>
     );
   }
 
   renderProfessor(item) {
     return (
-      <Row
+      <a
         key={item.professor_id}
-        type="flex"
-        align="middle"
-        className={style.wrap}>
-        <Col span={2}>
-          <Icon style={{ fontSize: 40, color: '#66dc66' }} type="idcard" />
-        </Col>
-        <Col span={6}>教授</Col>
-        <Col span={16}>
-          <div><h2>{item.professor_full_name}</h2></div>
-          <div>{item.school_name} 教授</div>
-        </Col>
-      </Row>
+        href={`/professor/${item.professor_id}`}
+        style={{color:'#000'}}>
+        <Row
+          type="flex"
+          align="middle"
+          className={style.wrap}>
+          <Col span={2}>
+            <Icon style={{ fontSize: 40, color: '#66dc66' }} type="idcard" />
+          </Col>
+          <Col span={6}>教授</Col>
+          <Col span={16}>
+            <div><h2>{item.professor_full_name}</h2></div>
+            <div>{item.school_name} 教授</div>
+          </Col>
+        </Row>
+      </a>
     );
   }
 
