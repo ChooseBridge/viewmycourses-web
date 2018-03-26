@@ -12,6 +12,8 @@ import {
   Card,
 } from 'antd';
 import cla from 'classnames';
+import client from '../../common/client';
+import api from '../../common/api';
 import style from '../../common/style/message.css';
 import commonStyle from '../../common/style/index.css';
 
@@ -23,17 +25,65 @@ class Message extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      messageInfo: [],
+    };
   }
 
   componentDidMount() {
+    this.getStudentMessage();
+  }
 
+  getStudentMessage() {
+    client(api.getStudentMessage)().then(res => {
+      this.setState({
+        messageInfo: res.messageInfo,
+      });
+    });
+  }
+
+  renderMessage(item) {
+    let href, msgArr;
+
+    if (item.type == 'success') {
+      msgArr = item.message.split(item.name);
+
+      if (item.info_type == 'professor') {
+        href = `/professor/${item.id}`;
+      }
+
+      if (item.info_type == 'school') {
+        href = `/school/${item.id}`;
+      }
+
+      return (
+        <div
+          key={item.created_at}
+          className={style.record}>
+          [{item.created_at}] {msgArr[0]} <a href={href}>{item.name}</a> {msgArr[1]}
+        </div>
+      );
+    }
+
+    if (item.type == 'fail') {
+      return (
+        <div
+          key={item.created_at}
+          className={style.record}>
+          [{item.created_at}] {item.message}
+        </div>
+      );
+    }
   }
 
   render() {
     const {
       url
     } = this.props;
+
+    const {
+      messageInfo
+    } = this.state;
 
     return (
       <ALayout title="消息中心" url={url}>
@@ -42,9 +92,9 @@ class Message extends React.Component {
           <div className={commonStyle.bgWrap}>
             <Card>
               <div><h2>消息中心</h2></div>
-              <div className={style.record}>[2018-03-19] 您创建的 <span className={commonStyle.colorBlue}>复旦大学</span> 已通过审核</div>
-              <div className={style.record}>[2018-03-18] 您创建的 <span className={commonStyle.colorBlue}>刘强东</span> 教授已通过审核</div>
-              <div className={style.record}>[2018-03-18] 您的邮箱已通过验证</div>
+              {
+                messageInfo.map(item => this.renderMessage(item))
+              }
             </Card>
           </div>
         </Content>
