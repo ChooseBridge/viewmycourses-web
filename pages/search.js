@@ -374,6 +374,8 @@ class Search extends React.Component {
         school_id,
         college_id,
         professor_name,
+        school_name,
+        college_name,
       } = this.props.url.query.condition;
 
       const query = {
@@ -382,11 +384,21 @@ class Search extends React.Component {
         city_id: cityValue || city_id,
         school_id: schoolValue || school_id,
         college_id: collegeValue || college_id,
+        school_name,
+        college_name,
         professor_name,
         pageSize,
         page: currentPage,
         mode,
       };
+
+      if (query.school_id) {
+        delete query.school_name;
+      }
+
+      if (query.college_id) {
+        delete query.college_name;
+      }
 
       client(api.getProfessorByCondition)({
         query,
