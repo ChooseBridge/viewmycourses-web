@@ -8,7 +8,7 @@ import {
   Row,
   Col,
   Card,
-  message,
+  message
 } from 'antd';
 import cla from 'classnames';
 import client from '../../common/client';
@@ -27,7 +27,7 @@ function renderDistrict(item) {
       <Col span={6} className={commonStyle.textCenter}>
         <div>综合得分</div>
         <div
-          style={{fontSize:50}}
+          style={{ fontSize: 50 }}
           className={style.schoolStyle}>
           {item.school_district_score}
         </div>
@@ -71,7 +71,7 @@ class School extends React.Component {
       tabList: school.schoolDistrictInfo.map(item => {
         return {
           key: item.school_district_name,
-          tab: item.school_district_name,
+          tab: item.school_district_name
         };
       })
     };
@@ -92,7 +92,7 @@ class School extends React.Component {
       }
     }).then(school => {
       this.setState({
-        school,
+        school
       });
     });
   }
@@ -100,7 +100,7 @@ class School extends React.Component {
   onThumbsUp(school_rate_id) {
     client(api.thumbsUpSchoolRate)({
       query: {
-        school_rate_id,
+        school_rate_id
       }
     }).then(res => {
       // console.log(res);
@@ -113,7 +113,7 @@ class School extends React.Component {
   onThumbsDown(school_rate_id) {
     client(api.thumbsDownSchoolRate)({
       query: {
-        school_rate_id,
+        school_rate_id
       }
     }).then(res => {
       // console.log(res);
@@ -131,12 +131,13 @@ class School extends React.Component {
     const {
       school,
       tabList,
-      contentList,
+      contentList
     } = this.state;
 
     const {
       schoolInfo,
       ratesInfo,
+      randomProfessor
     } = school;
 
     return (
@@ -144,50 +145,47 @@ class School extends React.Component {
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={commonStyle.bgWrap}>
-            <Card className={style.wrap}>
-              <Row style={{position:'relative'}}>
-                <Col span={12}>
-                {
-                  schoolInfo &&
-                  <Row type="flex" justify="space-around" align="middle">
-                    <Col span={8} className={commonStyle.textCenter}>
-                      <div>综合得分</div>
-                      <div className={style.points}>
-                        {schoolInfo.school_score}
-                      </div>
+
+            <Card className={commonStyle.bgWrap} style={{marginBottom: 10}}>
+              <Row type="flex" justify="space-around" align="middle">
+                <Col span={3} className={commonStyle.textCenter}>
+                  <div>综合得分</div>
+                  <div className={style.points}>
+                    {schoolInfo.school_score}
+                  </div>
+                </Col>
+
+                <Col span={21}>
+                  <div><span style={{ fontSize: 32 }}>{schoolInfo.school_name}</span></div>
+                  <Row>
+                    <Col span={12}>
+                      <div>{schoolInfo.country} {schoolInfo.province} <span className={style.colorBlue}><a
+                        href={schoolInfo.website_url}>网站</a></span></div>
+                      <div><a href="#">提交修正</a></div>
+                      <Row style={{marginTop: 24}}>
+                        <Col span={12}><Button type="primary">为这所高校评分</Button></Col>
+                        <Col span={4}><Button type="primary"
+                                              style={{ backgroundColor: '#737373', border: 'none' }}>分享</Button></Col>
+                      </Row>
                     </Col>
-                    <Col span={16}>
+                    <Col span={12}>
+                      <div><h2>每日推荐</h2></div>
                       <Row>
-                        <Col span={16}>
-                          <span style={{fontSize:32}}>{schoolInfo.school_name}</span>
+                        <Col span={4}><Icon type="smile" style={{ fontSize: 48, color: '#66dc66' }} /></Col>
+                        <Col span={12}>
+                          <div className={style.schoolStyle}>
+                            <a href={`/professor/${randomProfessor.professor_id}`}>
+                              {randomProfessor.professor_full_name}
+                            </a>
+                          </div>
+                          <div style={{ color: '#9e9e9e' }}>189条评论</div>
+                        </Col>
+                        <Col
+                          span={8}
+                          className={cla(commonStyle.textRight, style.schoolStyle)}>
+                          5.0
                         </Col>
                       </Row>
-                      <Row>
-                        <Col span={16}>{schoolInfo.country} {schoolInfo.province} <span className={style.colorBlue}><a href={schoolInfo.website_url}>网站</a></span></Col>
-                      </Row>
-                      <Row>
-                        <Col span={16} className={commonStyle.colorBlue} style={{marginBottom:20}}>提交修正</Col>
-                      </Row>
-                      <Row>
-                        <Col span={12}><Button type="primary">为这所高校评分</Button></Col>
-                        <Col span={4}><Button type="primary" style={{backgroundColor:'#737373',border:'none'}}>分享</Button></Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                }
-                </Col>
-                <Col className={style.tagWrap} span={12}>
-                  <div><h2>每日推荐</h2></div>
-                  <Row>
-                    <Col span={4}><Icon type="smile" style={{ fontSize: 48, color: '#66dc66' }} /></Col>
-                    <Col span={12}>
-                      <div className={style.schoolStyle}>Snbino 安东尼</div>
-                      <div style={{color:'#9e9e9e'}}>189条评论</div>
-                    </Col>
-                    <Col
-                      span={8}
-                      className={cla(commonStyle.textRight, style.schoolStyle)}>
-                      5.0
                     </Col>
                   </Row>
                 </Col>
@@ -205,7 +203,7 @@ class School extends React.Component {
 
             {
               ratesInfo &&
-              <Card className={style.wrap} style={{marginBottom: 0}}>
+              <Card className={style.wrap} style={{ marginBottom: 0 }}>
                 <Row>
                   <Col span={24} className={style.textWrap}>{ratesInfo.length}位同学的点评</Col>
                 </Row>
