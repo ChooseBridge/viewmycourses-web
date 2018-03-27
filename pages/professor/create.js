@@ -139,22 +139,22 @@ class ProfessorForm extends React.Component {
                 {...formItemLayout}
                 validateStatus={firstNameError ? 'error' : ''}
                 help={firstNameError || ''}
-                label="名：">
+                label="姓：">
                 {getFieldDecorator('professor_fisrt_name', {
-                  rules: [{ required: true, message: '请填写名' }]
+                  rules: [{ required: true, message: '请填写姓' }]
                 })(
-                  <Input size="large" style={{ width: 250 }} placeholder="名" />
+                  <Input size="large" style={{ width: 250 }} placeholder="姓" />
                 )}
               </FormItem>
               <FormItem
                 {...formItemLayout}
                 validateStatus={secondNameError ? 'error' : ''}
                 help={secondNameError || ''}
-                label="姓：">
+                label="名：">
                 {getFieldDecorator('professor_second_name', {
-                  rules: [{ required: true, message: '请填写姓!' }]
+                  rules: [{ required: true, message: '请填写名!' }]
                 })(
-                  <Input size="large" style={{ width: 250 }} placeholder="姓" />
+                  <Input size="large" style={{ width: 250 }} placeholder="名" />
                 )}
               </FormItem>
               <FormItem

@@ -22,7 +22,10 @@ class Home extends React.Component {
   }
 
   focusHandler = () => {
-    //TODO 判断登录
+    if (!this.props.url.query.user) {
+      return location.href = this.props.url.query.loginUrl
+    }
+
     this.setState({
       showInput: true
     });

@@ -112,12 +112,18 @@ app.prepare()
       render(req, res, '/user/message', { user: req.user });
     });
 
-    server.get('/user/:id', userInfo, (req, res) => {
+    server.get('/user', userInfo, (req, res) => {
       render(req, res, '/user/home', { user: req.user });
     });
 
     server.get('/search', userInfo, (req, res) => {
-      render(req, res, '/search', { user: req.user, condition: req.query });
+      const query = {};
+
+      for (let i in req.query) {
+        query[i] = decodeURIComponent(req.query[i]);
+      }
+
+      render(req, res, '/search', { user: req.user, condition: query });
     });
 
     server.get('*', (req, res) => {

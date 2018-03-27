@@ -19,7 +19,7 @@ export default class extends Component {
       <div className={cln(style.wrap, { [style.dark]: dark })}>
         <Row gutter={0} type="flex">
           <Col span={5} className={style.left}>
-            <div className={style.date}>2018/03</div>
+            <div className={style.date}>{rate.created_at.date}</div>
             <div className={style.rate}>
               <div>综合得分</div>
               <div className={style.score}>
@@ -27,10 +27,10 @@ export default class extends Component {
                 {(rate.score >= 2.5 && rate.score < 4) && <Icon type="meh" className={style.normal} />}
                 {rate.score < 2.5 && <Icon type="frown" className={style.bad} />}
 
-                {rate.score}
+                <span style={{marginLeft: 5}}>{rate.score}</span>
               </div>
               <div>
-                <div>心理学专业</div>
+                <div>{rate.major}专业</div>
                 <div>{rate.school_district_name}</div>
               </div>
             </div>
@@ -43,13 +43,17 @@ export default class extends Component {
             <div>
               <span onClick={onThumbsUp}>
                 <a className={style.like}>
-                  <Icon type="like-o" style={rate.is_thumbs_up ? {color: 'red'} : {color: '#000'}}/>
+                  <Icon
+                    type="like-o"
+                    style={rate.is_thumbs_up ? {color: 'red'} : {color: '#000'}}/>
                   {rate.thumbs_up_percent}% 的人认为有用
                 </a>
               </span>
               <span onClick={onThumbsDown}>
                 <a className={style.unlike}>
-                  <Icon type="dislike-o" style={rate.is_thumbs_down ? {color: 'red'} : {color: '#000'}}/>
+                  <Icon
+                    type="dislike-o"
+                    style={rate.is_thumbs_down ? {color: 'red'} : {color: '#000'}}/>
                   {rate.thumbs_down_percent}% 的人认为没用
                 </a>
               </span>

@@ -171,4 +171,12 @@ module.exports = {
     url: '/api/thumbs-down-school-rate',
   }, opt),
 
+  /**
+   * 搜索所有教授及学校
+   * @param opt
+   */
+  getAllByName: opt => makeApi({
+    url: '/api/get-all-by-name',
+  }, opt),
+
 };

@@ -11,9 +11,14 @@ import commonStyle from '../../common/style/index.css';
 import style from './style.css';
 import cla from 'classnames';
 import RegionCascader from '../../components/region-cascader';
+import api from '../../common/api';
+import client from '../../common/client';
+import SchoolAutoComplete from '../../components/school-auto-complete';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
+let cache = [];
+
 
 class Search extends Component {
   constructor() {
@@ -25,14 +30,24 @@ class Search extends Component {
   }
 
   componentDidMount() {
-
+    if (cache.length === 0) {
+      client(api.getSchoolGroupByCountry)()
+        .then(res => {
+          cache = res;
+          this.setState({
+            schools: res
+          });
+        });
+    }
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const result = {};
+        const result = {
+          mode: 'school'
+        };
         if (values.region) {
           values.region.forEach((id, i) => {
             if (i === 0) {
@@ -48,7 +63,8 @@ class Search extends Component {
         }
 
         if (values.name) {
-          result['school_name'] = encodeURIComponent(name);
+          // result['school_name'] = encodeURIComponent(values.name);
+          result['school_name'] = values.name;
         }
         this.props.onSubmit(result);
       }
@@ -61,7 +77,8 @@ class Search extends Component {
 
   render() {
     const {
-      schoolChoose
+      schoolChoose,
+      schools
     } = this.state;
     const { closeAll } = this.props;
     const { getFieldDecorator } = this.props.form;
@@ -89,10 +106,13 @@ class Search extends Component {
                   offset={6}>
 
                   {getFieldDecorator('name', {})(
-                    <AutoComplete
+                    <SchoolAutoComplete
                       size="large"
                       style={{ width: 300 }}
-                      placeholder="学校名称" />
+                      placeholder="学校名称"
+                      valueUseName
+                      dataSource={this.state.schools}
+                      onSelect={v => location.href = `/school/${v.name}`} />
                   )}
                 </Col>
               </Row>
