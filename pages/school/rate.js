@@ -65,8 +65,6 @@ class SchoolRate extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values);
-
         const body = Object.assign({}, {
           school_id: this.props.url.query.id,
         }, values);

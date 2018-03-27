@@ -58,7 +58,7 @@ class School extends React.Component {
       school
     } = props.url.query;
 
-    console.log(school);
+    // console.log(school);
 
     school.schoolDistrictInfo.map(item => {
       contentList[item.school_district_name] = renderDistrict(item);
