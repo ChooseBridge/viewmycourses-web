@@ -161,9 +161,9 @@ class School extends React.Component {
                     <Col span={12}>
                       <div>{schoolInfo.country} {schoolInfo.province} <span className={style.colorBlue}><a
                         href={schoolInfo.website_url}>网站</a></span></div>
-                      <div><a href="#">提交修正</a></div>
+                      <div><a href="/professor/create">提交修正</a></div>
                       <Row style={{marginTop: 24}}>
-                        <Col span={12}><Button type="primary">为这所高校评分</Button></Col>
+                        <Col span={12}><a href={`/school/rate?id=${this.props.url.query.id}`}><Button type="primary">为这所高校评分</Button></a></Col>
                         <Col span={4}><Button type="primary"
                                               style={{ backgroundColor: '#737373', border: 'none' }}>分享</Button></Col>
                       </Row>
