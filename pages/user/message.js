@@ -60,7 +60,7 @@ class Message extends React.Component {
         <div
           key={item.created_at}
           className={style.record}>
-          [{item.created_at}] {msgArr[0]} <a href={href}>{item.name}</a> {msgArr[1]}
+          [{item.created_at}] {msgArr[0]} <a href={href}>{item.name}</a> {msgArr[1] || ''}
         </div>
       );
     }

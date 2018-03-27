@@ -106,7 +106,7 @@ class School extends React.Component {
       // console.log(res);
       this.getSchoolDetail();
     }).catch(() => {
-      message.error('您已经点击过没用了');
+      message.error('您已点击过认为没用了');
     });
   }
 
@@ -119,7 +119,7 @@ class School extends React.Component {
       // console.log(res);
       this.getSchoolDetail();
     }).catch(() => {
-      message.error('您已经点击过有用了');
+      message.error('您已点击过认为有用了');
     });
   }
 
