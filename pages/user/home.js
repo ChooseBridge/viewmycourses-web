@@ -100,6 +100,7 @@ class User extends React.Component {
       is_attend,
       difficult_level,
       homework_num,
+      written_homework_num,
       quiz_num,
       course_related_quiz,
       spend_course_time_at_week,
@@ -146,6 +147,7 @@ class User extends React.Component {
                 <Col span={6}>是否出勤：{is_attend}</Col>
                 <Col span={6}>课程难度：{difficult_level}</Col>
                 <Col span={6}>笔头作业量：{homework_num}</Col>
+                <Col span={6}>书面作业量：{written_homework_num}</Col>
                 <Col span={6}>每月考试数：{quiz_num}</Col>
                 <Col span={6}>课程与考试内容相关度：{course_related_quiz}</Col>
                 <Col span={6}>每周课堂外所花总时间：{spend_course_time_at_week}</Col>
