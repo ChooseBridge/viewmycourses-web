@@ -34,7 +34,7 @@ const {
 } = AutoComplete;
 
 //默认每页显示条数
-const defaultPageSize = 2;
+const defaultPageSize = 15;
 
 class Search extends React.Component {
   constructor(props) {
