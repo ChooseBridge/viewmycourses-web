@@ -19,7 +19,8 @@ import api from '../../common/api';
 import style from '../../common/style/home.css';
 import commonStyle from '../../common/style/index.css';
 import Share from '../../components/share';
-import ProfessorRate from '../../components/professor-rate/index';
+// import ProfessorRate from '../../components/professor-rate/index';
+import ProfessorRate from '../../components/professor-rate-2/index';
 
 const {
   Content
@@ -225,7 +226,7 @@ class Professor extends React.Component {
               </Row>
             </Card>
 
-            <Card className={style.wrap} style={{marginBottom: 0}}>
+            <Card className={style.wrap} style={{marginBottom: 30}}>
               <Row>
                 {
                   rateInfo &&
