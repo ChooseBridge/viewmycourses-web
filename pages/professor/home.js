@@ -128,6 +128,8 @@ class Professor extends React.Component {
       tagsInfo
     } = professor;
 
+    console.log(professor);
+
     return (
       <ALayout title='教授主页' url={url}>
         <Content className={commonStyle.container}>
@@ -161,9 +163,9 @@ class Professor extends React.Component {
                         <Row>
                           <Col span={16}>{professorInfo.country}{professorInfo.province} {professorInfo.school}</Col>
                         </Row>
-                        <Row>
-                          <Col span={16}>心理学教授</Col>
-                        </Row>
+                        {/*<Row>*/}
+                          {/*<Col span={16}>心理学教授</Col>*/}
+                        {/*</Row>*/}
                         <Row>
                           <Col span={16} className={commonStyle.colorBlue} style={{ marginBottom: 20 }}>提交修正</Col>
                         </Row>

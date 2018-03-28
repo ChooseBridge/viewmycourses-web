@@ -64,6 +64,8 @@ class School extends React.Component {
       contentList[item.school_district_name] = renderDistrict(item);
     });
 
+    console.log(school);
+
     this.state = {
       key: school.schoolDistrictInfo[0] && school.schoolDistrictInfo[0].school_district_name,
       school,
@@ -178,12 +180,12 @@ class School extends React.Component {
                               {randomProfessor.professor_full_name}
                             </a>
                           </div>
-                          <div style={{ color: '#9e9e9e' }}>189条评论</div>
+                          <div style={{ color: '#9e9e9e' }}>{randomProfessor.rate_num}条评论</div>
                         </Col>
                         <Col
                           span={8}
                           className={cla(commonStyle.textRight, style.schoolStyle)}>
-                          5.0
+                          {randomProfessor.effort}
                         </Col>
                       </Row>
                     </Col>
