@@ -144,10 +144,11 @@ export default class extends React.Component {
               </Row>
 
               <input type="hidden" id="login-url" value={url.query.loginUrl} />
+              {menuContentKey && this.renderMenuContent(menuContentKey)}
             </Header>
           </Affix>
 
-          {menuContentKey && this.renderMenuContent(menuContentKey)}
+
 
           {children}
 

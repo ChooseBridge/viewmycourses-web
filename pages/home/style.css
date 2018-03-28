@@ -1,6 +1,6 @@
 .bg {
   /*position: absolute;*/
-  background: url("http://content.gallup.com/origin/gallupinc/GallupSpaces/Production/Cms/WWWV7CORP/v7yu3gad3k-zfddk7aotbq.jpg") #9a9a9a center center;
+  background: url("/img/737.jpg") #9a9a9a center center;
   background-size: cover;
   /*left: 0;*/
   /*right: 0;*/
@@ -8,8 +8,10 @@
   /*bottom: 0;*/
   /*padding: 64px 0 102px;*/
 
-  height: 80vh;
+  /*height: 80vh;*/
   min-height: 480px;
+  margin-bottom: -30px;
+  padding-bottom: 40px;
 
 }
 
@@ -104,13 +106,20 @@
 .textWrapper h4 {
   font-size: 18px;
 }
+.textWrapper h4 a {
+  color: #fff;
+}
+
 
 .date {
   font-family: "Chronicle SSm",Georgia,Times,"Times New Roman",serif;
-  color: #777;
+  color: rgba(255,255,255,.5);
   font-style: italic;
 }
 
 .news {
-  margin-top: 40px;
+  background: rgba(0,0,0,0.2);
+  padding: 20px;
+  border-radius: 10px;
+  margin: 90px 0 0 0;
 }

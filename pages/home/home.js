@@ -86,49 +86,51 @@ class Home extends React.Component {
               }
 
             </div>
+
+            <Row gutter={32} className={style.news}>
+              <Col span={8} className={style.item}>
+                <a href="">
+                  <img
+                    src="https://www.mckinsey.com/~/media/McKinsey/About%20Us/New%20at%20McKinsey/Digital%202020%20Helping%20companies%20set%20the%20stage%20for%20their%20digital%20future/blog-digital2020-thumb3.ashx?mw=677&car=42:25" />
+                </a>
+
+                <div className={style.textWrapper}>
+                  <h4><a href="">数字20/20：帮助公司为数字化未来奠定基础</a></h4>
+                  <div className={style.date}>2018年3月16日</div>
+                </div>
+              </Col>
+              <Col span={8} className={style.item}>
+                <a href="">
+                  <img
+                    src="https://www.mckinsey.com/~/media/McKinsey/About%20Us/New%20at%20McKinsey/Digital%202020%20Helping%20companies%20set%20the%20stage%20for%20their%20digital%20future/blog-digital2020-thumb3.ashx?mw=677&car=42:25" />
+                </a>
+
+                <div className={style.textWrapper}>
+                  <h4><a href="">数字20/20：帮助公司为数字化未来奠定基础</a></h4>
+                  <div className={style.date}>2018年3月16日</div>
+                </div>
+              </Col>
+              <Col span={8} className={style.item}>
+                <a href="">
+                  <img
+                    src="https://www.mckinsey.com/~/media/McKinsey/About%20Us/New%20at%20McKinsey/Digital%202020%20Helping%20companies%20set%20the%20stage%20for%20their%20digital%20future/blog-digital2020-thumb3.ashx?mw=677&car=42:25" />
+                </a>
+
+                <div className={style.textWrapper}>
+                  <h4><a href="">数字20/20：帮助公司为数字化未来奠定基础</a></h4>
+                  <div className={style.date}>2018年3月16日</div>
+                </div>
+              </Col>
+            </Row>
           </Content>
         </div>
 
-        <Content className={cln(commonStyle.container, style.news)}>
+        {/*<Content className={cln(commonStyle.container, style.news)}>*/}
 
-          <h3 className={style.newsTitle}>最新资讯</h3>
+          {/*<h3 className={style.newsTitle}>最新资讯</h3>*/}
 
-          <Row gutter={32}>
-            <Col span={8} className={style.item}>
-              <a href="">
-                <img
-                  src="https://www.mckinsey.com/~/media/McKinsey/About%20Us/New%20at%20McKinsey/Digital%202020%20Helping%20companies%20set%20the%20stage%20for%20their%20digital%20future/blog-digital2020-thumb3.ashx?mw=677&car=42:25" />
-              </a>
-
-              <div className={style.textWrapper}>
-                <h4><a href="">数字20/20：帮助公司为数字化未来奠定基础</a></h4>
-                <div className={style.date}>2018年3月16日</div>
-              </div>
-            </Col>
-            <Col span={8} className={style.item}>
-              <a href="">
-                <img
-                  src="https://www.mckinsey.com/~/media/McKinsey/About%20Us/New%20at%20McKinsey/Digital%202020%20Helping%20companies%20set%20the%20stage%20for%20their%20digital%20future/blog-digital2020-thumb3.ashx?mw=677&car=42:25" />
-              </a>
-
-              <div className={style.textWrapper}>
-                <h4><a href="">数字20/20：帮助公司为数字化未来奠定基础</a></h4>
-                <div className={style.date}>2018年3月16日</div>
-              </div>
-            </Col>
-            <Col span={8} className={style.item}>
-              <a href="">
-                <img
-                  src="https://www.mckinsey.com/~/media/McKinsey/About%20Us/New%20at%20McKinsey/Digital%202020%20Helping%20companies%20set%20the%20stage%20for%20their%20digital%20future/blog-digital2020-thumb3.ashx?mw=677&car=42:25" />
-              </a>
-
-              <div className={style.textWrapper}>
-                <h4><a href="">数字20/20：帮助公司为数字化未来奠定基础</a></h4>
-                <div className={style.date}>2018年3月16日</div>
-              </div>
-            </Col>
-          </Row>
-        </Content>
+          {/**/}
+        {/*</Content>*/}
       </ALayout>
     );
   }

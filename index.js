@@ -23,6 +23,7 @@ app.prepare()
     };
 
     server.use(cookieParser());
+    server.use(express.static('public'));
 
     // 授权 callback 处理
     server.use((req, res, next) => {
