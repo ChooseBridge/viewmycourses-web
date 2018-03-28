@@ -15,7 +15,8 @@ import client from '../../common/client';
 import api from '../../common/api';
 import style from '../../common/style/home.css';
 import commonStyle from '../../common/style/index.css';
-import SchoolRate from '../../components/school-rate';
+// import SchoolRate from '../../components/school-rate';
+import SchoolRate from '../../components/school-rate-2';
 
 const {
   Content
@@ -205,7 +206,7 @@ class School extends React.Component {
 
             {
               ratesInfo &&
-              <Card className={style.wrap} style={{ marginBottom: 0 }}>
+              <Card className={style.wrap} style={{ marginBottom: 30 }}>
                 <Row>
                   <Col span={24} className={style.textWrap}>{ratesInfo.length}位同学的点评</Col>
                 </Row>
