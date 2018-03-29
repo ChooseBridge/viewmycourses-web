@@ -42,6 +42,6 @@
   background-color: #0066c7;
 }
 
-.ant-menu-dark.ant-menu-horizontal {
+:global(.ant-menu-dark.ant-menu-horizontal) {
   border-bottom-color:#0066c7 ;
 }
