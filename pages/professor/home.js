@@ -34,7 +34,7 @@ class Professor extends React.Component {
 
     this.state = {
       professor: this.props.url.query.professor,
-      rateInfo: this.props.url.query.professor.rateInfo,
+      rateInfo: this.props.url.query.professor.rateInfo
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -42,6 +42,26 @@ class Professor extends React.Component {
     this.onThumbsUp = this.onThumbsUp.bind(this);
     this.onThumbsDown = this.onThumbsDown.bind(this);
   }
+
+  componentDidMount() {
+    this.setState({
+      listHeight: this.list.offsetHeight
+    });
+    window.addEventListener('scroll', this.onScroll);
+  }
+
+  onScroll = () => {
+    this.setState({
+      dense: true
+    });
+
+    clearTimeout(this.t);
+    this.t = setTimeout(() => {
+      this.setState({
+        dense: false
+      });
+    }, 50);
+  };
 
   handleChange(e) {
     console.log(e);
@@ -54,12 +74,13 @@ class Professor extends React.Component {
 
     if (e == 'all') {
       rateInfo = professor.rateInfo;
-    } else {
+    }
+    else {
       rateInfo = professor.rateInfo.filter(item => item.course_code == e);
     }
 
     this.setState({
-      rateInfo,
+      rateInfo
     });
   }
 
@@ -70,7 +91,7 @@ class Professor extends React.Component {
       }
     }).then(professor => {
       this.setState({
-        professor,
+        professor
       });
     });
   }
@@ -89,7 +110,7 @@ class Professor extends React.Component {
   onThumbsUp(professor_rate_id) {
     client(api.thumbsUpProfessorRate)({
       query: {
-        professor_rate_id,
+        professor_rate_id
       }
     }).then(res => {
       // console.log(res);
@@ -102,7 +123,7 @@ class Professor extends React.Component {
   onThumbsDown(professor_rate_id) {
     client(api.thumbsDownProfessorRate)({
       query: {
-        professor_rate_id,
+        professor_rate_id
       }
     }).then(res => {
       // console.log(res);
@@ -165,7 +186,7 @@ class Professor extends React.Component {
                           <Col span={16}>{professorInfo.country}{professorInfo.province} {professorInfo.school}</Col>
                         </Row>
                         {/*<Row>*/}
-                          {/*<Col span={16}>心理学教授</Col>*/}
+                        {/*<Col span={16}>心理学教授</Col>*/}
                         {/*</Row>*/}
                         <Row>
                           <Col span={16} className={commonStyle.colorBlue} style={{ marginBottom: 20 }}>提交修正</Col>
@@ -226,7 +247,7 @@ class Professor extends React.Component {
               </Row>
             </Card>
 
-            <Card className={style.wrap} style={{marginBottom: 30}}>
+            <Card className={style.wrap} style={{ marginBottom: 30 }}>
               <Row>
                 {
                   rateInfo &&
@@ -238,32 +259,40 @@ class Professor extends React.Component {
                     style={{ width: 200 }}
                     defaultValue="all"
                     onChange={this.handleChange}>
-                      <Option value="all">全部</Option>
-                      {
-                        coursesInfo &&
-                        coursesInfo.map(item =>
-                          <Option
-                            key={item.course_id}
-                            value={item.course_code}>{item.course_code}
-                          </Option>
-                        )
-                      }
+                    <Option value="all">全部</Option>
+                    {
+                      coursesInfo &&
+                      coursesInfo.map(item =>
+                        <Option
+                          key={item.course_id}
+                          value={item.course_code}>{item.course_code}
+                        </Option>
+                      )
+                    }
                   </Select>
                 </Col>
               </Row>
             </Card>
 
-            {
-              rateInfo &&
-              rateInfo.map((item, index) =>
-                <ProfessorRate
-                  onThumbsUp={() => this.onThumbsUp(item.professor_rate_id)}
-                  onThumbsDown={() => this.onThumbsDown(item.professor_rate_id)}
-                  key={index}
-                  rate={item}
-                  dark={index % 2 !== 0} />
-              )
-            }
+            <div
+
+              className={cla({ 'dense': this.state.dense })}
+              ref={ref => this.list = ref}
+              style={{ height: this.state.listHeight }}>
+
+
+              {
+                rateInfo &&
+                rateInfo.map((item, index) =>
+                  <ProfessorRate
+                    onThumbsUp={() => this.onThumbsUp(item.professor_rate_id)}
+                    onThumbsDown={() => this.onThumbsDown(item.professor_rate_id)}
+                    key={index}
+                    rate={item}
+                    dark={index % 2 !== 0} />
+                )
+              }
+            </div>
           </div>
         </Content>
       </ALayout>

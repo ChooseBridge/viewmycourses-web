@@ -15,7 +15,7 @@ export default class extends Component {
     } = this.props;
 
     return (
-      <Row>
+      <Row className="rate">
         {
           dark ? false : <Col span={2} style={{paddingTop: 11}}>
             <img src="/img/user.png" />
@@ -89,7 +89,7 @@ export default class extends Component {
         </Col>
 
         {
-          dark ? <Col span={2} style={{paddingTop: 11}}>
+          dark ? <Col span={2} style={{paddingTop: 11, textAlign: 'right' }}>
             <img src="/img/user.png" />
           </Col> : false
         }

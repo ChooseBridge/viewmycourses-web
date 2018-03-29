@@ -16,7 +16,7 @@ export default class extends Component {
     const { dark, rate, onThumbsUp, onThumbsDown } = this.props;
 
     return (
-      <Row>
+      <Row className="rate">
         {
           dark ? false : <Col span={2} style={{ paddingTop: 11 }}>
             <img src="/img/user.png" />
@@ -62,7 +62,7 @@ export default class extends Component {
                                 {rate.thumbs_up_percent}% 的人认为有用
                               </a>
                             </span>
-                                          <span onClick={onThumbsDown}>
+                            <span onClick={onThumbsDown}>
                               <a className={style.unlike}>
                                 <Icon
                                   type="dislike-o"
@@ -107,7 +107,7 @@ export default class extends Component {
           </div>
         </Col>
         {
-          dark ? <Col span={2} style={{ paddingTop: 11 }}>
+          dark ? <Col span={2} style={{ paddingTop: 11, textAlign: 'right' }}>
             <img src="/img/user.png" />
           </Col> : false
         }

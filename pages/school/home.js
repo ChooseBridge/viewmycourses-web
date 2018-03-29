@@ -82,6 +82,26 @@ class School extends React.Component {
     this.onTabChange = this.onTabChange.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({
+      listHeight: this.list.offsetHeight
+    });
+    window.addEventListener('scroll', this.onScroll);
+  }
+
+  onScroll = () => {
+    this.setState({
+      dense: true
+    });
+
+    clearTimeout(this.t);
+    this.t = setTimeout(() => {
+      this.setState({
+        dense: false
+      });
+    }, 50);
+  };
+
   onTabChange(key, type) {
     this.setState({
       [type]: key
@@ -149,7 +169,7 @@ class School extends React.Component {
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={commonStyle.bgWrap}>
 
-            <Card className={commonStyle.bgWrap} style={{marginBottom: 10}}>
+            <Card className={commonStyle.bgWrap} style={{ marginBottom: 10 }}>
               <Row type="flex" justify="space-around" align="middle">
                 <Col span={3} className={commonStyle.textCenter}>
                   <div>综合得分</div>
@@ -165,7 +185,7 @@ class School extends React.Component {
                       <div>{schoolInfo.country} {schoolInfo.province} <span className={style.colorBlue}><a
                         href={schoolInfo.website_url}>网站</a></span></div>
                       <div><a href="/professor/create">提交修正</a></div>
-                      <Row style={{marginTop: 24}}>
+                      <Row style={{ marginTop: 24 }}>
                         <Col span={12}><a href={`/school/rate?id=${this.props.url.query.id}`}><Button type="primary">为这所高校评分</Button></a></Col>
                         <Col span={4}><Button type="primary"
                                               style={{ backgroundColor: '#737373', border: 'none' }}>分享</Button></Col>
@@ -213,15 +233,21 @@ class School extends React.Component {
               </Card>
             }
 
-            {
-              ratesInfo && ratesInfo.map((item, index) =>
-                <SchoolRate
-                  rate={item} key={index}
-                  dark={index % 2 !== 0}
-                  onThumbsDown={() => this.onThumbsDown(item.school_rate_id)}
-                  onThumbsUp={() => this.onThumbsUp(item.school_rate_id)} />
-              )
-            }
+            <div
+              className={cla({ 'dense': this.state.dense })}
+              ref={ref => this.list = ref}
+              style={{ height: this.state.listHeight }}>
+
+              {
+                ratesInfo && ratesInfo.map((item, index) =>
+                  <SchoolRate
+                    rate={item} key={index}
+                    dark={index % 2 !== 0}
+                    onThumbsDown={() => this.onThumbsDown(item.school_rate_id)}
+                    onThumbsUp={() => this.onThumbsUp(item.school_rate_id)} />
+                )
+              }
+            </div>
 
             <Card className={style.wrap}>
               <h1>这些评论对你有用吗?帮助你的同学</h1>

@@ -4,6 +4,14 @@
   margin-bottom: 30px;
 }
 
+:global(.ant-row.rate) {
+  transition: margin-top .5s;
+}
+
+:global(.dense .ant-row.rate ) {
+  margin-top: 3px;
+}
+
 :global(.ant-popover-placement-leftTop).wrap {
   padding-right: 30px
 }
@@ -25,7 +33,6 @@
   height: 37.071068px;
   left: 12px;
 }
-
 
 .wrap.dark {
   background-color: #eee;
@@ -85,6 +92,7 @@
 .iconClass {
   font-size: 18px;
 }
+
 .items {
   padding: 10px 20px 20px;
   color: rgba(0, 0, 0, .4)
@@ -100,7 +108,8 @@
   font-weight: bold;
 
 }
-.tags{
+
+.tags {
   margin-bottom: 15px;
 }
 
@@ -113,7 +122,7 @@
   font-size: 14px;
 }
 
-.like,.unlike {
+.like, .unlike {
   color: inherit;
 }
 

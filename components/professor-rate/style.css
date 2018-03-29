@@ -3,6 +3,7 @@
   background: #fff;
   font-size: 12px;
   margin-top: -1px;
+  transition: margin-bottom .5s;
 }
 
 .wrap.dark {

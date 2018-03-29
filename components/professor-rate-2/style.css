@@ -4,6 +4,14 @@
   margin-bottom: 30px;
 }
 
+:global(.ant-row.rate) {
+  transition: margin-top .5s;
+}
+
+:global(.dense .ant-row.rate ) {
+  margin-top: 3px;
+}
+
 :global(.ant-popover-placement-leftTop).wrap {
   padding-right: 30px
 }
