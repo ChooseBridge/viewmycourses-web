@@ -38,7 +38,7 @@ export default class extends Component {
                             {(rate.effort >= 2.5 && rate.effort < 4) && <Icon type="meh" className={style.normal} />}
                             {rate.effort < 2.5 && <Icon type="frown" className={style.bad} />}
 
-                            {rate.effort}
+                            <span style={{ marginLeft: 5 }}>{rate.effort}</span>
                           </div>
                         </div>
                       </Col>
@@ -66,18 +66,18 @@ export default class extends Component {
                         </div>
 
                         <div>
-              <span onClick={onThumbsUp}>
-                <a className={style.like}>
-                  <Icon type="like-o" style={rate.is_thumbs_up ? { color: 'red' } : { color: '#000' }} />
-                  {rate.thumbs_up_percent}% 的人认为有用
-                </a>
-              </span>
-                          <span onClick={onThumbsDown}>
-                <a className={style.unlike}>
-                  <Icon type="dislike-o" style={rate.is_thumbs_down ? { color: 'red' } : { color: '#000' }} />
-                  {rate.thumbs_down_percent}% 的人认为没用
-                </a>
-              </span>
+                          <span onClick={onThumbsUp}>
+                            <a className={style.like}>
+                              <Icon type="like-o" style={rate.is_thumbs_up ? { color: 'red' } : { color: '#000' }} />
+                              {rate.thumbs_up_percent}% 的人认为有用
+                            </a>
+                          </span>
+                                      <span onClick={onThumbsDown}>
+                            <a className={style.unlike}>
+                              <Icon type="dislike-o" style={rate.is_thumbs_down ? { color: 'red' } : { color: '#000' }} />
+                              {rate.thumbs_down_percent}% 的人认为没用
+                            </a>
+                          </span>
                         </div>
                       </Col>
                     </Row>
@@ -95,6 +95,5 @@ export default class extends Component {
         }
       </Row>
     );
-
   }
 }

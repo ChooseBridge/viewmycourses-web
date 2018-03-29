@@ -54,22 +54,22 @@ export default class extends Component {
                           </div>
 
                           <div>
-              <span onClick={onThumbsUp}>
-                <a className={style.like}>
-                  <Icon
-                    type="like-o"
-                    style={rate.is_thumbs_up ? { color: 'red' } : { color: '#000' }} />
-                  {rate.thumbs_up_percent}% 的人认为有用
-                </a>
-              </span>
-                            <span onClick={onThumbsDown}>
-                <a className={style.unlike}>
-                  <Icon
-                    type="dislike-o"
-                    style={rate.is_thumbs_down ? { color: 'red' } : { color: '#000' }} />
-                  {rate.thumbs_down_percent}% 的人认为没用
-                </a>
-              </span>
+                            <span onClick={onThumbsUp}>
+                              <a className={style.like}>
+                                <Icon
+                                  type="like-o"
+                                  style={rate.is_thumbs_up ? { color: 'red' } : { color: '#000' }} />
+                                {rate.thumbs_up_percent}% 的人认为有用
+                              </a>
+                            </span>
+                                          <span onClick={onThumbsDown}>
+                              <a className={style.unlike}>
+                                <Icon
+                                  type="dislike-o"
+                                  style={rate.is_thumbs_down ? { color: 'red' } : { color: '#000' }} />
+                                {rate.thumbs_down_percent}% 的人认为没用
+                              </a>
+                            </span>
                           </div>
                         </Col>
 
@@ -106,7 +106,6 @@ export default class extends Component {
             </div>
           </div>
         </Col>
-
         {
           dark ? <Col span={2} style={{ paddingTop: 11 }}>
             <img src="/img/user.png" />
