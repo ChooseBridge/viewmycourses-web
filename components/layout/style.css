@@ -29,8 +29,14 @@
   box-shadow: 0 3px 3px rgba(0, 0, 0, .2);
   padding: 20px;
   left: 0;
-  height: 262px;
   color: #fff;
+  transition: height .5s;
+  overflow: hidden;
+  height: 0;
+}
+
+.show {
+  height: 262px;
 }
 
 .menuWrap :global(.ant-btn-primary) {

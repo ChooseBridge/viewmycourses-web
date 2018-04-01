@@ -38,6 +38,10 @@ class Search extends Component {
           });
         });
     }
+
+    setTimeout(() => {
+      this.setState({show: true})
+    }, 0);
   }
 
   handleSubmit = (e) => {
@@ -62,7 +66,7 @@ class Search extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        <div className={style.menuWrap}>
+        <div className={cla(style.menuWrap, {[style.show]: this.state.show})}>
           <Row className={style.row}>
             <Col
               className={cla(commonStyle.textCenter)}
@@ -138,7 +142,10 @@ class Search extends Component {
               className={cla(commonStyle.textCenter)}
               span={12}
               offset={6}>
-              <a href="javascript:;" onClick={closeAll}>关闭</a>
+              <a href="javascript:;" onClick={() => {
+                this.setState({show: false});
+                setTimeout(() => this.props.closeAll(), 300);
+              }}>关闭</a>
             </Col>
           </Row>
         </div>
