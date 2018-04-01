@@ -37,11 +37,11 @@
   box-shadow: 0 0 17px rgba(0, 0, 0, .1);
 }
 
-:global(.ant-layout-header),
-:global(.ant-menu-dark.ant-menu-horizontal){
-  background-color: #0066c7;
-}
+/*:global(.ant-layout-header),*/
+/*:global(.ant-menu-dark.ant-menu-horizontal){*/
+  /*background-color: #0066c7;*/
+/*}*/
 
-:global(.ant-menu-dark.ant-menu-horizontal) {
-  border-bottom-color:#0066c7 ;
-}
+/*:global(.ant-menu-dark.ant-menu-horizontal) {*/
+  /*border-bottom-color:#0066c7 ;*/
+/*}*/

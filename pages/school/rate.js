@@ -15,6 +15,7 @@ import {
   Slider,
   Input,
   Modal,
+  Checkbox
 } from 'antd';
 import cla from 'classnames';
 import style from '../../common/style/rate.css';
@@ -41,7 +42,8 @@ class SchoolRate extends React.Component {
     this.state = {
       loading: false,
       avgPoints: 0,
-      school: {}
+      school: {},
+      agreed: true
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -66,7 +68,7 @@ class SchoolRate extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const body = Object.assign({}, {
-          school_id: this.props.url.query.id,
+          school_id: this.props.url.query.id
         }, values);
 
         client(api.createSchoolRate)({
@@ -111,11 +113,12 @@ class SchoolRate extends React.Component {
       loading,
       avgPoints,
       school,
+      agreed
     } = this.state;
 
     const {
       schoolInfo,
-      schoolDistrictInfo,
+      schoolDistrictInfo
     } = school;
 
     const {
@@ -163,7 +166,7 @@ class SchoolRate extends React.Component {
     const commentError = isFieldTouched('comment') && getFieldError('comment');
 
     return (
-      <ALayout title='学校点评页' url={url}>
+      <ALayout title='点评学校' url={url}>
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={commonStyle.bgWrap}>
@@ -182,35 +185,40 @@ class SchoolRate extends React.Component {
                   <h2
                     className={commonStyle.colorBlue}
                     style={{ fontSize: 35 }}>
-                    Rating Do's and Don'ts
+                    点评礼仪
                   </h2>
-                </Col>
-                <Col
-                  className={commonStyle.colorBlue}
-                  span={12}>
-                  VIEW THE FULL SITE GUIDELINES
                 </Col>
               </Row>
 
-              <Row type="flex" justify="space-between" align="top">
+              <Row type="flex" justify="space-between" align="top" gutter={16}>
                 <Col span={8}>
-                  <h2 className={style.doTitle}>Do</h2>
-                  <div className={style.doText}>Double check your comments before posting. It never hurts to check your
-                    grammar.
+                  <h2 className={style.doTitle}>我知晓</h2>
+                  <div className={style.doText}>即使是匿名发表，我依旧需要为自己的言论负责。
+                    我享受着学生社群中他人的贡献，而我的评论则是给社群的答谢。
+                    生活终将用幸运回馈我积攒的好意。
                   </div>
                 </Col>
                 <Col span={8}>
-                  <h2 className={style.doTitle}>Do</h2>
-                  <div className={style.doText}>Refer to the rating categories to help you better elaborate your
-                    comments.
+                  <h2 className={style.doTitle}>我承诺</h2>
+                  <div className={style.doText}>
+                    我的评论是为了给其他同学提供更多信息与学习建议，正面、真实、有内容，而不是宣泄个人情绪。
+                    我不会使用任何侮辱性及敏感词汇，更不会发表触犯法律法规的言论。
                   </div>
                 </Col>
                 <Col span={8}>
-                  <h2 className={style.doTitle}>Do</h2>
-                  <div className={style.doText}>Reference existing comments or comments that have been deleted by our
-                    moderators.
+                  <h2 className={style.doTitle}>我将会</h2>
+                  <div className={style.doText}>
+                    在评论结束后再次检查我的课程信息（例如课程编号等）以及我的点评内容，确保信息适当、真实、准确。
                   </div>
                 </Col>
+
+                <div>
+                  <Checkbox
+                    checked={agreed}
+                    onChange={e => this.setState({ agreed: e.target.checked })}>
+                    我同意
+                  </Checkbox>
+                </div>
               </Row>
             </Card>
 
@@ -493,7 +501,7 @@ class SchoolRate extends React.Component {
                     style={{ width: 250 }}
                     type="primary"
                     htmlType="submit"
-                    disabled={hasErrors(getFieldsError())}>
+                    disabled={hasErrors(getFieldsError()) || !agreed}>
                     提交点评
                   </Button>
                 </FormItem>

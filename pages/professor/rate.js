@@ -17,6 +17,8 @@ import {
   Radio,
   AutoComplete,
   Modal,
+  Checkbox,
+  InputNumber
 } from 'antd';
 import cla from 'classnames';
 import client from '../../common/client';
@@ -47,7 +49,8 @@ class ProfessorRate extends React.Component {
       loading: false,
       effort: 0,
       selectedTags: [],
-      professor: {}
+      professor: {},
+      agreed: true
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -70,7 +73,7 @@ class ProfessorRate extends React.Component {
       });
 
       this.setState({
-        professor,
+        professor
       });
     });
   }
@@ -80,7 +83,7 @@ class ProfessorRate extends React.Component {
 
     const {
       selectedTags,
-      professor,
+      professor
     } = this.state;
 
     this.props.form.validateFields((err, values) => {
@@ -92,25 +95,25 @@ class ProfessorRate extends React.Component {
 
         //判断传id或传code和name
         professor.coursesInfo.forEach(item => {
-          if(item.course_code == courseCode) {
+          if (item.course_code == courseCode) {
             values.course_id = item.course_id;
             delete values.course_code;
           }
         });
 
         professor.schoolCategoryInfo.forEach(item => {
-          if(item.course_category_name == courseCategoryName) {
+          if (item.course_category_name == courseCategoryName) {
             values.course_category_id = item.course_category_id;
             delete values.course_category_name;
           }
         });
 
         const body = Object.assign({}, {
-          professor_id: this.props.url.query.id,
+          professor_id: this.props.url.query.id
         }, values);
 
         client(api.createProfessorRate)({
-          body,
+          body
         }).then(res => {
           if (res == '创建成功') {
             Modal.success({
@@ -149,9 +152,7 @@ class ProfessorRate extends React.Component {
       selectedTags
     } = this.state;
 
-    const nextSelectedTags = checked ?
-      [...selectedTags, tag] :
-      selectedTags.filter(t => t !== tag);
+    const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
 
     if (nextSelectedTags.length <= 3) {
       this.setState({
@@ -170,12 +171,13 @@ class ProfessorRate extends React.Component {
       effort,
       selectedTags,
       professor,
+      agreed
     } = this.state;
 
     const {
       professorInfo,
       coursesInfo,
-      schoolCategoryInfo,
+      schoolCategoryInfo
     } = professor;
 
     const {
@@ -224,7 +226,7 @@ class ProfessorRate extends React.Component {
     const commentError = isFieldTouched('comment') && getFieldError('comment');
 
     return (
-      <ALayout title='课程点评页' url={url}>
+      <ALayout title='点评课程' url={url}>
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={commonStyle.bgWrap}>
@@ -241,30 +243,41 @@ class ProfessorRate extends React.Component {
                 <Col span={12}>
                   <h2
                     className={commonStyle.colorBlue}
-                    style={{fontSize:35}}>
-                    Rating Do's and Don'ts
+                    style={{ fontSize: 35 }}>
+                    点评礼仪
                   </h2>
-                </Col>
-                <Col
-                  className={commonStyle.colorBlue}
-                  span={12}>
-                  VIEW THE FULL SITE GUIDELINES
                 </Col>
               </Row>
 
-              <Row type="flex" justify="space-between" align="top">
+              <Row type="flex" justify="space-between" align="top" gutter={16}>
                 <Col span={8}>
-                  <h2 className={style.doTitle}>Do</h2>
-                  <div className={style.doText}>Double check your comments before posting. It never hurts to check your grammar.</div>
+                  <h2 className={style.doTitle}>我知晓</h2>
+                  <div className={style.doText}>即使是匿名发表，我依旧需要为自己的言论负责。
+                    我享受着学生社群中他人的贡献，而我的评论则是给社群的答谢。
+                    生活终将用幸运回馈我积攒的好意。
+                  </div>
                 </Col>
                 <Col span={8}>
-                  <h2 className={style.doTitle}>Do</h2>
-                  <div className={style.doText}>Refer to the rating categories to help you better elaborate your comments.</div>
+                  <h2 className={style.doTitle}>我承诺</h2>
+                  <div className={style.doText}>
+                    我的评论是为了给其他同学提供更多信息与学习建议，正面、真实、有内容，而不是宣泄个人情绪。
+                    我不会使用任何侮辱性及敏感词汇，更不会发表触犯法律法规的言论。
+                  </div>
                 </Col>
                 <Col span={8}>
-                  <h2 className={style.doTitle}>Do</h2>
-                  <div className={style.doText}>Reference existing comments or comments that have been deleted by our moderators.</div>
+                  <h2 className={style.doTitle}>我将会</h2>
+                  <div className={style.doText}>
+                    在评论结束后再次检查我的课程信息（例如课程编号等）以及我的点评内容，确保信息适当、真实、准确。
+                  </div>
                 </Col>
+
+                <div>
+                  <Checkbox
+                    checked={agreed}
+                    onChange={e => this.setState({ agreed: e.target.checked })}>
+                    我同意
+                  </Checkbox>
+                </div>
               </Row>
             </Card>
 
@@ -311,9 +324,9 @@ class ProfessorRate extends React.Component {
                         coursesInfo &&
                         coursesInfo.map(item =>
                           <Option
-                          key={item.course_id}
-                          value={item.course_code}>
-                          {item.course_code}
+                            key={item.course_id}
+                            value={item.course_code}>
+                            {item.course_code}
                           </Option>
                         )
                       }
@@ -352,7 +365,7 @@ class ProfessorRate extends React.Component {
                   validateStatus={difficultError ? 'error' : ''}
                   help={difficultError || ''}
                   label="课程难度">
-                  {getFieldDecorator('difficult_level',{
+                  {getFieldDecorator('difficult_level', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -375,7 +388,7 @@ class ProfessorRate extends React.Component {
                   validateStatus={homeworkError ? 'error' : ''}
                   help={homeworkError || ''}
                   label="笔头作业量">
-                  {getFieldDecorator('homework_num',{
+                  {getFieldDecorator('homework_num', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -397,7 +410,7 @@ class ProfessorRate extends React.Component {
                   validateStatus={writtenHomeworkError ? 'error' : ''}
                   help={writtenHomeworkError || ''}
                   label="书面作业量">
-                  {getFieldDecorator('written_homework_num',{
+                  {getFieldDecorator('written_homework_num', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -422,13 +435,13 @@ class ProfessorRate extends React.Component {
                   {getFieldDecorator('quiz_num', {
                     rules: [{ required: true, message: '请填写每月考试数' }]
                   })(
-                    <AutoComplete
-                      children={<Input type="number"/>}
+                    <InputNumber
                       onChange={() => {
                         setTimeout(() => this.onCalEffort(), 1000);
                       }}
                       style={{ width: 200 }}
-                      placeholder="每月考试数" />
+                      placeholder="每月考试数"
+                      min={0} />
                   )}
                 </FormItem>
                 <FormItem
@@ -436,7 +449,7 @@ class ProfessorRate extends React.Component {
                   validateStatus={relatedError ? 'error' : ''}
                   help={relatedError || ''}
                   label="课程与考试内容相关度">
-                  {getFieldDecorator('course_related_quiz',{
+                  {getFieldDecorator('course_related_quiz', {
                     initialValue: 0,
                     rules: [{
                       validator: (rule, value, callback) => {
@@ -458,17 +471,17 @@ class ProfessorRate extends React.Component {
                   {...formItemLayout}
                   validateStatus={timeError ? 'error' : ''}
                   help={timeError || ''}
-                  label="每周课堂外所花总时间">
+                  label="每周课堂外所花总时间(分钟)">
                   {getFieldDecorator('spend_course_time_at_week', {
                     rules: [{ required: true, message: '请填写每周课堂外所花总时间' }]
                   })(
-                    <AutoComplete
-                      children={<Input type="number"/>}
+                    <InputNumber
                       onChange={() => {
                         setTimeout(() => this.onCalEffort(), 1000);
                       }}
                       style={{ width: 200 }}
-                      placeholder="分钟" />
+                      placeholder="分钟"
+                      min={0} />
                   )}
                 </FormItem>
                 <FormItem
@@ -492,7 +505,7 @@ class ProfessorRate extends React.Component {
                 <FormItem
                   {...formItemLayout}
                   label="努力指数">
-                  <h2 style={{fontSize:40}}>{effort}</h2>
+                  <h2 style={{ fontSize: 40 }}>{effort}</h2>
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
@@ -502,7 +515,7 @@ class ProfessorRate extends React.Component {
                   {getFieldDecorator('comment', {
                     rules: [{ required: true, message: '请填写点评' }]
                   })(
-                    <TextArea rows={4}  style={{resize:'none'}}/>
+                    <TextArea rows={4} style={{ resize: 'none' }} />
                   )}
                 </FormItem>
                 <FormItem

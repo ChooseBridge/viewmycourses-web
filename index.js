@@ -117,6 +117,15 @@ app.prepare()
       render(req, res, '/user/home', { user: req.user });
     });
 
+    server.get('/terms', userInfo, (req, res) => {
+      render(req, res, '/terms', { user: req.user });
+    });
+
+
+    server.get('/privacy', userInfo, (req, res) => {
+      render(req, res, '/privacy', { user: req.user });
+    });
+
     server.get('/search', userInfo, (req, res) => {
       const query = {};
 

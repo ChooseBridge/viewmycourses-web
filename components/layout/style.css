@@ -32,7 +32,8 @@
 }
 
 .footer {
-  background: #0066c7;
+  /*background: #0066c7;*/
+  background: #001529;
   color: rgba(255, 255, 255, .5);
   text-align: center;
   padding: 30px;
