@@ -5,11 +5,11 @@
 }
 
 :global(.ant-row.rate) {
-  transition: margin-top .5s;
+  transition: margin-top 1s;
 }
 
 :global(.dense .ant-row.rate ) {
-  margin-top: 3px;
+  margin: 5px 0;
 }
 
 :global(.ant-popover-placement-leftTop).wrap {
