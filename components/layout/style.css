@@ -24,11 +24,42 @@
   position: absolute;
   width: 100%;
   top: 64px;
-  background: #f0f2f5;
+  background: #1890ffdb;
   z-index: 99;
   box-shadow: 0 3px 3px rgba(0, 0, 0, .2);
   padding: 20px;
   left: 0;
+  height: 262px;
+  color: #fff;
+}
+
+.menuWrap :global(.ant-btn-primary) {
+  background: #ff9701;
+  border-color: #ff9701;
+}
+
+.menuWrap :global(.ant-btn-primary:hover) {
+  opacity: .8;
+}
+
+.menuWrap :global(.ant-radio-button-wrapper) {
+  color: #fff;
+  background-color: #001529;
+  border-color: #001529;
+}
+
+.menuWrap :global(.ant-radio-button-wrapper-checked) {
+  color: #fff;
+  background-color: #ff9701;
+  border-color: #ff9701;
+}
+
+.menuWrap :global(a) {
+  color: #fff;
+}
+
+.menuWrap :global(a:hover) {
+  color: rgba(255, 255, 255, .5);
 }
 
 .footer {
@@ -44,6 +75,7 @@
   margin: 0 5px 10px 5px;
   color: rgba(255, 255, 255, .5);
 }
+
 .footer a:hover {
   color: rgba(255, 255, 255, 1);
 }

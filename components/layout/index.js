@@ -101,7 +101,11 @@ export default class extends React.Component {
             <Header className={style.header}>
               <Row style={{ flex: 1 }}>
                 <Col lg={{ span: 4 }} md={{ span: 5 }}>
-                  <h2 className={style.logo}><a href="/">桥选®校园</a></h2>
+                  <h2 className={style.logo}>
+                    <a href="/">
+                      桥选<span style={{ transform: 'scale(0.8)', display: 'inline-block' }}>®</span>校园
+                    </a>
+                  </h2>
                 </Col>
 
                 <Col lg={{ span: 20 }} md={{ span: 19 }}>
@@ -147,7 +151,6 @@ export default class extends React.Component {
               {menuContentKey && this.renderMenuContent(menuContentKey)}
             </Header>
           </Affix>
-
 
 
           {children}

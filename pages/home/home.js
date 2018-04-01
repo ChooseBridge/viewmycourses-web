@@ -54,12 +54,10 @@ class Home extends React.Component {
               {(!showInput) && (
                 <Typed
                   strings={[
-                    '北京大学',
-                    'University of Cambridge',
-                    '中国人民大学',
-                    'Stanford University',
-                    '中国人民大学',
-                    'California Institute of Technology']}
+                    '下学期想上什么课？',
+                    '你的梦校是什么？',
+                    '下学期想上谁的课？',
+                    '你在你现在的大学过得好吗？',]}
                   typeSpeed={40}
                   backSpeed={50}
                   attr="placeholder"

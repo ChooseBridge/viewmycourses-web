@@ -78,116 +78,27 @@ class Search extends Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <div className={style.menuWrap}>
-          <Row className={style.row}>
-            <Col
-              className={cla(commonStyle.textCenter)}
-              span={12}
-              offset={6}>
-              <RadioGroup size="large" onChange={this.onRadioChangeHandler} value={professorChoose}>
-                <RadioButton value="proName">按名称</RadioButton>
-                <RadioButton value="school">按学校</RadioButton>
-              </RadioGroup>
-            </Col>
-          </Row>
+          <div style={{ paddingTop: 6 }}>
+            <div className={cla(commonStyle.textCenter)} style={{ marginBottom: 15 }}>
+              我想查找 {getFieldDecorator('school_name', {})(
+              <SchoolAutoComplete
+                size="large"
+                style={{ width: 200 }}
+                placeholder="学校"
+                valueUseName
+                dataSource={this.state.schools} />
+            )} 的
+            </div>
 
-          {
-            professorChoose === 'proName' ? <div>
-                <Row className={style.row}>
-                  <Col
-                    className={cla(commonStyle.textCenter)}
-                    span={12}
-                    offset={6}>
-                    <div>我正在寻找的教授就任于</div>
-                  </Col>
-                </Row>
-
-                <Row className={style.row}>
-                  <Col
-                    className={cla(commonStyle.textCenter)}
-                    span={12}
-                    offset={6}>
-                    {getFieldDecorator('school_name', {})(
-                      <SchoolAutoComplete
-                        size="large"
-                        style={{ width: 300 }}
-                        placeholder="学校名称"
-                        valueUseName
-                        dataSource={this.state.schools} />
-                    )}
-                  </Col>
-                </Row>
-
-                <Row className={style.row}>
-                  <Col
-                    className={cla(commonStyle.textCenter)}
-                    span={12}
-                    offset={6}>
-                    <div>名为</div>
-                  </Col>
-                </Row>
-
-                <Row className={style.row}>
-                  <Col
-                    className={cla(commonStyle.textCenter)}
-                    span={12}
-                    offset={6}>
-
-                    {getFieldDecorator('professor_name', {})(
-                      <AutoComplete
-                        size="large"
-                        style={{ width: 300 }}
-                        placeholder="教授名字" />
-                    )}
-                  </Col>
-                </Row>
-              </div>
-              : <div>
-                <Row className={style.row}>
-                  <Col
-                    className={cla(commonStyle.textCenter)}
-                    span={12}
-                    offset={6}>
-                    我正在寻找的教授就任于
-
-                    {getFieldDecorator('school_name', {})(
-                      <SchoolAutoComplete
-                        size="large"
-                        style={{ width: 300 }}
-                        placeholder="学校名称"
-                        valueUseName
-                        onSelect={({ value }) => this.schoolChangeHandler(value)}
-                        dataSource={this.state.schools} />
-                    )}
-                    大学
-                  </Col>
-                </Row>
-
-                <Row className={style.row}>
-                  <Col
-                    className={cla(commonStyle.textCenter)}
-                    span={12}
-                    offset={6}>
-                    <Select
-                      size="large"
-                      placeholder="选择学院"
-                      style={{ width: 300, paddingLeft: 4, paddingRight: 4 }}>
-
-                      {
-                        this.state.college.map(clg => (
-                            <Option
-                              key={clg.college_id}
-                              value={clg.college_id}>
-                              {clg.college_name}
-                            </Option>
-                          )
-                        )
-                      }
-                    </Select>
-                    学院
-                  </Col>
-                </Row>
-              </div>
-          }
+            <div className={cla(commonStyle.textCenter)} style={{ marginBottom: 15 }}>
+              {getFieldDecorator('professor_name', {})(
+                <AutoComplete
+                  size="large"
+                  style={{ width: 200 }}
+                  placeholder="教授" />
+              )} 教授
+            </div>
+          </div>
 
           <Row className={style.row}>
             <Col
