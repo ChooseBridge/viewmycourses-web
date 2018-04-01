@@ -189,7 +189,9 @@ class Professor extends React.Component {
                         {/*<Col span={16}>心理学教授</Col>*/}
                         {/*</Row>*/}
                         <Row>
-                          <Col span={16} className={commonStyle.colorBlue} style={{ marginBottom: 20 }}>提交修正</Col>
+                          <Col span={16} className={commonStyle.colorBlue} style={{ marginBottom: 20 }}>
+                            <a href="/professor/create">提交修正</a>
+                          </Col>
                         </Row>
                         <Row>
                           <Col span={9}>
@@ -198,8 +200,7 @@ class Professor extends React.Component {
                             </a>
                           </Col>
                           <Col span={7}>
-                            <Button type="primary" style={{ backgroundColor: '#737373', border: 'none' }}>分享</Button>
-                            {/*<Share/>*/}
+                            <Share/>
                           </Col>
                         </Row>
                       </Col>

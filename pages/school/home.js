@@ -17,6 +17,7 @@ import style from '../../common/style/home.css';
 import commonStyle from '../../common/style/index.css';
 // import SchoolRate from '../../components/school-rate';
 import SchoolRate from '../../components/school-rate-2';
+import Share from '../../components/share';
 
 const {
   Content
@@ -187,8 +188,9 @@ class School extends React.Component {
                       <div><a href="/professor/create">提交修正</a></div>
                       <Row style={{ marginTop: 24 }}>
                         <Col span={12}><a href={`/school/rate?id=${this.props.url.query.id}`}><Button type="primary">为这所高校评分</Button></a></Col>
-                        <Col span={4}><Button type="primary"
-                                              style={{ backgroundColor: '#737373', border: 'none' }}>分享</Button></Col>
+                        <Col span={4}>
+                          <Share/>
+                        </Col>
                       </Row>
                     </Col>
                     <Col span={12}>
