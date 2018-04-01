@@ -21,6 +21,7 @@ import commonStyle from '../../common/style/index.css';
 import Share from '../../components/share';
 // import ProfessorRate from '../../components/professor-rate/index';
 import ProfessorRate from '../../components/professor-rate-2/index';
+import requiredEdu from '../../common/required-edu';
 
 const {
   Content
@@ -195,8 +196,15 @@ class Professor extends React.Component {
                         </Row>
                         <Row>
                           <Col span={9}>
-                            <a href={`/professor/${url.query.id}/rate`}>
-                              <Button type="primary">点评它的课程</Button>
+                            <a
+                              onClick={e => {
+                                if (!url.query.user.student.is_email_edu) {
+                                  e.preventDefault();
+                                  requiredEdu();
+                                }
+                              }}
+                              href={`/professor/${url.query.id}/rate`}>
+                              <Button type="primary">点评ta的课程</Button>
                             </a>
                           </Col>
                           <Col span={7}>

@@ -1,6 +1,4 @@
-const { Modal, Button } = require('antd');
-
-const confirm = Modal.confirm;
+const requiredEdu = require('./required-edu');
 
 function getCookie(name) {
   const value = '; ' + document.cookie;
@@ -20,19 +18,11 @@ module.exports = api => opt => {
         }
 
         if (e.errorCode === 1007) {
-          confirm({
-            title: '请验证edu邮箱',
-            content: '该功能需要验证edu邮箱后使用',
-            okText: '前往修改邮箱',
-            cancelText: '取消',
-            onOk() {
-              location.href = '/user'
-            }
-          });
+          requiredEdu();
         }
 
         reject(e);
-      })
+      });
   });
 
 };

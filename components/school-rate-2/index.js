@@ -14,6 +14,7 @@ const Score = ({ score }) => (
 export default class extends Component {
   render() {
     const { dark, rate, onThumbsUp, onThumbsDown } = this.props;
+    const [year, month] = rate.created_at.split('-');
 
     return (
       <Row className="rate">
@@ -32,7 +33,7 @@ export default class extends Component {
                     <div>
                       <Row gutter={0} type="flex">
                         <Col span={5} className={style.left}>
-                          <div className={style.date}>{rate.created_at.date}</div>
+                          <div className={style.date}>{`${year}-${month}`}</div>
                           <div className={style.rate}>
                             <div>综合得分</div>
                             <div className={style.score}>

@@ -81,10 +81,10 @@ app.prepare()
       render(req, res, '/school/create', { user: req.user });
     });
 
-    server.get('/school/rate', userInfo, checkLogin, (req, res) => {
+    server.get('/school/:id/rate', userInfo, checkLogin, (req, res) => {
       render(req, res, '/school/rate', {
         user: req.user,
-        id: req.param('id')
+        id: req.params.id
       });
     });
 

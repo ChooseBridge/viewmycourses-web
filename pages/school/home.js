@@ -18,6 +18,7 @@ import commonStyle from '../../common/style/index.css';
 // import SchoolRate from '../../components/school-rate';
 import SchoolRate from '../../components/school-rate-2';
 import Share from '../../components/share';
+import requiredEdu from '../../common/required-edu';
 
 const {
   Content
@@ -187,9 +188,20 @@ class School extends React.Component {
                         href={schoolInfo.website_url}>网站</a></span></div>
                       <div><a href="/professor/create">提交修正</a></div>
                       <Row style={{ marginTop: 24 }}>
-                        <Col span={12}><a href={`/school/rate?id=${this.props.url.query.id}`}><Button type="primary">为这所高校评分</Button></a></Col>
+                        <Col span={12}>
+                          <a
+                            onClick={e => {
+                              if (!url.query.user.student.is_email_edu) {
+                                e.preventDefault();
+                                requiredEdu();
+                              }
+                            }}
+                            href={`/school/${this.props.url.query.id}/rate`}>
+                            <Button type="primary">为这所高校评分</Button>
+                          </a>
+                        </Col>
                         <Col span={4}>
-                          <Share/>
+                          <Share />
                         </Col>
                       </Row>
                     </Col>
@@ -251,10 +263,10 @@ class School extends React.Component {
               }
             </div>
 
-            <Card className={style.wrap}>
-              <h1>这些评论对你有用吗?帮助你的同学</h1>
+            <Card className={style.wrap} style={{textAlign: 'center'}}>
+              <h1>想让学弟学妹们更加了解你的学校？</h1>
               <div>
-                <a href={`/school/rate?id=${this.props.url.query.id}`}>
+                <a href={`/school/${this.props.url.query.id}/rate`}>
                   <Button
                     size="large"
                     style={{ width: 250 }}

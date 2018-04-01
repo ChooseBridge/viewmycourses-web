@@ -529,7 +529,7 @@ class Search extends React.Component {
           <div className={commonStyle.bgWrap}>
             <Card className={style.wrap}>
               <div><h3>{searchText}</h3></div>
-              <div>没有你想找的学习或教授？</div>
+              <div>没有你想找的学校或教授？</div>
               <div>
                 <a href="/professor/create">创建教授</a>或<a href="/school/create">创建学校</a>
               </div>
@@ -539,26 +539,13 @@ class Search extends React.Component {
                 this.renderNoresult()
                 :
                 <div>
-                  <div style={{ margin: '10px 0' }}>
-                    <h2>每页将展示{pageSize}条结果，共{total}条</h2>
-                  </div>
-
-                  <Pagination
-                    showSizeChanger
-                    showQuickJumper
-                    onShowSizeChange={this.onShowSizeChange}
-                    onChange={this.onPageChange}
-                    current={currentPage}
-                    pageSize={pageSize}
-                    total={total} />
-
                   <div>结果可按照下列条件筛选</div>
 
                   <Row>
                     <Col span={4}>
                       <RadioGroup onChange={this.onModeChange} value={mode}>
-                        <Radio style={radioStyle} value="professor">Professor</Radio>
-                        <Radio style={radioStyle} value="school">School</Radio>
+                        <Radio style={radioStyle} value="professor">教授</Radio>
+                        <Radio style={radioStyle} value="school">学校</Radio>
                       </RadioGroup>
                     </Col>
                     {
@@ -655,7 +642,7 @@ class Search extends React.Component {
               !noResult &&
               <Card>
                 <Row>
-                  <Col span={8}><h2>种类</h2></Col>
+                  <Col span={8}><h2>类别</h2></Col>
                   <Col span={16}><h2>名字</h2></Col>
                 </Row>
                 {

@@ -119,7 +119,7 @@ class Search extends Component {
                       placeholder="学校名称"
                       valueUseName
                       dataSource={this.state.schools}
-                      onSelect={v => location.href = `/school/rate?id=${v.name}`} />
+                      onSelect={v => location.href = `/school/${v.name}/rate`} />
                   )}
                   {getFieldDecorator('mode', { initialValue: 'school' })(
                     <input type="hidden" />

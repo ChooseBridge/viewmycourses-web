@@ -97,7 +97,7 @@ class Search extends Component {
               offset={6}>
               <RadioGroup size="large" onChange={this.onRadioChangeHandler} value={schoolChoose}>
                 <RadioButton value="name">按名称</RadioButton>
-                <RadioButton value="region">按区域</RadioButton>
+                <RadioButton value="region">按地区</RadioButton>
               </RadioGroup>
             </Col>
           </Row>

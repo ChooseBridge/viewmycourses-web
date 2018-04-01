@@ -223,7 +223,7 @@ class SchoolRate extends React.Component {
             </Card>
 
             <Card className={style.wrap}>
-              <Form layout="horizontal" onSubmit={this.handleSubmit}>
+              <Form layout="horizontal" onSubmit={this.handleSubmit} style={{width: 620}}>
                 <FormItem
                   {...formItemLayout}
                   validateStatus={schoolError ? 'error' : ''}
@@ -489,11 +489,11 @@ class SchoolRate extends React.Component {
                   )}
                 </FormItem>
 
-                <FormItem
-                  {...formItemLayout}
-                  label="综合得分">
-                  <h2 style={{ fontSize: 40 }}>{avgPoints}</h2>
-                </FormItem>
+                {/*<FormItem*/}
+                  {/*{...formItemLayout}*/}
+                  {/*label="综合得分">*/}
+                  {/*<h2 style={{ fontSize: 40 }}>{avgPoints}</h2>*/}
+                {/*</FormItem>*/}
                 <FormItem {...tailFormItemLayout}>
                   <Button
                     loading={loading}
