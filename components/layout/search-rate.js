@@ -57,6 +57,11 @@ class Search extends Component {
     this.setState({ rateChoose: e.target.value });
   };
 
+  close = () => {
+    this.setState({ show: false });
+    setTimeout(() => this.props.closeAll(), 300);
+  };
+
   render() {
     const {
       rateChoose
@@ -66,6 +71,7 @@ class Search extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
+        <div className={style.mask} onClick={this.close}/>
         <div className={cla(style.menuWrap, {[style.show]: this.state.show})}>
           <Row className={style.row}>
             <Col

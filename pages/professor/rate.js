@@ -35,7 +35,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 const RadioGroup = Radio.Group;
 const CheckableTag = Tag.CheckableTag;
-const tagsFromServer = ['风趣幽默', '和蔼可亲', '严谨认真', '反馈及时', '良师益友', '超赞讲师', '学识渊博', '学富五车', '呕心沥血', '鞠躬尽瘁', '诲人不倦', '一丝不苟'];
+const tagsFromServer = ['风趣幽默', '和蔼可亲', '严谨认真', '反馈及时', '学识渊博', '超赞讲师', '课后沟通多', '公平公正'];
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -154,7 +154,7 @@ class ProfessorRate extends React.Component {
 
     const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
 
-    if (nextSelectedTags.length <= 3) {
+    if (nextSelectedTags.length <= 4) {
       this.setState({
         selectedTags: nextSelectedTags
       });
@@ -217,7 +217,7 @@ class ProfessorRate extends React.Component {
     const attendError = isFieldTouched('is_attend') && getFieldError('is_attend');
     const difficultError = isFieldTouched('difficult_level') && getFieldError('difficult_level');
     const homeworkError = isFieldTouched('homework_num') && getFieldError('homework_num');
-    const writtenHomeworkError = isFieldTouched('written_homework_num') && getFieldError('written_homework_num');
+    // const writtenHomeworkError = isFieldTouched('written_homework_num') && getFieldError('written_homework_num');
     const quizError = isFieldTouched('quiz_num') && getFieldError('quiz_num');
     const relatedError = isFieldTouched('course_related_quiz') && getFieldError('course_related_quiz');
     const timeError = isFieldTouched('spend_course_time_at_week') && getFieldError('spend_course_time_at_week');
@@ -282,7 +282,7 @@ class ProfessorRate extends React.Component {
             </Card>
 
             <Card className={style.wrap}>
-              <Form layout="horizontal" onSubmit={this.handleSubmit} style={{width: 620}}>
+              <Form layout="horizontal" onSubmit={this.handleSubmit} style={{ width: 700 }}>
                 <FormItem
                   {...formItemLayout}
                   validateStatus={categorysError ? 'error' : ''}
@@ -312,13 +312,13 @@ class ProfessorRate extends React.Component {
                   {...formItemLayout}
                   validateStatus={courseCodeError ? 'error' : ''}
                   help={courseCodeError || ''}
-                  label="课程编号">
+                  label="请选择或输入官方课程编号">
                   {getFieldDecorator('course_code', {
-                    rules: [{ required: true, message: '请选择课程编号' }]
+                    rules: [{ required: true, message: '请选择或输入官方课程编号' }]
                   })(
                     <Select
                       mode="combobox"
-                      placeholder="请选择课程编号"
+                      placeholder="请选择或输入官方课程编号"
                       style={{ width: 200 }}>
                       {
                         coursesInfo &&
@@ -405,28 +405,28 @@ class ProfessorRate extends React.Component {
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
                   )}
                 </FormItem>
-                <FormItem
-                  {...formItemLayout}
-                  validateStatus={writtenHomeworkError ? 'error' : ''}
-                  help={writtenHomeworkError || ''}
-                  label="书面作业量">
-                  {getFieldDecorator('written_homework_num', {
-                    initialValue: 0,
-                    rules: [{
-                      validator: (rule, value, callback) => {
-                        if (value == 0) {
-                          callback(true);
-                        }
-                        callback();
-                      }, message: '请在1-5分中选择'
-                    }]
-                  })(
-                    <Slider
-                      dots
-                      max={5}
-                      marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
-                  )}
-                </FormItem>
+                {/*<FormItem*/}
+                {/*{...formItemLayout}*/}
+                {/*validateStatus={writtenHomeworkError ? 'error' : ''}*/}
+                {/*help={writtenHomeworkError || ''}*/}
+                {/*label="书面作业量">*/}
+                {/*{getFieldDecorator('written_homework_num', {*/}
+                {/*initialValue: 0,*/}
+                {/*rules: [{*/}
+                {/*validator: (rule, value, callback) => {*/}
+                {/*if (value == 0) {*/}
+                {/*callback(true);*/}
+                {/*}*/}
+                {/*callback();*/}
+                {/*}, message: '请在1-5分中选择'*/}
+                {/*}]*/}
+                {/*})(*/}
+                {/*<Slider*/}
+                {/*dots*/}
+                {/*max={5}*/}
+                {/*marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />*/}
+                {/*)}*/}
+                {/*</FormItem>*/}
                 <FormItem
                   {...formItemLayout}
                   validateStatus={quizError ? 'error' : ''}
@@ -471,7 +471,7 @@ class ProfessorRate extends React.Component {
                   {...formItemLayout}
                   validateStatus={timeError ? 'error' : ''}
                   help={timeError || ''}
-                  label="每周课堂外所花总时间(分钟)">
+                  label="每周课堂外所花总时间(小时)">
                   {getFieldDecorator('spend_course_time_at_week', {
                     rules: [{ required: true, message: '请填写每周课堂外所花总时间' }]
                   })(
@@ -480,7 +480,7 @@ class ProfessorRate extends React.Component {
                         setTimeout(() => this.onCalEffort(), 1000);
                       }}
                       style={{ width: 200 }}
-                      placeholder="分钟"
+                      placeholder="小时"
                       min={0} />
                   )}
                 </FormItem>
@@ -488,7 +488,8 @@ class ProfessorRate extends React.Component {
                   {...formItemLayout}
                   validateStatus={gradeError ? 'error' : ''}
                   help={gradeError || ''}
-                  label="你的成绩">
+                  label="你的成绩"
+                extra="百分比成绩换算标准为90%以上为A，每减少10%下降一个等第。A+, A, A-统一为A，以此类推。">
                   {getFieldDecorator('grade', {
                     rules: [{ required: true, message: '请选你的成绩' }]
                   })(
@@ -499,14 +500,16 @@ class ProfessorRate extends React.Component {
                       <Option value="B">B</Option>
                       <Option value="C">C</Option>
                       <Option value="D">D</Option>
+                      <Option value="F">F</Option>
+                      <Option value="未完成">未完成</Option>
                     </Select>
                   )}
                 </FormItem>
-                <FormItem
-                  {...formItemLayout}
-                  label="努力指数">
-                  <h2 style={{ fontSize: 40 }}>{effort}</h2>
-                </FormItem>
+                {/*<FormItem*/}
+                {/*{...formItemLayout}*/}
+                {/*label="努力指数">*/}
+                {/*<h2 style={{ fontSize: 40 }}>{effort}</h2>*/}
+                {/*</FormItem>*/}
 
 
                 <FormItem
@@ -515,31 +518,35 @@ class ProfessorRate extends React.Component {
                   help={commentError || ''}
                   label="文字点评"
                   extra={<div>
-                    我们提供了以下示例问题供你选择，也欢迎分享校园生活中的趣事，让大家对你的学校有更多了解！
+                    我们提供了以下示例问题供你选择，也欢迎分享课程学习中的趣事，让大家对这门课程有更多了解！
                     <ul>
-                      <li>你的学校名声好吗？学术水平如何？</li>
-                      <li>在学校的衣食住行方便吗？你有没有一些特别的生活策略？</li>
-                      <li>校园内课外活动多吗？学校对于学生活动支持吗？</li>
+                      <li>这门课抢课难度如何？</li>
+                      <li>从这门课能学到什么？讨论为主还是讲课为主？巩固还是拓展课本内容？</li>
+                      <li>作业是怎样的？小组项目？练习题？阅读？写作？还是？</li>
+                      <li>考试频率多高？考试内容与题型？给分情况如何？</li>
+                      <li>应该如何学习这门课程？预习？复习？你有什么特别的学习建议？</li>
                     </ul>
                   </div>}>
                   {getFieldDecorator('comment', {
                     rules: [{ required: true, message: '请填写点评' }]
                   })(
-                      <TextArea rows={4} style={{ resize: 'none' }} />
+                    <TextArea rows={4} style={{ resize: 'none' }} />
                   )}
                 </FormItem>
                 <FormItem
                   {...formItemLayout}
                   validateStatus={tagError ? 'error' : ''}
                   help={tagError || ''}
-                  label="为教授选取标签">
+                  label="为教授选取标签"
+                  extra='最多可选四个'>
                   {getFieldDecorator('tag')(
-                    <div>
+                    <div style={{ width: 300 }}>
                       {tagsFromServer.map(tag => (
                         <CheckableTag
                           key={tag}
                           checked={selectedTags.indexOf(tag) > -1}
-                          onChange={checked => this.handleChange(tag, checked)}>
+                          onChange={checked => this.handleChange(tag, checked)}
+                          className={style.tag}>
                           {tag}
                         </CheckableTag>
                       ))}

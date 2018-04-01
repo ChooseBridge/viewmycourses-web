@@ -5,6 +5,11 @@ import cln from 'classnames';
 import client from '../../common/client';
 import api from '../../common/api';
 
+function homeWorkPipe(num) {
+  const m = '很少，较少，适中，较多，很多'.split('，');
+  return m[num];
+}
+
 export default class extends Component {
   render() {
     const {
@@ -13,11 +18,12 @@ export default class extends Component {
       onThumbsUp,
       onThumbsDown
     } = this.props;
+    const [year, month] = rate.created_at.date.split('-');
 
     return (
       <Row className="rate">
         {
-          dark ? false : <Col span={2} style={{paddingTop: 11}}>
+          dark ? false : <Col span={2} style={{ paddingTop: 11 }}>
             <img src="/img/user.png" />
           </Col>
         }
@@ -30,13 +36,13 @@ export default class extends Component {
                   <div className="ant-popover-inner-content">
                     <Row gutter={0} type="flex">
                       <Col span={5} className={style.left}>
-                        <div className={style.date}>2018/03</div>
+                        <div className={style.date}>{`${year}-${month}`}</div>
                         <div className={style.rate}>
                           <div>努力指数</div>
                           <div className={style.score}>
-                            {rate.effort >= 4 && <Icon type="smile" className={style.good} />}
-                            {(rate.effort >= 2.5 && rate.effort < 4) && <Icon type="meh" className={style.normal} />}
-                            {rate.effort < 2.5 && <Icon type="frown" className={style.bad} />}
+                            {/*{rate.effort >= 4 && <Icon type="smile" className={style.good} />}*/}
+                            {/*{(rate.effort >= 2.5 && rate.effort < 4) && <Icon type="meh" className={style.normal} />}*/}
+                            {/*{rate.effort < 2.5 && <Icon type="frown" className={style.bad} />}*/}
 
                             <span style={{ marginLeft: 5 }}>{rate.effort}</span>
                           </div>
@@ -48,10 +54,8 @@ export default class extends Component {
                         <div className={style.items}>
                           <div><strong className={style.label}>是否记出勤:</strong> {rate.is_attend === 1 ? '是' : '否'}</div>
                           <div><strong>课程难度:</strong> {rate.difficult_level}</div>
-                          <div><strong>笔头作业量:</strong> {rate.homework_num}</div>
-                          <div><strong>书面作业量:</strong> {rate.written_homework_num}</div>
+                          <div><strong>书面作业量:</strong> {homeWorkPipe(rate.written_homework_num)}</div>
                           <div><strong>每月考试数:</strong> {rate.quiz_num}</div>
-                          <div><strong>课程与考试内容相关度:</strong> {rate.course_related_quiz}</div>
                         </div>
                       </Col>
                       <Col className={style.right} span={13}>
@@ -72,9 +76,10 @@ export default class extends Component {
                               {rate.thumbs_up_percent}% 的人认为有用
                             </a>
                           </span>
-                                      <span onClick={onThumbsDown}>
+                          <span onClick={onThumbsDown}>
                             <a className={style.unlike}>
-                              <Icon type="dislike-o" style={rate.is_thumbs_down ? { color: 'red' } : { color: '#000' }} />
+                              <Icon type="dislike-o"
+                                    style={rate.is_thumbs_down ? { color: 'red' } : { color: '#000' }} />
                               {rate.thumbs_down_percent}% 的人认为没用
                             </a>
                           </span>
@@ -89,7 +94,7 @@ export default class extends Component {
         </Col>
 
         {
-          dark ? <Col span={2} style={{paddingTop: 11, textAlign: 'right' }}>
+          dark ? <Col span={2} style={{ paddingTop: 11, textAlign: 'right' }}>
             <img src="/img/user.png" />
           </Col> : false
         }

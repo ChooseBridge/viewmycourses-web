@@ -151,8 +151,6 @@ class Professor extends React.Component {
       tagsInfo
     } = professor;
 
-    console.log(professor);
-
     return (
       <ALayout title='教授主页' url={url}>
         <Content className={commonStyle.container}>
@@ -195,7 +193,7 @@ class Professor extends React.Component {
                           </Col>
                         </Row>
                         <Row>
-                          <Col span={9}>
+                          <Col span={11}>
                             <a
                               onClick={e => {
                                 if (!url.query.user.student.is_email_edu) {
@@ -204,7 +202,7 @@ class Professor extends React.Component {
                                 }
                               }}
                               href={`/professor/${url.query.id}/rate`}>
-                              <Button type="primary">点评ta的课程</Button>
+                              <Button type="primary">点评该教授的课程</Button>
                             </a>
                           </Col>
                           <Col span={7}>
@@ -241,13 +239,13 @@ class Professor extends React.Component {
 
                 <Col span={18} className={style.classWrap}>
                   <h2>所教课程</h2>
-                  <div style={{ marginBottom: 10 }}>看看其他同学对这位教授的评分情况</div>
+                  <div style={{ marginBottom: 10 }}>看看同学们在这些课程上的努力程度</div>
                   <Row>
                     {
                       coursesInfo &&
                       coursesInfo.map(item =>
                         <Col key={item.course_id} span={6}>
-                          {item.effort} <span className={commonStyle.colorBlue}>{item.course_code}</span>
+                          <span className={commonStyle.colorBlue}>{item.course_code}</span> {item.effort}
                         </Col>
                       )
                     }
@@ -284,8 +282,7 @@ class Professor extends React.Component {
             </Card>
 
             <div
-
-              className={cla({ 'dense': this.state.dense })}
+              // className={cla({ 'dense': this.state.dense })}
               ref={ref => this.list = ref}
               style={{ height: this.state.listHeight }}>
 

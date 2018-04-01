@@ -49,12 +49,12 @@ export default class extends React.Component {
       }
     }
 
-    if (this.state.menuContentKey === item.key) {
-      this.setState({
-        menuContentKey: ''
-      });
-      return;
-    }
+    // if (this.state.menuContentKey === item.key) {
+    //   this.setState({
+    //     menuContentKey: ''
+    //   });
+    //   return;
+    // }
 
     this.setState({
       menuContentKey: item.key

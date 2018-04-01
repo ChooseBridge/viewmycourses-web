@@ -72,6 +72,11 @@ class Search extends Component {
     });
   };
 
+  close = () => {
+    this.setState({ show: false });
+    setTimeout(() => this.props.closeAll(), 300);
+  };
+
   render() {
     const {
       professorChoose
@@ -81,6 +86,7 @@ class Search extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
+        <div className={style.mask} onClick={this.close}/>
         <div className={cla(style.menuWrap, {[style.show]: this.state.show})}>
           <div style={{ paddingTop: 6 }}>
             <div className={cla(commonStyle.textCenter)} style={{ marginBottom: 15 }}>

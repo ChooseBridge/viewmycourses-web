@@ -163,7 +163,8 @@ class SchoolForm extends React.Component {
                 {...formItemLayout}
                 validateStatus={schoolNameError ? 'error' : ''}
                 help={schoolNameError || ''}
-                label="学校名称：">
+                label="学校名称："
+                extra="请使用学校所在国家的官方语言填写学校官方全称，否则创建申请将被驳回。">
                 {getFieldDecorator('school_name', {
                   rules: [{ required: true, message: '请填写学校名称' }]
                 })(
@@ -249,23 +250,23 @@ class SchoolForm extends React.Component {
                   <Input size="large" style={{ width: 250 }} placeholder="http://" />
                 )}
               </FormItem>
-              <FormItem
-                {...formItemLayout}
-                validateStatus={emailError ? 'error' : ''}
-                help={emailError || ''}
-                label="你的邮箱">
-                {getFieldDecorator('your_email', {
-                  rules: [{
-                    required: true,
-                    message: '请填写电子邮箱！'
-                  }, {
-                    type: 'email',
-                    message: '您填写的e-mail不正确！'
-                  }]
-                })(
-                  <Input size="large" style={{ width: 250 }} placeholder="电子邮箱" />
-                )}
-              </FormItem>
+              {/*<FormItem*/}
+                {/*{...formItemLayout}*/}
+                {/*validateStatus={emailError ? 'error' : ''}*/}
+                {/*help={emailError || ''}*/}
+                {/*label="你的邮箱">*/}
+                {/*{getFieldDecorator('your_email', {*/}
+                  {/*rules: [{*/}
+                    {/*required: true,*/}
+                    {/*message: '请填写电子邮箱！'*/}
+                  {/*}, {*/}
+                    {/*type: 'email',*/}
+                    {/*message: '您填写的e-mail不正确！'*/}
+                  {/*}]*/}
+                {/*})(*/}
+                  {/*<Input size="large" style={{ width: 250 }} placeholder="电子邮箱" />*/}
+                {/*)}*/}
+              {/*</FormItem>*/}
               <FormItem {...tailFormItemLayout}
                         validateStatus={agreeError ? 'error' : ''}
                         help={agreeError || ''}>

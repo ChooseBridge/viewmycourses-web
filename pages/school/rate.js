@@ -481,7 +481,15 @@ class SchoolRate extends React.Component {
                   {...formItemLayout}
                   validateStatus={commentError ? 'error' : ''}
                   help={commentError || ''}
-                  label="文字点评">
+                  label="文字点评"
+                  extra={<div>
+                    我们提供了以下示例问题供你选择，也欢迎分享校园生活中的趣事，让大家对你的学校有更多了解！
+                    <ul>
+                      <li>你的学校名声好吗？学术水平如何？</li>
+                      <li>在学校的衣食住行方便吗？你有没有一些特别的生活策略？</li>
+                      <li>校园内课外活动多吗？学校对于学生活动支持吗？</li>
+                    </ul>
+                  </div>}>
                   {getFieldDecorator('comment', {
                     rules: [{ required: true, message: '请填写点评' }]
                   })(

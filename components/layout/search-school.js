@@ -19,7 +19,6 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 let cache = [];
 
-
 class Search extends Component {
   constructor() {
     super();
@@ -41,7 +40,7 @@ class Search extends Component {
     }
 
     setTimeout(() => {
-      this.setState({show: true})
+      this.setState({ show: true });
     }, 0);
   }
 
@@ -79,6 +78,11 @@ class Search extends Component {
     this.setState({ schoolChoose: e.target.value });
   };
 
+  close = () => {
+    this.setState({ show: false });
+    setTimeout(() => this.props.closeAll(), 300);
+  };
+
   render() {
     const {
       schoolChoose,
@@ -89,7 +93,8 @@ class Search extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        <div className={cla(style.menuWrap, {[style.show]: this.state.show})}>
+        <div className={style.mask} onClick={this.close}/>
+        <div className={cla(style.menuWrap, { [style.show]: this.state.show })}>
           <Row className={style.row}>
             <Col
               className={cla(commonStyle.textCenter)}
@@ -148,10 +153,7 @@ class Search extends Component {
               className={cla(commonStyle.textCenter)}
               span={12}
               offset={6}>
-              <a href="javascript:;" onClick={() => {
-                this.setState({show: false});
-                setTimeout(() => this.props.closeAll(), 300);
-              }}>关闭</a>
+              <a href="javascript:;" onClick={this.close}>关闭</a>
             </Col>
           </Row>
         </div>

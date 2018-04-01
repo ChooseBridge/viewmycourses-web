@@ -139,7 +139,8 @@ class ProfessorForm extends React.Component {
                 {...formItemLayout}
                 validateStatus={firstNameError ? 'error' : ''}
                 help={firstNameError || ''}
-                label="姓：">
+                label="姓："
+                extra="请使用学校选课系统内的官方教授名称，否则创建申请将被驳回。">
                 {getFieldDecorator('professor_fisrt_name', {
                   rules: [{ required: true, message: '请填写姓' }]
                 })(
