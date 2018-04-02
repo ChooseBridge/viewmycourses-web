@@ -1,4 +1,4 @@
-const requiredEdu = require('./required-edu');
+const requiredEdu = require('./required-edu').default;
 
 function getCookie(name) {
   const value = '; ' + document.cookie;
