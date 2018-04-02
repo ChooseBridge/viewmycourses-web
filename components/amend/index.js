@@ -4,10 +4,8 @@ import {
   Input,
   AutoComplete,
 } from 'antd';
-import cla from 'classnames';
 import client from '../../common/client';
 import api from '../../common/api';
-import commonStyle from '../../common/style/index.css';
 
 const { TextArea } = Input;
 
@@ -68,12 +66,14 @@ class Amend extends React.Component {
     const {
       visible,
       confirmLoading,
+      isFocus,
     } = this.state;
 
     return (
       <div>
         <a onClick={this.showModal}>提交修正</a>
-        <Modal title="提交修正"
+        <Modal
+          title="提交修正"
           visible={visible}
           onOk={this.handleOk}
           confirmLoading={confirmLoading}
@@ -81,6 +81,7 @@ class Amend extends React.Component {
           cancelText="取消"
           okText="提交">
           <AutoComplete
+            autoFocus
             style={{width: '100%'}}
             onChange={this.setTextAreaValue}>
             <TextArea
