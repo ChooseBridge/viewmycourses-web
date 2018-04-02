@@ -22,6 +22,14 @@ module.exports = {
   }, opt),
 
   /**
+   * 根据id获取用户信息
+   * @param opt
+   */
+  getStudentById: opt => makeApi({
+    url: '/api/get-student-by-id',
+  }, opt),
+
+  /**
    * 根据国家获取学校
    * @param opt
    */

@@ -4,6 +4,7 @@ import style from './style.css';
 import cln from 'classnames';
 import client from '../../common/client';
 import api from '../../common/api';
+import InfoPopover from '../info-popover';
 
 function homeWorkPipe(num) {
   const m = '很少，较少，适中，较多，很多'.split('，');
@@ -23,9 +24,14 @@ export default class extends Component {
     return (
       <Row className="rate">
         {
-          dark ? false : <Col span={2} style={{ paddingTop: 11 }}>
-            <img src="/img/user.png" />
-          </Col>
+          dark ? false :
+          <InfoPopover
+            id={rate.create_student_id}
+            placement="bottomLeft">
+            <Col span={2} style={{ paddingTop: 11 }}>
+              <img src="/img/user.png" />
+            </Col>
+          </InfoPopover>
         }
         <Col span={22}>
           <div className={cln(`ant-popover ant-popover-placement-${dark ? 'left' : 'right'}Top`, style.wrap)}>
@@ -94,9 +100,14 @@ export default class extends Component {
         </Col>
 
         {
-          dark ? <Col span={2} style={{ paddingTop: 11, textAlign: 'right' }}>
-            <img src="/img/user.png" />
-          </Col> : false
+          dark ?
+          <InfoPopover
+            id={rate.create_student_id}
+            placement="bottomRight">
+            <Col span={2} style={{ paddingTop: 11, textAlign: 'right' }}>
+              <img src="/img/user.png" />
+            </Col>
+          </InfoPopover> : false
         }
       </Row>
     );
