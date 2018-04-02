@@ -180,46 +180,70 @@ class User extends React.Component {
                 <Col span={12}>
                   <Row>
                     <Col span={4}><Avatar size="large" icon="user" /></Col>
-                    <Col span={20}>
-                      <Row>
-                        <Col>
-                          {
-                            student &&
+                    {
+                      student &&
+                      <Col span={20}>
+                        <Row>
+                          <Col>
                             <span style={{ fontSize: 32 }}>{student.name}</span>
+                          </Col>
+                        </Row>
+                        <Row type="flex" justify="start">
+                          {
+                            student.education_status == 1 ?
+                            <Col span={12}>
+                              <Row>
+                                <Col span={12} style={{ fontWeight: 800 }}>大学</Col>
+                                <Col span={12}>{student.school_name}</Col>
+                              </Row>
+                              <Row>
+                                <Col span={12} style={{ fontWeight: 800 }}>专业</Col>
+                                <Col span={12}>{student.major}</Col>
+                              </Row>
+                              <Row>
+                                <Col span={12} style={{ fontWeight: 800 }}>高考地</Col>
+                                <Col span={12}>{student.exam_province}</Col>
+                              </Row>
+                              <Row>
+                                <Col span={12} style={{ fontWeight: 800 }}>毕业年份</Col>
+                                <Col span={12}>
+                                  {
+                                    student.is_graduate == 0 ?
+                                    '在读'
+                                    :
+                                    student.graduate_year
+                                  }
+                                </Col>
+                              </Row>
+                            </Col>
+                            :
+                            <Col span={12}>
+                              <Row>
+                                <Col span={12} style={{ fontWeight: 800 }}>高中</Col>
+                                <Col span={12}>{student.school_name}</Col>
+                              </Row>
+                              <Row>
+                                <Col span={12} style={{ fontWeight: 800 }}>毕业年份</Col>
+                                <Col span={12}>
+                                  {
+                                    student.is_graduate == 0 ?
+                                    '在读'
+                                    :
+                                    student.graduate_year
+                                  }
+                                </Col>
+                              </Row>
+                            </Col>
                           }
-                        </Col>
-                      </Row>
-                      <Row type="flex" justify="start">
-                        <Col span={5} style={{ fontWeight: 800 }}>大学</Col>
-                        <Col span={7}>复旦大学</Col>
-                        <Col span={5} style={{ fontWeight: 800 }}>高中</Col>
-                        <Col span={7}>杨浦高级中学</Col>
-                      </Row>
-                      <Row type="flex" justify="space-between">
-                        <Col span={5} style={{ fontWeight: 800 }}>专业</Col>
-                        <Col span={7}>心理学</Col>
-                        <Col span={5} style={{ fontWeight: 800 }}>毕业年份</Col>
-                        <Col span={7}>2015</Col>
-                      </Row>
-                      <Row type="flex" justify="space-between">
-                        <Col span={5} style={{ fontWeight: 800 }}>高考地</Col>
-                        <Col span={7}>上海</Col>
-                        <Col span={5}></Col>
-                        <Col span={7}></Col>
-                      </Row>
-                      <Row type="flex" justify="space-between">
-                        <Col span={5} style={{ fontWeight: 800 }}>毕业年份</Col>
-                        <Col span={7}>2019</Col>
-                        <Col span={5}></Col>
-                        <Col span={7}></Col>
-                      </Row>
-                      <Row>
-                        <Col span={16} style={{ marginTop: 20 }}>
-                          {student &&
-                          <a href={`https://i.choosebridge.com/profile/${student.name}/edit`}><Button type="primary">编辑个人资料</Button></a>}
-                        </Col>
-                      </Row>
-                    </Col>
+                        </Row>
+                        <Row>
+                          <Col span={16} style={{ marginTop: 20 }}>
+                            {student &&
+                            <a href={`https://i.choosebridge.com/profile/${student.name}/edit`}><Button type="primary">编辑个人资料</Button></a>}
+                          </Col>
+                        </Row>
+                      </Col>
+                    }
                   </Row>
                 </Col>
               </Row>
