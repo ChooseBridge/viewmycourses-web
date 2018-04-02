@@ -18,6 +18,7 @@ import commonStyle from '../../common/style/index.css';
 // import SchoolRate from '../../components/school-rate';
 import SchoolRate from '../../components/school-rate-2';
 import Share from '../../components/share';
+import Amend from '../../components/amend';
 import requiredEdu from '../../common/required-edu';
 
 const {
@@ -184,9 +185,12 @@ class School extends React.Component {
                   <div><span style={{ fontSize: 32 }}>{schoolInfo.school_name}</span></div>
                   <Row>
                     <Col span={12}>
-                      <div>{schoolInfo.country} {schoolInfo.province} <span className={style.colorBlue}><a
-                        href={schoolInfo.website_url}>网站</a></span></div>
-                      <div><a href="/professor/create">提交修正</a></div>
+                      <div>{schoolInfo.country} {schoolInfo.province} <span className={style.colorBlue}>
+                        <a href={schoolInfo.website_url}>网站</a></span>
+                      </div>
+
+                      <Amend amendUrl='' />
+
                       <Row style={{ marginTop: 24 }}>
                         <Col span={12}>
                           <a

@@ -21,6 +21,7 @@ import commonStyle from '../../common/style/index.css';
 import Share from '../../components/share';
 // import ProfessorRate from '../../components/professor-rate/index';
 import ProfessorRate from '../../components/professor-rate-2/index';
+import Amend from '../../components/amend';
 import requiredEdu from '../../common/required-edu';
 
 const {
@@ -189,7 +190,7 @@ class Professor extends React.Component {
                         {/*</Row>*/}
                         <Row>
                           <Col span={16} className={commonStyle.colorBlue} style={{ marginBottom: 20 }}>
-                            <a href="/professor/create">提交修正</a>
+                            <Amend amendUrl='' />
                           </Col>
                         </Row>
                         <Row>
