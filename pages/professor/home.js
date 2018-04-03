@@ -206,7 +206,7 @@ class Professor extends React.Component {
                               <Button type="primary">点评该教授的课程</Button>
                             </a>
                           </Col>
-                          <Col span={7}>
+                          <Col span={13}>
                             <Share/>
                           </Col>
                         </Row>

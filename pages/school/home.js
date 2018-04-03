@@ -192,7 +192,7 @@ class School extends React.Component {
                       <Amend amendUrl='' />
 
                       <Row style={{ marginTop: 24 }}>
-                        <Col span={12}>
+                        <Col span={10}>
                           <a
                             onClick={e => {
                               if (!url.query.user.student.is_email_edu) {
@@ -204,7 +204,7 @@ class School extends React.Component {
                             <Button type="primary">为这所高校评分</Button>
                           </a>
                         </Col>
-                        <Col span={4}>
+                        <Col span={14}>
                           <Share />
                         </Col>
                       </Row>
