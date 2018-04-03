@@ -57,7 +57,9 @@ function renderDistrict(item) {
 class School extends React.Component {
   constructor(props) {
     super(props);
+
     let contentList = {};
+
     const {
       school
     } = props.url.query;
@@ -67,8 +69,6 @@ class School extends React.Component {
     school.schoolDistrictInfo.map(item => {
       contentList[item.school_district_name] = renderDistrict(item);
     });
-
-    console.log(school);
 
     this.state = {
       key: school.schoolDistrictInfo[0] && school.schoolDistrictInfo[0].school_district_name,
@@ -89,6 +89,7 @@ class School extends React.Component {
     this.setState({
       listHeight: this.list.offsetHeight
     });
+
     window.addEventListener('scroll', this.onScroll);
   }
 

@@ -34,9 +34,15 @@ class Professor extends React.Component {
   constructor(props) {
     super(props);
 
+    const {
+      professor
+    } = this.props.url.query;
+
+    console.log(professor);
+
     this.state = {
-      professor: this.props.url.query.professor,
-      rateInfo: this.props.url.query.professor.rateInfo
+      professor,
+      rateInfo: professor.rateInfo
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -49,6 +55,7 @@ class Professor extends React.Component {
     this.setState({
       listHeight: this.list.offsetHeight
     });
+
     window.addEventListener('scroll', this.onScroll);
   }
 
@@ -66,8 +73,6 @@ class Professor extends React.Component {
   };
 
   handleChange(e) {
-    console.log(e);
-
     const {
       professor
     } = this.state;
@@ -76,8 +81,7 @@ class Professor extends React.Component {
 
     if (e == 'all') {
       rateInfo = professor.rateInfo;
-    }
-    else {
+    } else {
       rateInfo = professor.rateInfo.filter(item => item.course_code == e);
     }
 
@@ -104,7 +108,6 @@ class Professor extends React.Component {
         professor_id: this.props.url.query.id
       }
     }).then(res => {
-      // console.log(res);
       this.getProfessorDetail();
     });
   }
@@ -115,7 +118,6 @@ class Professor extends React.Component {
         professor_rate_id
       }
     }).then(res => {
-      // console.log(res);
       this.getProfessorDetail();
     }).catch(() => {
       message.error('您已经点击过没用了');
@@ -128,7 +130,6 @@ class Professor extends React.Component {
         professor_rate_id
       }
     }).then(res => {
-      // console.log(res);
       this.getProfessorDetail();
     }).catch(() => {
       message.error('您已经点击过有用了');
