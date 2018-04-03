@@ -94,16 +94,16 @@ class School extends React.Component {
   }
 
   onScroll = () => {
-    this.setState({
-      dense: true
-    });
+    // this.setState({
+    //   dense: true
+    // });
 
-    clearTimeout(this.t);
-    this.t = setTimeout(() => {
-      this.setState({
-        dense: false
-      });
-    }, 50);
+    // clearTimeout(this.t);
+    // this.t = setTimeout(() => {
+    //   this.setState({
+    //     dense: false
+    //   });
+    // }, 50);
   };
 
   onTabChange(key, type) {
