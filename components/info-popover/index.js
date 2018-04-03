@@ -49,7 +49,7 @@ class InfoPopover extends React.Component {
 
     const content = (
       student &&
-        <div>
+        <div style={{width: 200}}>
         {
           student.education_status == 1 ?
           <div>
@@ -104,8 +104,8 @@ class InfoPopover extends React.Component {
         key={id}
         content={content}
         placement={placement}
-        title={student && student.name}
-        trigger="click"
+        // title={student && student.name}
+        // trigger="click"
         visible={visible}
         onVisibleChange={this.handleVisibleChange}>
         {children}

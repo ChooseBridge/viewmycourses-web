@@ -284,7 +284,7 @@ class Professor extends React.Component {
             </Card>
 
             <div
-              // className={cla({ 'dense': this.state.dense })}
+              className={cla({ 'dense': this.state.dense })}
               ref={ref => this.list = ref}
               style={{ height: this.state.listHeight }}>
 
