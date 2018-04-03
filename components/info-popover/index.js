@@ -49,10 +49,10 @@ class InfoPopover extends React.Component {
 
     const content = (
       student &&
-      <Row type="flex" justify="start">
+        <div>
         {
           student.education_status == 1 ?
-          <Col span={24}>
+          <div>
             <Row>
               <Col span={12} style={{ fontWeight: 800 }}>大学</Col>
               <Col span={12}>{student.school_name}</Col>
@@ -76,9 +76,9 @@ class InfoPopover extends React.Component {
                 }
               </Col>
             </Row>
-          </Col>
+          </div>
           :
-          <Col span={24}>
+          <div>
             <Row>
               <Col span={12} style={{ fontWeight: 800 }}>高中</Col>
               <Col span={12}>{student.school_name}</Col>
@@ -94,9 +94,9 @@ class InfoPopover extends React.Component {
                 }
               </Col>
             </Row>
-          </Col>
+          </div>
         }
-      </Row>
+      </div>
     );
 
     return (
@@ -104,7 +104,7 @@ class InfoPopover extends React.Component {
         key={id}
         content={content}
         placement={placement}
-        title="用户信息"
+        title={student && student.name}
         trigger="click"
         visible={visible}
         onVisibleChange={this.handleVisibleChange}>
