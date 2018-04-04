@@ -53,31 +53,44 @@ class Amend extends React.Component {
       confirmLoading: true,
     });
 
-    let apiName, query;
+    let apiName, body;
 
     if (amendType == 'school') {
       apiName = 'createSchoolComment';
-      query = {
+      body = {
         school_id: id,
         comment: textAreaVal,
       };
     } else if (amendType == 'professor') {
       apiName = 'createProfessorComment';
-      query = {
+      body = {
         professor_id: id,
         comment: textAreaVal,
       };
     }
 
     client(api[apiName])({
-      query,
-    }).then(res => {
-      console.log(res);
+      body,
+    }).then(() => {
+      Modal.success({
+        title: '提交成功',
+        content: '感谢您的帮助',
+        okText: '确定',
+        cancelText: '取消',
+      });
+
       this.setState({
         visible: false,
         confirmLoading: false,
       });
     }).catch(() => {
+      Modal.error({
+        title: '提交失败',
+        content: '您提交的内容有误，请重新提交',
+        okText: '确定',
+        cancelText: '取消',
+      });
+
       this.setState({
         confirmLoading: false,
       });

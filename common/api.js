@@ -148,6 +148,14 @@ module.exports = {
   }, opt),
 
   /**
+   * 给学校点赞
+   * @param opt
+   */
+  thumbsUpSchool: opt => makeApi({
+    url: '/api/thumbs-up-school',
+  }, opt),
+
+  /**
    * 给教授的点评点赞
    * @param opt
    */
@@ -192,6 +200,7 @@ module.exports = {
    * @param opt
    */
   createSchoolComment: opt => makeApi({
+    type: 'POST',
     url: '/api/create-school-comment',
   }, opt),
 
@@ -200,6 +209,7 @@ module.exports = {
    * @param opt
    */
   createProfessorComment: opt => makeApi({
+    type: 'POST',
     url: '/api/create-professor-comment',
   }, opt),
 
