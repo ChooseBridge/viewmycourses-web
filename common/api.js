@@ -187,4 +187,20 @@ module.exports = {
     url: '/api/get-all-by-name',
   }, opt),
 
+  /**
+   * 学校提交修正
+   * @param opt
+   */
+  createSchoolComment: opt => makeApi({
+    url: '/api/create-school-comment',
+  }, opt),
+
+  /**
+   * 教授提交修正
+   * @param opt
+   */
+  createProfessorComment: opt => makeApi({
+    url: '/api/create-professor-comment',
+  }, opt),
+
 };

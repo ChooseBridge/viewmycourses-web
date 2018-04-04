@@ -3,11 +3,14 @@ import {
   Modal,
   Input,
   AutoComplete,
+  message,
 } from 'antd';
 import client from '../../common/client';
 import api from '../../common/api';
 
-const { TextArea } = Input;
+const {
+  TextArea
+} = Input;
 
 class Amend extends React.Component {
   constructor(props) {
@@ -21,8 +24,7 @@ class Amend extends React.Component {
     this.setTextAreaValue = this.setTextAreaValue.bind(this);
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   showModal = () => {
     this.setState({
@@ -31,19 +33,55 @@ class Amend extends React.Component {
   }
 
   handleOk = () => {
+    const {
+      textAreaVal
+    } = this.state;
+
+    const {
+      amendType,
+      id,
+    } = this.props;
+
+    console.log(textAreaVal);
+
+    if (!textAreaVal) {
+      message.error('请填写修正内容');
+      return;
+    }
+
     this.setState({
       confirmLoading: true,
     });
 
-    console.log(this.state.textAreaVal);
+    let apiName, query;
 
-    //TODO 提交修正信息
-    setTimeout(() => {
+    if (amendType == 'school') {
+      apiName = 'createSchoolComment';
+      query = {
+        school_id: id,
+        comment: textAreaVal,
+      };
+    } else if (amendType == 'professor') {
+      apiName = 'createProfessorComment';
+      query = {
+        professor_id: id,
+        comment: textAreaVal,
+      };
+    }
+
+    client(api[apiName])({
+      query,
+    }).then(res => {
+      console.log(res);
       this.setState({
         visible: false,
         confirmLoading: false,
       });
-    }, 2000);
+    }).catch(() => {
+      this.setState({
+        confirmLoading: false,
+      });
+    });
   }
 
   handleCancel = () => {
@@ -59,10 +97,6 @@ class Amend extends React.Component {
   }
 
   render() {
-    const {
-      // amendUrl
-    } = this.props;
-
     const {
       visible,
       confirmLoading,
