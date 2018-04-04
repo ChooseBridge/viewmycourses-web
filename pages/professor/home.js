@@ -21,6 +21,7 @@ import commonStyle from '../../common/style/index.css';
 import Share from '../../components/share';
 // import ProfessorRate from '../../components/professor-rate/index';
 import ProfessorRate from '../../components/professor-rate-2/index';
+import Thumb from '../../components/thumb/index';
 import Amend from '../../components/amend';
 import requiredEdu from '../../common/required-edu';
 
@@ -168,18 +169,12 @@ class Professor extends React.Component {
                       <Col span={20}>
                         <Row>
                           <Col span={16}>
-                            <span style={{ fontSize: 32, marginRight: 6 }}>
+                            <span style={{ fontSize: 32 }}>
                               {professorInfo.professor_full_name}
                             </span>
-                            {
-                              professorInfo.is_thumbs_up ? <Icon
-                                  onClick={this.thumbsProfessor}
-                                  type="heart"
-                                  style={{ color: 'red' }} />
-                                : <Icon
-                                  onClick={this.thumbsProfessor}
-                                  type="heart-o" />
-                            }
+                            <Thumb
+                              info={professorInfo}
+                              onThumbs={this.thumbsProfessor} />
                             <span style={{ marginLeft: 5 }}>{professorInfo.thumbs_up_num}</span>
                           </Col>
                         </Row>

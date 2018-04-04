@@ -19,6 +19,7 @@ import commonStyle from '../../common/style/index.css';
 // import SchoolRate from '../../components/school-rate';
 import SchoolRate from '../../components/school-rate-2';
 import Share from '../../components/share';
+import Thumb from '../../components/thumb/index';
 import Amend from '../../components/amend';
 import requiredEdu from '../../common/required-edu';
 
@@ -84,6 +85,7 @@ class School extends React.Component {
     };
 
     this.onTabChange = this.onTabChange.bind(this);
+    this.thumbsSchool = this.thumbsSchool.bind(this);
   }
 
   componentDidMount() {
@@ -151,6 +153,16 @@ class School extends React.Component {
     });
   }
 
+  thumbsSchool() {
+    client(api.thumbsUpSchool)({
+      query: {
+        school_id: this.props.url.query.id
+      }
+    }).then(res => {
+      this.getSchoolDetail();
+    });
+  }
+
   render() {
     const {
       url
@@ -184,7 +196,12 @@ class School extends React.Component {
                 </Col>
 
                 <Col span={21}>
-                  <div><span style={{ fontSize: 32 }}>{schoolInfo.school_name}</span></div>
+                  <div>
+                    <span style={{ fontSize: 32 }}>{schoolInfo.school_name}</span>
+                    <Thumb
+                      info={schoolInfo}
+                      onThumbs={this.thumbsSchool} />
+                  </div>
                   <Row>
                     <Col span={12}>
                       <div>{schoolInfo.country} {schoolInfo.province} <span className={style.colorBlue}>
