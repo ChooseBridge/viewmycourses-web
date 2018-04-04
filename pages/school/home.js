@@ -8,7 +8,8 @@ import {
   Row,
   Col,
   Card,
-  message
+  message,
+  Avatar
 } from 'antd';
 import cla from 'classnames';
 import client from '../../common/client';
@@ -213,7 +214,9 @@ class School extends React.Component {
                     <Col span={12}>
                       <div><h2>每日推荐</h2></div>
                       <Row>
-                        <Col span={4}><Icon type="smile" style={{ fontSize: 48, color: '#66dc66' }} /></Col>
+                        <Col span={4}>
+                          <Avatar size="large" icon="user" />
+                        </Col>
                         <Col span={12}>
                           <div className={style.schoolStyle}>
                             <a href={`/professor/${randomProfessor.professor_id}`}>

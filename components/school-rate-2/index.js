@@ -55,32 +55,32 @@ export default class extends Component {
                             </div>
                           </div>
                         </Col>
-                        <Col className={style.center} span={10}>
+
+                        <Col className={style.center} span={8}>
                           <div className={style.comment}>
                             {rate.comment}
                           </div>
-
                           <div>
-                            <span onClick={onThumbsUp}>
+                            <div onClick={onThumbsUp}>
                               <a className={style.like}>
                                 <Icon
                                   type="like-o"
                                   style={rate.is_thumbs_up ? { color: 'red' } : { color: '#000' }} />
                                 {rate.thumbs_up_percent}% 的人认为有用
                               </a>
-                            </span>
-                            <span onClick={onThumbsDown}>
+                            </div>
+                            <div onClick={onThumbsDown}>
                               <a className={style.unlike}>
                                 <Icon
                                   type="dislike-o"
                                   style={rate.is_thumbs_down ? { color: 'red' } : { color: '#000' }} />
                                 {rate.thumbs_down_percent}% 的人认为没用
                               </a>
-                            </span>
+                            </div>
                           </div>
                         </Col>
 
-                        <Col span={9} className={style.right}>
+                        <Col span={11} className={style.right}>
                           <Col>
                             <Row>
                               <Col span={12}>
