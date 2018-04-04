@@ -18,7 +18,8 @@ import {
   AutoComplete,
   Modal,
   Checkbox,
-  InputNumber
+  InputNumber,
+  message,
 } from 'antd';
 import cla from 'classnames';
 import client from '../../common/client';
@@ -50,7 +51,7 @@ class ProfessorRate extends React.Component {
       effort: 0,
       selectedTags: [],
       professor: {},
-      agreed: true
+      agreed: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -83,8 +84,14 @@ class ProfessorRate extends React.Component {
 
     const {
       selectedTags,
-      professor
+      professor,
+      agreed,
     } = this.state;
+
+    if (!agreed) {
+      message.error('请同意点评礼仪');
+      return;
+    }
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -489,7 +496,24 @@ class ProfessorRate extends React.Component {
                   validateStatus={gradeError ? 'error' : ''}
                   help={gradeError || ''}
                   label="你的成绩"
-                extra="百分比成绩换算标准为90%以上为A，每减少10%下降一个等第。A+, A, A-统一为A，以此类推。">
+                  extra={
+                    <div>
+                      <div>
+                        百分比成绩换算标准为90%以上为A，每减少10%下降一个等第。
+                        <br/> A+, A, A-统一为A，以此类推。
+                      </div>
+                      <div>
+                        我们提供了以下示例问题供你选择，也欢迎分享课程学习中的趣事，让大家对这门课程有更多了解！
+                        <ul>
+                          <li>这门课抢课难度如何？</li>
+                          <li>从这门课能学到什么？讨论为主还是讲课为主？巩固还是拓展课本？</li>
+                          <li>作业是怎样的？小组项目？练习题？阅读？写作？还是？</li>
+                          <li>考试频率多高？考试内容与题型？给分情况如何？</li>
+                          <li>应该如何学习这门课程？预习？复习？你有什么特别的学习建议？</li>
+                        </ul>
+                      </div>
+                    </div>
+                  }>
                   {getFieldDecorator('grade', {
                     rules: [{ required: true, message: '请选你的成绩' }]
                   })(
@@ -510,23 +534,24 @@ class ProfessorRate extends React.Component {
                 {/*label="努力指数">*/}
                 {/*<h2 style={{ fontSize: 40 }}>{effort}</h2>*/}
                 {/*</FormItem>*/}
-
-
                 <FormItem
                   {...formItemLayout}
                   validateStatus={commentError ? 'error' : ''}
                   help={commentError || ''}
                   label="文字点评"
-                  extra={<div>
-                    我们提供了以下示例问题供你选择，也欢迎分享课程学习中的趣事，让大家对这门课程有更多了解！
-                    <ul>
-                      <li>这门课抢课难度如何？</li>
-                      <li>从这门课能学到什么？讨论为主还是讲课为主？巩固还是拓展课本内容？</li>
-                      <li>作业是怎样的？小组项目？练习题？阅读？写作？还是？</li>
-                      <li>考试频率多高？考试内容与题型？给分情况如何？</li>
-                      <li>应该如何学习这门课程？预习？复习？你有什么特别的学习建议？</li>
-                    </ul>
-                  </div>}>
+                  // extra={
+                    // <div>
+                    //   我们提供了以下示例问题供你选择，也欢迎分享课程学习中的趣事，让大家对这门课程有更多了解！
+                    //   <ul>
+                    //     <li>这门课抢课难度如何？</li>
+                    //     <li>从这门课能学到什么？讨论为主还是讲课为主？巩固还是拓展课本？</li>
+                    //     <li>作业是怎样的？小组项目？练习题？阅读？写作？还是？</li>
+                    //     <li>考试频率多高？考试内容与题型？给分情况如何？</li>
+                    //     <li>应该如何学习这门课程？预习？复习？你有什么特别的学习建议？</li>
+                    //   </ul>
+                    // </div>
+                  // }
+                  >
                   {getFieldDecorator('comment', {
                     rules: [{ required: true, message: '请填写点评' }]
                   })(

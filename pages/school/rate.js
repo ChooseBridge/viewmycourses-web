@@ -15,7 +15,8 @@ import {
   Slider,
   Input,
   Modal,
-  Checkbox
+  Checkbox,
+  message,
 } from 'antd';
 import cla from 'classnames';
 import style from '../../common/style/rate.css';
@@ -43,7 +44,7 @@ class SchoolRate extends React.Component {
       loading: false,
       avgPoints: 0,
       school: {},
-      agreed: true
+      agreed: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -65,6 +66,13 @@ class SchoolRate extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const {agreed} = this.state;
+
+    if (!agreed) {
+      message.error('请同意点评礼仪');
+      return;
+    }
+
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const body = Object.assign({}, {
@@ -458,7 +466,15 @@ class SchoolRate extends React.Component {
                   {...formItemLayout}
                   validateStatus={relationsError ? 'error' : ''}
                   help={relationsError || ''}
-                  label="校方与学生群体关系">
+                  label="校方与学生群体关系"
+                  extra={<div>
+                    我们提供了以下示例问题供你选择，也欢迎分享校园生活中的趣事，让大家对你的学校有更多了解！
+                    <ul>
+                      <li>你的学校名声好吗？学术水平如何？</li>
+                      <li>在学校的衣食住行方便吗？你有没有一些特别的生活策略？</li>
+                      <li>校园内课外活动多吗？学校对于学生活动支持吗？</li>
+                    </ul>
+                  </div>}>
                   {getFieldDecorator('school_students_relations', {
                     initialValue: 0,
                     rules: [{
@@ -482,14 +498,15 @@ class SchoolRate extends React.Component {
                   validateStatus={commentError ? 'error' : ''}
                   help={commentError || ''}
                   label="文字点评"
-                  extra={<div>
-                    我们提供了以下示例问题供你选择，也欢迎分享校园生活中的趣事，让大家对你的学校有更多了解！
-                    <ul>
-                      <li>你的学校名声好吗？学术水平如何？</li>
-                      <li>在学校的衣食住行方便吗？你有没有一些特别的生活策略？</li>
-                      <li>校园内课外活动多吗？学校对于学生活动支持吗？</li>
-                    </ul>
-                  </div>}>
+                  // extra={<div>
+                  //   我们提供了以下示例问题供你选择，也欢迎分享校园生活中的趣事，让大家对你的学校有更多了解！
+                  //   <ul>
+                  //     <li>你的学校名声好吗？学术水平如何？</li>
+                  //     <li>在学校的衣食住行方便吗？你有没有一些特别的生活策略？</li>
+                  //     <li>校园内课外活动多吗？学校对于学生活动支持吗？</li>
+                  //   </ul>
+                  // </div>}
+                  >
                   {getFieldDecorator('comment', {
                     rules: [{ required: true, message: '请填写点评' }]
                   })(
@@ -509,7 +526,7 @@ class SchoolRate extends React.Component {
                     style={{ width: 250 }}
                     type="primary"
                     htmlType="submit"
-                    disabled={hasErrors(getFieldsError()) || !agreed}>
+                    disabled={hasErrors(getFieldsError())}>
                     提交点评
                   </Button>
                 </FormItem>
