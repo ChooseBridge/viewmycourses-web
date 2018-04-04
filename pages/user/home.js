@@ -188,54 +188,57 @@ class User extends React.Component {
                             <span style={{ fontSize: 32 }}>{student.name}</span>
                           </Col>
                         </Row>
-                        <Row type="flex" justify="start">
-                          {
-                            student.education_status == 1 ?
-                            <Col span={12}>
-                              <Row>
-                                <Col span={12} style={{ fontWeight: 800 }}>大学</Col>
-                                <Col span={12}>{student.school_name}</Col>
-                              </Row>
-                              <Row>
-                                <Col span={12} style={{ fontWeight: 800 }}>专业</Col>
-                                <Col span={12}>{student.major}</Col>
-                              </Row>
-                              <Row>
-                                <Col span={12} style={{ fontWeight: 800 }}>高考地</Col>
-                                <Col span={12}>{student.exam_province}</Col>
-                              </Row>
-                              <Row>
-                                <Col span={12} style={{ fontWeight: 800 }}>毕业年份</Col>
-                                <Col span={12}>
-                                  {
-                                    student.is_graduate == 0 ?
-                                    '在读'
-                                    :
-                                    student.graduate_year
-                                  }
-                                </Col>
-                              </Row>
+                        {
+                          student.education_status == 1 ?
+                          <Row type="flex">
+                            <Col style={{ fontWeight: 800, marginRight: 6 }}>
+                              <div>大学</div>
+                              <div>专业</div>
+                              <div>
+                                {
+                                  student.school_status == '国内' ?
+                                  '高考地'
+                                  :
+                                  '高中所在省份/联邦州'
+                                }
+                              </div>
+                              <div>毕业年份</div>
                             </Col>
-                            :
-                            <Col span={12}>
-                              <Row>
-                                <Col span={12} style={{ fontWeight: 800 }}>高中</Col>
-                                <Col span={12}>{student.school_name}</Col>
-                              </Row>
-                              <Row>
-                                <Col span={12} style={{ fontWeight: 800 }}>毕业年份</Col>
-                                <Col span={12}>
-                                  {
-                                    student.is_graduate == 0 ?
-                                    '在读'
-                                    :
-                                    student.graduate_year
-                                  }
-                                </Col>
-                              </Row>
+
+                            <Col>
+                              <div>{student.school_name}</div>
+                              <div>{student.major}</div>
+                              <div>{student.exam_province}</div>
+                              <div>
+                                {
+                                  student.is_graduate == 0 ?
+                                  '在读'
+                                  :
+                                  student.graduate_year
+                                }
+                              </div>
                             </Col>
-                          }
-                        </Row>
+                          </Row>
+                          :
+                          <Row type="flex">
+                            <Col style={{ fontWeight: 800, marginRight: 6 }}>
+                              <div>高中</div>
+                              <div>毕业年份</div>
+                            </Col>
+
+                            <Col>
+                              <div>{student.school_name}</div>
+                              <div>
+                                {
+                                  student.is_graduate == 0 ?
+                                  '在读'
+                                  :
+                                  student.graduate_year
+                                }
+                              </div>
+                            </Col>
+                          </Row>
+                        }
                         <Row>
                           <Col span={16} style={{ marginTop: 20 }}>
                             {student &&
