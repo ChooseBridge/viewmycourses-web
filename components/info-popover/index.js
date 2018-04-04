@@ -7,6 +7,7 @@ import {
 import cla from 'classnames';
 import client from '../../common/client';
 import api from '../../common/api';
+import style from './style.css';
 
 class InfoPopover extends React.Component {
   constructor(props) {
@@ -53,7 +54,7 @@ class InfoPopover extends React.Component {
         {
           student.education_status == 1 ?
           <Row type="flex">
-            <Col style={{ fontWeight: 800, marginRight: 6 }}>
+            <Col className={cla(style.wrap, style.title)}>
               <div>大学</div>
               <div>专业</div>
               <div>
@@ -67,7 +68,7 @@ class InfoPopover extends React.Component {
               <div>毕业年份</div>
             </Col>
 
-            <Col>
+            <Col className={style.wrap}>
               <div>{student.school_name}</div>
               <div>{student.major}</div>
               <div>{student.exam_province}</div>
@@ -83,12 +84,12 @@ class InfoPopover extends React.Component {
           </Row>
           :
           <Row type="flex">
-            <Col style={{ fontWeight: 800, marginRight: 6 }}>
+            <Col className={cla(style.wrap, style.title)}>
               <div>高中</div>
               <div>毕业年份</div>
             </Col>
 
-            <Col>
+            <Col className={style.wrap}>
               <div>{student.school_name}</div>
               <div>
                 {
