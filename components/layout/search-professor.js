@@ -124,17 +124,17 @@ class Search extends Component {
             </Col>
           </Row>
 
-          <Row className={style.row}>
-            <Col
-              className={cla(commonStyle.textCenter)}
-              span={12}
-              offset={6}>
-              <a href="javascript:;" onClick={() => {
-                this.setState({show: false});
-                setTimeout(() => this.props.closeAll(), 300);
-              }}>关闭</a>
-            </Col>
-          </Row>
+          {/*<Row className={style.row}>*/}
+            {/*<Col*/}
+              {/*className={cla(commonStyle.textCenter)}*/}
+              {/*span={12}*/}
+              {/*offset={6}>*/}
+              {/*<a href="javascript:;" onClick={() => {*/}
+                {/*this.setState({show: false});*/}
+                {/*setTimeout(() => this.props.closeAll(), 300);*/}
+              {/*}}>关闭</a>*/}
+            {/*</Col>*/}
+          {/*</Row>*/}
         </div>
       </Form>
     );

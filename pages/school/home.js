@@ -293,7 +293,14 @@ class School extends React.Component {
             <Card className={style.wrap} style={{textAlign: 'center'}}>
               <h1>想让学弟学妹们更加了解你的学校？</h1>
               <div>
-                <a href={`/school/${this.props.url.query.id}/rate`}>
+                <a
+                  onClick={e => {
+                    if (!url.query.user.student.is_email_edu) {
+                      e.preventDefault();
+                      requiredEdu();
+                    }
+                  }}
+                  href={`/school/${this.props.url.query.id}/rate`}>
                   <Button
                     size="large"
                     style={{ width: 250 }}

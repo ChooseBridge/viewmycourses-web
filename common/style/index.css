@@ -45,3 +45,13 @@
 /*:global(.ant-menu-dark.ant-menu-horizontal) {*/
   /*border-bottom-color:#0066c7 ;*/
 /*}*/
+
+
+:global(.ant-form-item-control) {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+:global(.ant-form-extra) {
+  padding-top: 11px;
+}

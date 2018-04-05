@@ -103,7 +103,13 @@ export default class extends React.Component {
                 <Col lg={{ span: 4 }} md={{ span: 5 }}>
                   <h2 className={style.logo}>
                     <a href="/">
-                      桥选<span style={{ transform: 'scale(0.8)', display: 'inline-block' }}>®</span>校园
+                      桥选<span style={{
+                      transform: 'scale(0.5)',
+                      display: 'inline-block',
+                      fontWeight: 'normal',
+                      position: 'relative',
+                      top: -4
+                    }}>®</span>校园
                     </a>
                   </h2>
                 </Col>
@@ -160,7 +166,7 @@ export default class extends React.Component {
               <a href="">关于我们</a>
               <a href="">加入我们</a>
               <a href="">联系我们</a>
-              <a href="">使用规范</a>
+              <a href="/terms">使用协议</a>
               <a href="/privacy">隐私政策</a>
             </div>
             <div>备案号 xxxxxxxx</div>

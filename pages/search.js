@@ -21,6 +21,7 @@ import api from '../common/api';
 import client from '../common/client';
 import style from '../common/style/home.css';
 import commonStyle from '../common/style/index.css';
+import requiredEdu from '../common/required-edu';
 
 const {
   Content
@@ -531,7 +532,22 @@ class Search extends React.Component {
               <div><h3>{searchText}</h3></div>
               <div>没有你想找的学校或教授？</div>
               <div>
-                <a href="/professor/create">创建教授</a>或<a href="/school/create">创建学校</a>
+                <a
+                  onClick={e => {
+                    if (!url.query.user.student.is_email_edu) {
+                      e.preventDefault();
+                      requiredEdu();
+                    }
+                  }}
+                  href="/professor/create">创建教授</a>或
+                <a
+                  onClick={e => {
+                    if (!url.query.user.student.is_email_edu) {
+                      e.preventDefault();
+                      requiredEdu();
+                    }
+                  }}
+                  href="/school/create">创建学校</a>
               </div>
 
               {

@@ -55,9 +55,25 @@ class Home extends React.Component {
                 <Typed
                   strings={[
                     '下学期想上什么课？',
-                    '你的梦校是什么？',
-                    '下学期想上谁的课？',
-                    '你在你现在的大学过得好吗？',]}
+                    '工商管理学',
+                    '高等数学',
+                    '清华大学',
+                  '大学英语',
+                  '你的梦校是什么？',
+                  'Stanford University',
+                  '复旦大学',
+                  '微观经济学',
+                  'Harvard University',
+                  '你在你现在的大学过得好吗？',
+                  '北京大学',
+                  '物理',
+                  '政治哲学',
+                  '上海交通大学',
+                  '下学期想上谁的课？',
+                  'Cornell University',
+                  '环境科学',
+                  '上海纽约大学',
+                  '新闻学']}
                   typeSpeed={40}
                   backSpeed={50}
                   attr="placeholder"
