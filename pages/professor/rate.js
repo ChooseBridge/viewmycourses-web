@@ -496,12 +496,14 @@ class ProfessorRate extends React.Component {
                   validateStatus={gradeError ? 'error' : ''}
                   help={gradeError || ''}
                   label="你的成绩"
+                  style={{marginBottom: 0}}
                   extra={
                     <div>
                       <div>
                         百分比成绩换算标准为90%以上为A，每减少10%下降一个等第。
                         <br/> A+, A, A-统一为A，以此类推。
                       </div>
+                      <br />
                       <div>
                         我们提供了以下示例问题供你选择，也欢迎分享课程学习中的趣事，让大家对这门课程有更多了解！
                         <ul>
