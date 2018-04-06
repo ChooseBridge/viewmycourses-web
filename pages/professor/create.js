@@ -61,7 +61,7 @@ class ProfessorForm extends React.Component {
         client(api.createProfessor)({ body: values }).then(() => {
           Modal.success({
             title: '提交成功',
-            content: '我们将对你提交的资料进行审核，审核结果将会发送到你的邮箱',
+            content: '我们将对您提交的资料进行审核，审核结果将会发送到您的邮箱',
             onOk: () => history.back()
           });
         }, e => {

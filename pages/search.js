@@ -530,7 +530,7 @@ class Search extends React.Component {
           <div className={commonStyle.bgWrap}>
             <Card className={style.wrap}>
               <div><h3>{searchText}</h3></div>
-              <div>没有你想找的学校或教授？</div>
+              <div>没有您想找的学校或教授？</div>
               <div>
                 <a
                   onClick={e => {

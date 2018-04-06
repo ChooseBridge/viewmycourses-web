@@ -505,10 +505,10 @@ class ProfessorRate extends React.Component {
                     </div>
                   }>
                   {getFieldDecorator('grade', {
-                    rules: [{ required: true, message: '请选你的成绩' }]
+                    rules: [{ required: true, message: '请选您的成绩' }]
                   })(
                     <Select
-                      placeholder="你的成绩"
+                      placeholder="您的成绩"
                       style={{ width: 200 }}>
                       <Option value="A">A</Option>
                       <Option value="B">B</Option>

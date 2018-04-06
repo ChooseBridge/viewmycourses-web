@@ -44,7 +44,7 @@ class Home extends React.Component {
     const { showInput } = this.state;
 
     return (
-      <ALayout title='首页' url={url}>
+      <ALayout url={url}>
         <div className={style.bg}>
           <Content className={commonStyle.container}>
             <div className={style.headline}>

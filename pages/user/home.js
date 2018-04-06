@@ -242,7 +242,7 @@ class User extends React.Component {
                         <Row>
                           <Col span={16} style={{ marginTop: 20 }}>
                             {student &&
-                            <a href={`https://i.choosebridge.com/profile/${student.name}/edit`}><Button type="primary">编辑个人资料</Button></a>}
+                            <a target="_blank" href={`https://i.choosebridge.com/profile/${student.name}/edit`}><Button type="primary">编辑个人资料</Button></a>}
                           </Col>
                         </Row>
                       </Col>
