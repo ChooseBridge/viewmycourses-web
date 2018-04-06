@@ -6,7 +6,9 @@ import {
   Col,
   Button,
   Dropdown,
-  Affix
+  Affix,
+  Badge,
+  Icon
 } from 'antd';
 import Base from '../base/index.js';
 import style from './style.css';
@@ -130,6 +132,21 @@ export default class extends React.Component {
 
 
                   <div style={{ float: 'right', color: '#fff' }}>
+
+                    {
+                      url.query.user && (
+                        <Badge count={url.query.user.unread} showZero>
+                          <a href="/user/message" style={{ color: '#fff' }}>
+                            <Icon type="inbox" style={{fontSize: 20}} />
+                          </a>
+                        </Badge>
+                      )
+                    }
+
+                    {
+                      url.query.user && <span style={{ margin: '0 10px' }}>|</span>
+                    }
+
                     {
                       url.query.user ? (
                         <Dropdown overlay={(
@@ -138,16 +155,12 @@ export default class extends React.Component {
                               <a href="/user">个人主页</a>
                             </Menu.Item>
                             <Menu.Item>
-                              <a href="/user/message">消息中心{url.query.user.unread && `(${url.query.user.unread})`}</a>
-                            </Menu.Item>
-                            <Menu.Item>
                               <a href="javascript:;" onClick={this.logout}>退出登录</a>
                             </Menu.Item>
                           </Menu>
                         )}>
                           <a href="/user" style={{ color: '#fff' }}>
                             {url.query.user.student.name}
-                            {url.query.user.unread && <span className={style.redPoint} />}
                           </a>
                         </Dropdown>
                       ) : <a href={url.query.loginUrl}><Button ghost type="primary">登录</Button></a>
