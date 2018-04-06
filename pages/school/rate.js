@@ -497,6 +497,7 @@ class SchoolRate extends React.Component {
                       <li>你的学校名声好吗？学术水平如何？</li>
                       <li>在学校的衣食住行方便吗？你有没有一些特别的生活策略？</li>
                       <li>校园内课外活动多吗？学校对于学生活动支持吗？</li>
+                      <li>新学期的校园有哪些不同？</li>
                     </ul>
                   </div>}>
                   {getFieldDecorator('comment', {
