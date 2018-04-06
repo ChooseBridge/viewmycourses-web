@@ -121,14 +121,14 @@ class ProfessorRate extends React.Component {
 
         client(api.createProfessorRate)({
           body
-        }).then(res => {
-          if (res == '创建成功') {
-            Modal.success({
-              title: '创建成功',
-              content: '感谢您的点评',
-              okText: '确定'
-            });
-          }
+        }).then(() => {
+          Modal.success({
+            title: '创建成功',
+            content: '感谢您的点评',
+            okText: '确定'
+          });
+        }, e => {
+          message.error(e.errorMsg);
         });
       }
     });
@@ -500,7 +500,7 @@ class ProfessorRate extends React.Component {
                     <div>
                       <div>
                         百分比成绩换算标准为90%以上为A，每减少10%下降一个等第。
-                        <br/> A+, A, A-统一为A，以此类推。
+                        <br /> A+, A, A-统一为A，以此类推。
                       </div>
                     </div>
                   }>

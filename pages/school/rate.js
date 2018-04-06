@@ -16,7 +16,7 @@ import {
   Input,
   Modal,
   Checkbox,
-  message,
+  message
 } from 'antd';
 import cla from 'classnames';
 import style from '../../common/style/rate.css';
@@ -44,7 +44,7 @@ class SchoolRate extends React.Component {
       loading: false,
       avgPoints: 0,
       school: {},
-      agreed: false,
+      agreed: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -66,7 +66,7 @@ class SchoolRate extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const {agreed} = this.state;
+    const { agreed } = this.state;
 
     if (!agreed) {
       message.error('请同意点评礼仪');
@@ -81,14 +81,14 @@ class SchoolRate extends React.Component {
 
         client(api.createSchoolRate)({
           body
-        }).then(res => {
-          if (res == '创建成功') {
-            Modal.success({
-              title: '创建成功',
-              content: '感谢您的点评',
-              okText: '确定'
-            });
-          }
+        }).then(() => {
+          Modal.success({
+            title: '创建成功',
+            content: '感谢您的点评',
+            okText: '确定'
+          });
+        }, e => {
+          message.error(e.errorMsg);
         });
       }
     });
@@ -231,7 +231,7 @@ class SchoolRate extends React.Component {
             </Card>
 
             <Card className={style.wrap}>
-              <Form layout="horizontal" onSubmit={this.handleSubmit} style={{width: 620}}>
+              <Form layout="horizontal" onSubmit={this.handleSubmit} style={{ width: 620 }}>
                 <FormItem
                   {...formItemLayout}
                   validateStatus={schoolError ? 'error' : ''}
@@ -497,7 +497,7 @@ class SchoolRate extends React.Component {
                       <li>在学校的衣食住行方便吗？你有没有一些特别的生活策略？</li>
                       <li>校园内课外活动多吗？学校对于学生活动支持吗？</li>
                     </ul>
-                  </div>} >
+                  </div>}>
                   {getFieldDecorator('comment', {
                     rules: [{ required: true, message: '请填写点评' }]
                   })(
@@ -506,9 +506,9 @@ class SchoolRate extends React.Component {
                 </FormItem>
 
                 {/*<FormItem*/}
-                  {/*{...formItemLayout}*/}
-                  {/*label="综合得分">*/}
-                  {/*<h2 style={{ fontSize: 40 }}>{avgPoints}</h2>*/}
+                {/*{...formItemLayout}*/}
+                {/*label="综合得分">*/}
+                {/*<h2 style={{ fontSize: 40 }}>{avgPoints}</h2>*/}
                 {/*</FormItem>*/}
                 <FormItem {...tailFormItemLayout}>
                   <Button
