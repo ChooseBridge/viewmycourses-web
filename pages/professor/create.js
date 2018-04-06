@@ -216,7 +216,7 @@ class ProfessorForm extends React.Component {
                     }, message: '请同意!'
                   }]
                 })(
-                  <Checkbox>我已阅读并接受<a href="">协议</a></Checkbox>
+                  <Checkbox>我已阅读并接受<a href="/terms">协议</a></Checkbox>
                 )}
               </FormItem>
               <FormItem {...tailFormItemLayout}>

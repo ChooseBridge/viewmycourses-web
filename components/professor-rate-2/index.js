@@ -79,14 +79,14 @@ export default class extends Component {
                           <span onClick={onThumbsUp}>
                             <a className={style.like}>
                               <Icon type="like-o" style={rate.is_thumbs_up ? { color: 'red' } : { color: '#000' }} />
-                              {rate.thumbs_up_percent}% 有用
+                              {rate.thumbs_up_percent}%
                             </a>
                           </span>
                           <span onClick={onThumbsDown}>
                             <a className={style.unlike}>
                               <Icon type="dislike-o"
                                     style={rate.is_thumbs_down ? { color: 'red' } : { color: '#000' }} />
-                              {rate.thumbs_down_percent}% 没用
+                              {rate.thumbs_down_percent}%
                             </a>
                           </span>
                         </div>
