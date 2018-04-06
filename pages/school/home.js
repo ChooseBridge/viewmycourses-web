@@ -196,12 +196,14 @@ class School extends React.Component {
                 </Col>
 
                 <Col span={21}>
-                  <div>
-                    <span style={{ fontSize: 32 }}>{schoolInfo.school_name}</span>
-                    <Thumb
-                      info={schoolInfo}
-                      onThumbs={this.thumbsSchool} />
-                  </div>
+                  <Row type="flex" align="middle">
+                    <Col>
+                      <span style={{ fontSize: 32 }}>{schoolInfo.school_name}</span>
+                      <Thumb
+                        info={schoolInfo}
+                        onThumbs={this.thumbsSchool} />
+                    </Col>
+                  </Row>
                   <Row>
                     <Col span={12}>
                       <div>{schoolInfo.country} {schoolInfo.province} <span className={style.colorBlue}>

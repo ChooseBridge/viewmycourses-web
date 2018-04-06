@@ -167,11 +167,13 @@ class Professor extends React.Component {
                     <Row>
                       <Col span={4}><Avatar size="large" icon="user" /></Col>
                       <Col span={20}>
-                        <Row>
-                          <Col span={16}>
+                        <Row type="flex" align="middle">
+                          <Col>
                             <span style={{ fontSize: 32 }}>
                               {professorInfo.professor_full_name}
                             </span>
+                          </Col>
+                          <Col>
                             <Thumb
                               info={professorInfo}
                               onThumbs={this.thumbsProfessor} />
