@@ -165,9 +165,9 @@ class Professor extends React.Component {
                 <Row style={{ position: 'relative' }}>
                   <Col span={12}>
                     <Row>
-                      <Col span={4}><Avatar size="large" icon="user" /></Col>
                       <Col span={20}>
                         <Row type="flex" align="middle">
+                          <Col span={4}><Avatar size="large" icon="user" /></Col>
                           <Col>
                             <span style={{ fontSize: 32 }}>
                               {professorInfo.professor_full_name}
@@ -181,19 +181,22 @@ class Professor extends React.Component {
                           </Col>
                         </Row>
                         <Row>
-                          <Col span={16}>{professorInfo.country}{professorInfo.province} {professorInfo.school}</Col>
+                          <Col span={4}></Col>
+                          <Col span={20}>{professorInfo.country}{professorInfo.province} {professorInfo.school}</Col>
                         </Row>
                         {/*<Row>*/}
                         {/*<Col span={16}>心理学教授</Col>*/}
                         {/*</Row>*/}
                         <Row>
-                          <Col span={16} className={commonStyle.colorBlue} style={{ marginBottom: 20 }}>
+                          <Col span={4}></Col>
+                          <Col span={20} className={commonStyle.colorBlue} style={{ marginBottom: 20 }}>
                             <Amend
                               amendType='professor'
                               id={this.props.url.query.id} />
                           </Col>
                         </Row>
                         <Row>
+                          <Col span={4}></Col>
                           <Col span={11}>
                             <a
                               onClick={e => {
@@ -206,7 +209,7 @@ class Professor extends React.Component {
                               <Button type="primary">点评该教授的课程</Button>
                             </a>
                           </Col>
-                          <Col span={13}>
+                          <Col span={9}>
                             <Share/>
                           </Col>
                         </Row>
