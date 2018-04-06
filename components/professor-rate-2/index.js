@@ -60,7 +60,7 @@ export default class extends Component {
                         <div className={style.items}>
                           <div><strong className={style.label}>是否记出勤:</strong> {rate.is_attend === 1 ? '是' : '否'}</div>
                           <div><strong>课程难度:</strong> {rate.difficult_level}</div>
-                          <div><strong>书面作业量:</strong> {homeWorkPipe(rate.written_homework_num)}</div>
+                          <div><strong>书面作业量:</strong> {homeWorkPipe(rate.homework_num)}</div>
                           <div><strong>每月考试数:</strong> {rate.quiz_num}</div>
                         </div>
                       </Col>

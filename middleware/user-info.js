@@ -10,8 +10,12 @@ module.exports = (req, res, next) => {
     headers.token = req.cookies.token;
   }
 
-  api.getStudent({ headers }).then(user => {
+  Promise.all([
+    api.getStudent({ headers }),
+    api.getUnreadCount()
+  ]).then(([user, unread]) => {
     req.user = user;
+    req.user.unread = unread;
     next();
   }, () => {
     next();

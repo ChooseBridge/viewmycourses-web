@@ -213,4 +213,8 @@ module.exports = {
     url: '/api/create-professor-comment',
   }, opt),
 
+  getUnreadCount: () => makeApi({
+    url: '/api/get-student-unread-count'
+  })
+
 };

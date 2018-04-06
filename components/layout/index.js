@@ -138,14 +138,17 @@ export default class extends React.Component {
                               <a href="/user">个人主页</a>
                             </Menu.Item>
                             <Menu.Item>
-                              <a href="/user/message">消息中心</a>
+                              <a href="/user/message">消息中心{url.query.user.unread && `(${url.query.user.unread})`}</a>
                             </Menu.Item>
                             <Menu.Item>
                               <a href="javascript:;" onClick={this.logout}>退出登录</a>
                             </Menu.Item>
                           </Menu>
                         )}>
-                          <a href="/user" style={{ color: '#fff' }}>{url.query.user.student.name}</a>
+                          <a href="/user" style={{ color: '#fff' }}>
+                            {url.query.user.student.name}
+                            {url.query.user.unread && <span className={style.redPoint} />}
+                          </a>
                         </Dropdown>
                       ) : <a href={url.query.loginUrl}><Button ghost type="primary">登录</Button></a>
                     }
