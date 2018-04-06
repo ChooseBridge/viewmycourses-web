@@ -394,7 +394,7 @@ class ProfessorRate extends React.Component {
                   {...formItemLayout}
                   validateStatus={homeworkError ? 'error' : ''}
                   help={homeworkError || ''}
-                  label="笔头作业量">
+                  label="书面作业量">
                   {getFieldDecorator('homework_num', {
                     initialValue: 0,
                     rules: [{
@@ -436,23 +436,6 @@ class ProfessorRate extends React.Component {
                 {/*</FormItem>*/}
                 <FormItem
                   {...formItemLayout}
-                  validateStatus={quizError ? 'error' : ''}
-                  help={quizError || ''}
-                  label="每月考试数（包括随堂检测等）">
-                  {getFieldDecorator('quiz_num', {
-                    rules: [{ required: true, message: '请填写每月考试数' }]
-                  })(
-                    <InputNumber
-                      onChange={() => {
-                        setTimeout(() => this.onCalEffort(), 1000);
-                      }}
-                      style={{ width: 200 }}
-                      placeholder="每月考试数"
-                      min={0} />
-                  )}
-                </FormItem>
-                <FormItem
-                  {...formItemLayout}
                   validateStatus={relatedError ? 'error' : ''}
                   help={relatedError || ''}
                   label="课程与考试内容相关度">
@@ -472,6 +455,23 @@ class ProfessorRate extends React.Component {
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
+                  )}
+                </FormItem>
+                <FormItem
+                  {...formItemLayout}
+                  validateStatus={quizError ? 'error' : ''}
+                  help={quizError || ''}
+                  label="每月考试数（包括随堂检测等）">
+                  {getFieldDecorator('quiz_num', {
+                    rules: [{ required: true, message: '请填写每月考试数' }]
+                  })(
+                    <InputNumber
+                      onChange={() => {
+                        setTimeout(() => this.onCalEffort(), 1000);
+                      }}
+                      style={{ width: 200 }}
+                      placeholder="每月考试数"
+                      min={0} />
                   )}
                 </FormItem>
                 <FormItem
@@ -538,6 +538,7 @@ class ProfessorRate extends React.Component {
                         <li>作业是怎样的？小组项目？练习题？阅读？写作？还是？</li>
                         <li>考试频率多高？考试内容与题型？给分情况如何？</li>
                         <li>应该如何学习这门课程？预习？复习？你有什么特别的学习建议？</li>
+                        <li>这学期的课程与之前有哪些不同？</li>
                       </ul>
                     </div>
                   }
