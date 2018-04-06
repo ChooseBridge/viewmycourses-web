@@ -105,33 +105,33 @@ class Home extends React.Component {
               <Col span={8} className={style.item}>
                 <a href="">
                   <img
-                    src="https://www.mckinsey.com/~/media/McKinsey/About%20Us/New%20at%20McKinsey/Digital%202020%20Helping%20companies%20set%20the%20stage%20for%20their%20digital%20future/blog-digital2020-thumb3.ashx?mw=677&car=42:25" />
+                    src="/img/i1.jpg" />
                 </a>
 
                 <div className={style.textWrapper}>
-                  <h4><a href="">数字20/20：帮助公司为数字化未来奠定基础</a></h4>
+                  <h4><a href="">高校生拿A攻略</a></h4>
                   <div className={style.date}>2018年3月16日</div>
                 </div>
               </Col>
               <Col span={8} className={style.item}>
                 <a href="">
                   <img
-                    src="https://www.mckinsey.com/~/media/McKinsey/About%20Us/New%20at%20McKinsey/Digital%202020%20Helping%20companies%20set%20the%20stage%20for%20their%20digital%20future/blog-digital2020-thumb3.ashx?mw=677&car=42:25" />
+                    src="/img/i2.jpg" />
                 </a>
 
                 <div className={style.textWrapper}>
-                  <h4><a href="">数字20/20：帮助公司为数字化未来奠定基础</a></h4>
+                  <h4><a href="">用户手册：高中生选校指南</a></h4>
                   <div className={style.date}>2018年3月16日</div>
                 </div>
               </Col>
               <Col span={8} className={style.item}>
                 <a href="">
                   <img
-                    src="https://www.mckinsey.com/~/media/McKinsey/About%20Us/New%20at%20McKinsey/Digital%202020%20Helping%20companies%20set%20the%20stage%20for%20their%20digital%20future/blog-digital2020-thumb3.ashx?mw=677&car=42:25" />
+                    src="/img/i3.jpg" />
                 </a>
 
                 <div className={style.textWrapper}>
-                  <h4><a href="">数字20/20：帮助公司为数字化未来奠定基础</a></h4>
+                  <h4><a href="">桥选出品——关于我们</a></h4>
                   <div className={style.date}>2018年3月16日</div>
                 </div>
               </Col>
