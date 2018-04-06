@@ -435,6 +435,24 @@ class ProfessorRate extends React.Component {
                 {/*marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />*/}
                 {/*)}*/}
                 {/*</FormItem>*/}
+
+                <FormItem
+                  {...formItemLayout}
+                  validateStatus={quizError ? 'error' : ''}
+                  help={quizError || ''}
+                  label="每月考试数（包括随堂检测等）">
+                  {getFieldDecorator('quiz_num', {
+                    rules: [{ required: true, message: '请填写每月考试数' }]
+                  })(
+                    <InputNumber
+                      onChange={() => {
+                        setTimeout(() => this.onCalEffort(), 1000);
+                      }}
+                      style={{ width: 200 }}
+                      placeholder="每月考试数"
+                      min={0} />
+                  )}
+                </FormItem>
                 <FormItem
                   {...formItemLayout}
                   validateStatus={relatedError ? 'error' : ''}
@@ -456,23 +474,6 @@ class ProfessorRate extends React.Component {
                       dots
                       max={5}
                       marks={{ 0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }} />
-                  )}
-                </FormItem>
-                <FormItem
-                  {...formItemLayout}
-                  validateStatus={quizError ? 'error' : ''}
-                  help={quizError || ''}
-                  label="每月考试数（包括随堂检测等）">
-                  {getFieldDecorator('quiz_num', {
-                    rules: [{ required: true, message: '请填写每月考试数' }]
-                  })(
-                    <InputNumber
-                      onChange={() => {
-                        setTimeout(() => this.onCalEffort(), 1000);
-                      }}
-                      style={{ width: 200 }}
-                      placeholder="每月考试数"
-                      min={0} />
                   )}
                 </FormItem>
                 <FormItem
