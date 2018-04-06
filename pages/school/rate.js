@@ -85,7 +85,8 @@ class SchoolRate extends React.Component {
           Modal.success({
             title: '创建成功',
             content: '感谢您的点评，为保护您的隐私，点评将会在审核通过后延时发出。',
-            okText: '确定'
+            okText: '确定',
+            onOk: () => history.back()
           });
         }, e => {
           message.error(e.errorMsg);
