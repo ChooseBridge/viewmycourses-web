@@ -151,7 +151,7 @@ class SchoolForm extends React.Component {
     const agreeError = isFieldTouched('agreement') && getFieldError('agreement');
 
     return (
-      <ALayout title='学校创建页面' url={url}>
+      <ALayout title='学校创建' url={url}>
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>

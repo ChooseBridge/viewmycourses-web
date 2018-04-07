@@ -181,7 +181,7 @@ class School extends React.Component {
     } = school;
 
     return (
-      <ALayout title='学校主页' url={url}>
+      <ALayout title={`${schoolInfo.school_name}`} url={url}>
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={commonStyle.bgWrap}>
@@ -202,6 +202,7 @@ class School extends React.Component {
                       <Thumb
                         info={schoolInfo}
                         onThumbs={this.thumbsSchool} />
+                      <span style={{ marginLeft: 5 }}>{schoolInfo.thumbs_up_num}</span>
                     </Col>
                   </Row>
                   <Row>

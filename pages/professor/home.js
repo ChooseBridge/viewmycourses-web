@@ -155,7 +155,7 @@ class Professor extends React.Component {
     } = professor;
 
     return (
-      <ALayout title='教授主页' url={url}>
+      <ALayout title={`${professorInfo.professor_full_name} - ${professorInfo.school}`} url={url}>
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <div className={commonStyle.bgWrap}>
