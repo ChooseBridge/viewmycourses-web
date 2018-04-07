@@ -121,7 +121,7 @@ class Professor extends React.Component {
     }).then(res => {
       this.getProfessorDetail();
     }).catch(() => {
-      message.error('您已经点击过没用了');
+      message.error('您已经投过票了');
     });
   }
 
@@ -133,7 +133,7 @@ class Professor extends React.Component {
     }).then(res => {
       this.getProfessorDetail();
     }).catch(() => {
-      message.error('您已经点击过有用了');
+      message.error('您已经投过票了');
     });
   }
 

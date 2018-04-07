@@ -61,15 +61,15 @@ export default class extends Component {
                             {rate.comment}
                           </div>
                           <div>
-                            <div onClick={onThumbsUp}>
-                              <a className={style.like}>
+                            <div>
+                              <a className={style.like} onClick={onThumbsUp}>
                                 <Icon
                                   type="like-o"
                                   style={rate.is_thumbs_up ? { color: 'red' } : { color: '#000' }} />
                                 {rate.thumbs_up_percent}%
                               </a>
 
-                              <a className={style.unlike}>
+                              <a className={style.unlike} onClick={onThumbsDown}>
                                 <Icon
                                   type="dislike-o"
                                   style={rate.is_thumbs_down ? { color: 'red' } : { color: '#000' }} />
