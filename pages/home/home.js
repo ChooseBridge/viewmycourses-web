@@ -46,7 +46,7 @@ class Home extends React.Component {
     return (
       <ALayout url={url}>
         <div className={style.bg}>
-          <Content className={commonStyle.container}>
+          <Content className={cln(commonStyle.container, style.center)}>
             <div className={style.headline}>
               <h1>我们想未来所想<br />而你，就是未来</h1>
               <div>输入学校名或教授名</div>
