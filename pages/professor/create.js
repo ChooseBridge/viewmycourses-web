@@ -58,11 +58,11 @@ class ProfessorForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.setState({ loading: true });
-        client(api.createProfessor)({ body: values }).then(() => {
+        client(api.createProfessor)({ body: values }).then(({ id }) => {
           Modal.success({
             title: '提交成功',
-            content: <span>教授主页创建成功，现在就去<a href="/professor/xx/rate">点评该教授</a>的课程吧！</span>,
-            onOk: () => history.back()
+            content: <span>教授主页创建成功，现在就去<a href={`/professor/${id}/rate`}>点评该教授</a>的课程吧！</span>,
+            onOk: () => location.href = `/professor/${id}`
           });
         }, e => {
           message.error(e.errorMsg);

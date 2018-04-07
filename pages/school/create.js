@@ -14,7 +14,7 @@ import {
 import style from '../../common/style/create.css';
 import api from '../../common/api';
 import client from '../../common/client';
-import commonStyle from '../../common/style/index.css'
+import commonStyle from '../../common/style/index.css';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -56,11 +56,11 @@ class SchoolForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.setState({ loading: true });
-        client(api.createSchool)({body: values}).then(() => {
+        client(api.createSchool)({ body: values }).then(({ id }) => {
           Modal.success({
             title: '提交成功',
             content: '我们将对您提交的资料进行审核，审核结果将会发送到您的邮箱',
-            onOk: () => history.back()
+            onOk: () => location.href = `/school/${id}`
           });
         }, e => {
           message.error(e.errorMsg);
@@ -251,21 +251,21 @@ class SchoolForm extends React.Component {
                 )}
               </FormItem>
               {/*<FormItem*/}
-                {/*{...formItemLayout}*/}
-                {/*validateStatus={emailError ? 'error' : ''}*/}
-                {/*help={emailError || ''}*/}
-                {/*label="你的邮箱">*/}
-                {/*{getFieldDecorator('your_email', {*/}
-                  {/*rules: [{*/}
-                    {/*required: true,*/}
-                    {/*message: '请填写电子邮箱！'*/}
-                  {/*}, {*/}
-                    {/*type: 'email',*/}
-                    {/*message: '您填写的e-mail不正确！'*/}
-                  {/*}]*/}
-                {/*})(*/}
-                  {/*<Input size="large" style={{ width: 250 }} placeholder="电子邮箱" />*/}
-                {/*)}*/}
+              {/*{...formItemLayout}*/}
+              {/*validateStatus={emailError ? 'error' : ''}*/}
+              {/*help={emailError || ''}*/}
+              {/*label="你的邮箱">*/}
+              {/*{getFieldDecorator('your_email', {*/}
+              {/*rules: [{*/}
+              {/*required: true,*/}
+              {/*message: '请填写电子邮箱！'*/}
+              {/*}, {*/}
+              {/*type: 'email',*/}
+              {/*message: '您填写的e-mail不正确！'*/}
+              {/*}]*/}
+              {/*})(*/}
+              {/*<Input size="large" style={{ width: 250 }} placeholder="电子邮箱" />*/}
+              {/*)}*/}
               {/*</FormItem>*/}
               <FormItem {...tailFormItemLayout}
                         validateStatus={agreeError ? 'error' : ''}
