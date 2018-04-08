@@ -233,7 +233,8 @@ class School extends React.Component {
                         </Col>
                       </Row>
                     </Col>
-                    <Col span={12}>
+                    {randomProfessor && (
+                       <Col span={12}>
                       <div><h2>每日推荐</h2></div>
                       <Row>
                         <Col span={4}>
@@ -254,6 +255,8 @@ class School extends React.Component {
                         </Col>
                       </Row>
                     </Col>
+                    ) }
+                   
                   </Row>
                 </Col>
               </Row>
