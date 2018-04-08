@@ -213,8 +213,8 @@ module.exports = {
     url: '/api/create-professor-comment',
   }, opt),
 
-  getUnreadCount: () => makeApi({
+  getUnreadCount: opt => makeApi({
     url: '/api/get-student-unread-count'
-  })
+  }, opt)
 
 };

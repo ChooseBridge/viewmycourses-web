@@ -10,12 +10,14 @@ module.exports = (req, res, next) => {
     headers.token = req.cookies.token;
   }
 
+  console.log('user-info');
+
   Promise.all([
     api.getStudent({ headers }),
-    api.getUnreadCount()
+    api.getUnreadCount({ headers })
   ]).then(([user, unread]) => {
     req.user = user;
-    req.user.unread = unread;
+    req.user.unread = unread.count;
     next();
   }, () => {
     next();

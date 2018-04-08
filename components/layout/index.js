@@ -135,7 +135,7 @@ export default class extends React.Component {
 
                     {
                       url.query.user && (
-                        <Badge count={url.query.user.unread} showZero>
+                        <Badge count={url.query.user.unread}>
                           <a href="/user/message" style={{ color: '#fff' }}>
                             <Icon type="inbox" style={{fontSize: 20}} />
                           </a>
