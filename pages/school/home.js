@@ -127,7 +127,7 @@ class School extends React.Component {
     });
   }
 
-  onThumbsUp(school_rate_id) {
+  onThumbsUp(school_rate_id, done) {
     client(api.thumbsUpSchoolRate)({
       query: {
         school_rate_id
@@ -135,12 +135,13 @@ class School extends React.Component {
     }).then(res => {
       // console.log(res);
       this.getSchoolDetail();
+      done()
     }).catch(() => {
       message.error('您已经投过票了');
     });
   }
 
-  onThumbsDown(school_rate_id) {
+  onThumbsDown(school_rate_id, done) {
     client(api.thumbsDownSchoolRate)({
       query: {
         school_rate_id
@@ -148,6 +149,7 @@ class School extends React.Component {
     }).then(res => {
       // console.log(res);
       this.getSchoolDetail();
+      done()
     }).catch(() => {
       message.error('您已经投过票了');
     });
@@ -290,8 +292,8 @@ class School extends React.Component {
                   <SchoolRate
                     rate={item} key={index}
                     dark={index % 2 !== 0}
-                    onThumbsDown={() => this.onThumbsDown(item.school_rate_id)}
-                    onThumbsUp={() => this.onThumbsUp(item.school_rate_id)} />
+                    onThumbsDown={done => this.onThumbsDown(item.school_rate_id, done)}
+                    onThumbsUp={done => this.onThumbsUp(item.school_rate_id, done)} />
                 )
               }
             </div>

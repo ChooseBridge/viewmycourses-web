@@ -12,6 +12,24 @@ function homeWorkPipe(num) {
 }
 
 export default class extends Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
+
+  onThumbsUp = () => {
+    this.props.onThumbsUp(() => this.setState({
+      thumbsUp: true
+    }))
+  }
+
+
+  onThumbsDown = () => {
+    this.props.onThumbsDown(() => this.setState({
+      thumbsDown: true
+    }));
+  }
+
   render() {
     const {
       dark,
@@ -19,13 +37,13 @@ export default class extends Component {
       onThumbsUp,
       onThumbsDown
     } = this.props;
+    const { thumbsUp, thumbsDown } = this.state;
     const [year, month] = rate.created_at.date.split('-');
 
     return (
       <Row className="rate">
         {
-          dark ? false :
-          <InfoPopover
+          dark ? false : <InfoPopover
             id={rate.create_student_id}
             placement="bottomLeft">
             <Col span={2} style={{ paddingTop: 11 }}>
@@ -58,6 +76,8 @@ export default class extends Component {
                         <div className={style.class}><Icon type="book" className={style.iconClass} /> {rate.course_code}
                         </div>
                         <div className={style.items}>
+                          <div><strong>课程类别:</strong> {rate.course_category_name}</div>
+                          <div><strong>课程名:</strong> {rate.course_name}</div>
                           <div><strong className={style.label}>是否记出勤:</strong> {rate.is_attend === 1 ? '是' : '否'}</div>
                           <div><strong>课程难度:</strong> {rate.difficult_level}</div>
                           <div><strong>书面作业量:</strong> {homeWorkPipe(rate.homework_num)}</div>
@@ -76,16 +96,16 @@ export default class extends Component {
                         </div>
 
                         <div>
-                          <span onClick={onThumbsUp}>
+                          <span onClick={this.onThumbsUp}>
                             <a className={style.like}>
-                              <Icon type="like-o" style={rate.is_thumbs_up ? { color: 'red' } : { color: '#000' }} />
+                              <Icon type="like-o" style={(thumbsUp || rate.is_thumbs_up) ? { color: 'red' } : { color: '#000' }} />
                               {rate.thumbs_up_percent}%
                             </a>
                           </span>
-                          <span onClick={onThumbsDown}>
+                          <span onClick={this.onThumbsDown}>
                             <a className={style.unlike}>
                               <Icon type="dislike-o"
-                                    style={rate.is_thumbs_down ? { color: 'red' } : { color: '#000' }} />
+                                    style={(thumbsDown || rate.is_thumbs_down) ? { color: 'red' } : { color: '#000' }} />
                               {rate.thumbs_down_percent}%
                             </a>
                           </span>
@@ -100,8 +120,7 @@ export default class extends Component {
         </Col>
 
         {
-          dark ?
-          <InfoPopover
+          dark ? <InfoPopover
             id={rate.create_student_id}
             placement="bottomRight">
             <Col span={2} style={{ paddingTop: 11, textAlign: 'right' }}>

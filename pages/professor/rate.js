@@ -126,7 +126,7 @@ class ProfessorRate extends React.Component {
             title: '创建成功',
             content: '感谢您的点评，为保护您的隐私，点评将会在审核通过后延时发出。',
             okText: '确定',
-            onOk: () => history.back()
+            onOk: () => location.href = `/profesoor/${this.props.url.query.id}`
           });
         }, e => {
           message.error(e.errorMsg);
@@ -297,11 +297,11 @@ class ProfessorRate extends React.Component {
                   help={categorysError || ''}
                   label="课程类别">
                   {getFieldDecorator('course_category_name', {
-                    rules: [{ required: true, message: '请选择课程类别' }]
+                    rules: [{ required: true, message: '请选择或输入课程类别' }]
                   })(
                     <Select
                       mode="combobox"
-                      placeholder="请选择课程类别"
+                      placeholder="请选择或输入课程类别"
                       style={{ width: 200 }}>
                       {
                         schoolCategoryInfo &&
@@ -320,13 +320,13 @@ class ProfessorRate extends React.Component {
                   {...formItemLayout}
                   validateStatus={courseCodeError ? 'error' : ''}
                   help={courseCodeError || ''}
-                  label="请选择或输入官方课程编号">
+                  label="官方课程编号">
                   {getFieldDecorator('course_code', {
-                    rules: [{ required: true, message: '请选择或输入官方课程编号' }]
+                    rules: [{ required: true, message: '请选择或输入官方编号' }]
                   })(
                     <Select
                       mode="combobox"
-                      placeholder="请选择或输入官方课程编号"
+                      placeholder="请选择或输入官方编号"
                       style={{ width: 200 }}>
                       {
                         coursesInfo &&

@@ -113,25 +113,27 @@ class Professor extends React.Component {
     });
   }
 
-  onThumbsUp(professor_rate_id) {
-    client(api.thumbsUpProfessorRate)({
+  onThumbsUp(professor_rate_id, done) {
+    return client(api.thumbsUpProfessorRate)({
       query: {
         professor_rate_id
       }
     }).then(res => {
       this.getProfessorDetail();
+      done();
     }).catch(() => {
       message.error('您已经投过票了');
     });
   }
 
-  onThumbsDown(professor_rate_id) {
-    client(api.thumbsDownProfessorRate)({
+  onThumbsDown(professor_rate_id, done) {
+    return client(api.thumbsDownProfessorRate)({
       query: {
         professor_rate_id
       }
     }).then(res => {
       this.getProfessorDetail();
+      done()
     }).catch(() => {
       message.error('您已经投过票了');
     });
@@ -295,8 +297,8 @@ class Professor extends React.Component {
                 rateInfo &&
                 rateInfo.map((item, index) =>
                   <ProfessorRate
-                    onThumbsUp={() => this.onThumbsUp(item.professor_rate_id)}
-                    onThumbsDown={() => this.onThumbsDown(item.professor_rate_id)}
+                    onThumbsUp={done => this.onThumbsUp(item.professor_rate_id, done)}
+                    onThumbsDown={done => this.onThumbsDown(item.professor_rate_id, done)}
                     key={index}
                     rate={item}
                     dark={index % 2 !== 0} />
