@@ -98,7 +98,8 @@ class Professor extends React.Component {
       }
     }).then(professor => {
       this.setState({
-        professor
+        professor,
+        rateInfo: professor.rateInfo
       });
     });
   }

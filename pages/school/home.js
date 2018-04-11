@@ -122,7 +122,8 @@ class School extends React.Component {
       }
     }).then(school => {
       this.setState({
-        school
+        school,
+
       });
     });
   }
