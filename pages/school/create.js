@@ -60,6 +60,7 @@ class SchoolForm extends React.Component {
           Modal.success({
             title: '提交成功',
             content: '我们将对您提交的资料进行审核，审核结果将会发送到您的邮箱',
+            okText: '确定',
             onOk: () => location.href = `/school/${id}`
           });
         }, e => {

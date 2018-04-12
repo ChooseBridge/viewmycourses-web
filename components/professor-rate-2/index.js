@@ -20,7 +20,7 @@ export default class extends Component {
   onThumbsUp = () => {
     this.props.onThumbsUp(() => this.setState({
       thumbsUp: true
-    }))
+    }));
   }
 
 
@@ -31,12 +31,7 @@ export default class extends Component {
   }
 
   render() {
-    const {
-      dark,
-      rate,
-      onThumbsUp,
-      onThumbsDown
-    } = this.props;
+    const { dark, rate } = this.props;
     const { thumbsUp, thumbsDown } = this.state;
     const [year, month] = rate.created_at.date.split('-');
 

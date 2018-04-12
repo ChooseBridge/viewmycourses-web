@@ -62,6 +62,7 @@ class ProfessorForm extends React.Component {
           Modal.success({
             title: '提交成功',
             content: <span>教授主页创建成功，现在就去<a href={`/professor/${id}/rate`}>点评该教授</a>的课程吧！</span>,
+            okText: '确定',
             onOk: () => location.href = `/professor/${id}`
           });
         }, e => {

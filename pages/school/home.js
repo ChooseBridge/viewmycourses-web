@@ -259,7 +259,6 @@ class School extends React.Component {
                       </Row>
                     </Col>
                     ) }
-                   
                   </Row>
                 </Col>
               </Row>
