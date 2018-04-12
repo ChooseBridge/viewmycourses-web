@@ -94,6 +94,12 @@ class School extends React.Component {
     });
 
     window.addEventListener('scroll', this.onScroll);
+
+    const tabs = document.getElementsByClassName('ant-tabs-tab');
+
+    for (let i = 0; i < tabs.length; i++) {
+      tabs[i].style.marginRight = "10px";
+    }
   }
 
   onScroll = () => {
