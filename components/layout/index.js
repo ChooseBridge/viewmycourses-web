@@ -184,7 +184,7 @@ export default class extends React.Component {
               <a href="">联系我们</a>
               <a href="/terms">使用协议</a>
               <a href="/privacy">隐私政策</a>
-              <a href="/">版权申明</a>
+              <a href="/copyright">版权申明</a>
             </div>
             <div>备案号 xxxxxxxx</div>
           </Footer>

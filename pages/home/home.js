@@ -109,7 +109,7 @@ class Home extends React.Component {
                 </a>
 
                 <div className={style.textWrapper}>
-                  <h4><a href="">高校生拿A攻略</a></h4>
+                  <h4><a href="">用户手册：高校生拿A攻略</a></h4>
                   <div className={style.date}>2018年3月16日</div>
                 </div>
               </Col>
