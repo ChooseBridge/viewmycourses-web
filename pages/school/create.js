@@ -59,7 +59,7 @@ class SchoolForm extends React.Component {
         client(api.createSchool)({ body: values }).then(({ id }) => {
           Modal.success({
             title: '提交成功',
-            content: '我们将对您提交的资料进行审核，审核结果将会发送到您的邮箱',
+            content: '我们已收到您的创建请求，审核结果将会显示在消息中心',
             okText: '确定',
             onOk: () => location.href = `/school/${id}`
           });
