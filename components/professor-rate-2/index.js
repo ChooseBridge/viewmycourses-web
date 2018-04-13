@@ -77,6 +77,7 @@ export default class extends Component {
                           <div><strong>课程难度:</strong> {rate.difficult_level}</div>
                           <div><strong>书面作业量:</strong> {homeWorkPipe(rate.homework_num)}</div>
                           <div><strong>每月考试数:</strong> {rate.quiz_num}</div>
+                          <div><strong>我的成绩:</strong> {rate.grade}</div>
                         </div>
                       </Col>
                       <Col className={style.right} span={13}>
