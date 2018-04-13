@@ -216,7 +216,7 @@ class School extends React.Component {
                   </Row>
                   <Row>
                     <Col span={12}>
-                      <div>{schoolInfo.country} {schoolInfo.province} {schoolInfo.city}<span className={style.colorBlue}>
+                      <div>{schoolInfo.country} {schoolInfo.province} {schoolInfo.city} <span className={style.colorBlue}>
                         <a href={schoolInfo.website_url}>网站</a></span>
                       </div>
 
