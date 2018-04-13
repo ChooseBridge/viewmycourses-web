@@ -47,7 +47,8 @@ export default class extends React.Component {
               country.children = province.map(p => ({
                 label: p.province_name,
                 value: p.province_id,
-                isLeaf: false
+                // isLeaf: false
+                isLeaf: true
               }));
             }
 

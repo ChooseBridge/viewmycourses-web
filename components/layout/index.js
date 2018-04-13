@@ -102,7 +102,7 @@ export default class extends React.Component {
           <Affix>
             <Header className={style.header}>
               <Row style={{ flex: 1 }}>
-                <Col lg={{ span: 4 }} md={{ span: 5 }}>
+                <Col lg={{ span: 3 }} md={{ span: 5 }}>
                   <h2 className={style.logo}>
                     <a href="/">
                       桥选<span style={{
@@ -116,7 +116,7 @@ export default class extends React.Component {
                   </h2>
                 </Col>
 
-                <Col lg={{ span: 20 }} md={{ span: 19 }}>
+                <Col lg={{ span: 21 }} md={{ span: 19 }}>
                   <Menu
                     theme="dark"
                     mode="horizontal"
@@ -179,9 +179,9 @@ export default class extends React.Component {
 
           <Footer className={style.footer}>
             <div>
-              <a href="">关于我们</a>
-              <a href="">加入我们</a>
-              <a href="">联系我们</a>
+              <a href="/about">关于我们</a>
+              <a href="/join">加入我们</a>
+              <a href="/contact">联系我们</a>
               <a href="/terms">使用协议</a>
               <a href="/privacy">隐私政策</a>
               <a href="/copyright">版权申明</a>
