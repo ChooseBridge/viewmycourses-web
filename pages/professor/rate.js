@@ -242,7 +242,7 @@ class ProfessorRate extends React.Component {
               <div>评价课程</div>
               {
                 professorInfo &&
-                <div>{professorInfo.school} {professorInfo.professor_full_name}</div>
+                <div>{professorInfo.school}-{professorInfo.professor_full_name}</div>
               }
             </Card>
 

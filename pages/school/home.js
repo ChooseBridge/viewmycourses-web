@@ -66,7 +66,7 @@ class School extends React.Component {
       school
     } = props.url.query;
 
-    // console.log(this.props.url.query);
+    console.log(this.props.url.query);
 
     school.schoolDistrictInfo.map(item => {
       contentList[item.school_district_name] = renderDistrict(item);
@@ -216,7 +216,7 @@ class School extends React.Component {
                   </Row>
                   <Row>
                     <Col span={12}>
-                      <div>{schoolInfo.country} {schoolInfo.province} {schoolInfo.city} <span className={style.colorBlue}>
+                      <div>{schoolInfo.city}, {schoolInfo.province} {schoolInfo.country} <span className={style.colorBlue}>
                         <a href={schoolInfo.website_url}>网站</a></span>
                       </div>
 
