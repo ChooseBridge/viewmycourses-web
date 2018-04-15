@@ -244,10 +244,10 @@ class School extends React.Component {
                     </Col>
                     {randomProfessor && (
                        <Col span={12}>
-                      <div><h2>每日推荐</h2></div>
+                      <div><h2 style={{margin:0}}>每日推荐</h2></div>
                       <Row>
                         <Col span={4}>
-                          <Avatar size="large" icon="user" />
+                          <Avatar size="large" icon="user" style={{marginTop:15}} />
                         </Col>
                         <Col span={12}>
                           <div className={style.schoolStyle}>
@@ -259,8 +259,9 @@ class School extends React.Component {
                         </Col>
                         <Col
                           span={8}
-                          className={cla(commonStyle.textRight, style.schoolStyle)}>
-                          {randomProfessor.effort}
+                          className={cla(commonStyle.textRight)}>
+                          <div className={style.schoolStyle}>{randomProfessor.effort}</div>
+                          <div>课程平均努力指数</div>
                         </Col>
                       </Row>
                     </Col>

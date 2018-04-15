@@ -136,6 +136,10 @@ app.prepare()
       render(req, res, '/search', { user: req.user, condition: query });
     });
 
+    server.get('/copyright', userInfo, (req, res) => {
+      render(req, res, '/copyright', { user: req.user });
+    });
+
     server.get('*', (req, res) => {
       return handle(req, res);
     });

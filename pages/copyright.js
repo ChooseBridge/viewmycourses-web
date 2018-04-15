@@ -13,7 +13,7 @@ class Copyright extends React.Component {
     } = this.props;
 
     return (
-      <ALayout title='隐私政策' url={url}>
+      <ALayout title='版权声明' url={url}>
         <Content className={commonStyle.container}>
           <Breadcrumb style={{ margin: '16px 0' }} />
           <Card>
