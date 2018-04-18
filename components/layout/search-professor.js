@@ -43,7 +43,7 @@ class Search extends Component {
     }
 
     setTimeout(() => {
-      this.setState({show: true})
+      this.setState({ show: true });
     }, 0);
   }
 
@@ -81,13 +81,17 @@ class Search extends Component {
     const {
       professorChoose
     } = this.state;
-    const { closeAll } = this.props;
+    const { closeAl, small } = this.props;
     const { getFieldDecorator } = this.props.form;
+    const grid = { md: { span: 12 }, sm: { span: 24, offset: 0 } };
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        <div className={style.mask} onClick={this.close}/>
-        <div className={cla(style.menuWrap, {[style.show]: this.state.show})}>
+        <div className={style.mask} onClick={this.close} />
+        <div className={cla(style.menuWrap, {
+          [style.show]: this.state.show,
+          [style.menuWrapSmall]: small
+        })}>
           <div style={{ paddingTop: 6 }}>
             <div className={cla(commonStyle.textCenter)} style={{ marginBottom: 15 }}>
               我想查找 {getFieldDecorator('school_name', {})(
@@ -113,8 +117,7 @@ class Search extends Component {
           <Row className={style.row}>
             <Col
               className={cla(commonStyle.textCenter)}
-              span={12}
-              offset={6}>
+              {...grid}>
 
 
               {getFieldDecorator('mode', { initialValue: 'professor' })(
@@ -125,15 +128,15 @@ class Search extends Component {
           </Row>
 
           {/*<Row className={style.row}>*/}
-            {/*<Col*/}
-              {/*className={cla(commonStyle.textCenter)}*/}
-              {/*span={12}*/}
-              {/*offset={6}>*/}
-              {/*<a href="javascript:;" onClick={() => {*/}
-                {/*this.setState({show: false});*/}
-                {/*setTimeout(() => this.props.closeAll(), 300);*/}
-              {/*}}>关闭</a>*/}
-            {/*</Col>*/}
+          {/*<Col*/}
+          {/*className={cla(commonStyle.textCenter)}*/}
+          {/*span={12}*/}
+          {/*offset={6}>*/}
+          {/*<a href="javascript:;" onClick={() => {*/}
+          {/*this.setState({show: false});*/}
+          {/*setTimeout(() => this.props.closeAll(), 300);*/}
+          {/*}}>关闭</a>*/}
+          {/*</Col>*/}
           {/*</Row>*/}
         </div>
       </Form>

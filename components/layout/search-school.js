@@ -88,18 +88,21 @@ class Search extends Component {
       schoolChoose,
       schools
     } = this.state;
-    const { closeAll } = this.props;
+    const { closeAll, small } = this.props;
     const { getFieldDecorator } = this.props.form;
+    const grid = { md: { span: 12 }, sm: { span: 24, offset: 0 } };
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        <div className={style.mask} onClick={this.close}/>
-        <div className={cla(style.menuWrap, { [style.show]: this.state.show })}>
+        <div className={style.mask} onClick={this.close} />
+        <div className={cla(style.menuWrap, {
+          [style.show]: this.state.show,
+          [style.menuWrapSmall]: small
+        })}>
           <Row className={style.row}>
             <Col
               className={cla(commonStyle.textCenter)}
-              span={12}
-              offset={6}>
+              {...grid}>
               <RadioGroup size="large" onChange={this.onRadioChangeHandler} value={schoolChoose}>
                 <RadioButton value="name">按名称</RadioButton>
                 <RadioButton value="region">按地区</RadioButton>
@@ -111,8 +114,7 @@ class Search extends Component {
             schoolChoose === 'name' ? <Row className={style.row}>
                 <Col
                   className={cla(commonStyle.textCenter)}
-                  span={12}
-                  offset={6}>
+                  {...grid}>
 
                   {getFieldDecorator('name', {})(
                     <SchoolAutoComplete
@@ -128,8 +130,7 @@ class Search extends Component {
               : <Row className={style.row}>
                 <Col
                   className={cla(commonStyle.textCenter)}
-                  span={12}
-                  offset={6}>
+                  {...grid}>
 
                   {getFieldDecorator('region', {})(
                     <RegionCascader placeholder="请选择区域" size="large" style={{ width: 300 }} />
@@ -142,19 +143,18 @@ class Search extends Component {
           <Row className={style.row}>
             <Col
               className={cla(commonStyle.textCenter)}
-              span={12}
-              offset={6}>
+              {...grid}>
               <Button size="large" style={{ width: 300 }} htmlType="submit" type="primary">搜索</Button>
             </Col>
           </Row>
 
           {/*<Row className={style.row}>*/}
-            {/*<Col*/}
-              {/*className={cla(commonStyle.textCenter)}*/}
-              {/*span={12}*/}
-              {/*offset={6}>*/}
-              {/*<a href="javascript:;" onClick={this.close}>关闭</a>*/}
-            {/*</Col>*/}
+          {/*<Col*/}
+          {/*className={cla(commonStyle.textCenter)}*/}
+          {/*span={12}*/}
+          {/*offset={6}>*/}
+          {/*<a href="javascript:;" onClick={this.close}>关闭</a>*/}
+          {/*</Col>*/}
           {/*</Row>*/}
         </div>
       </Form>

@@ -17,6 +17,7 @@ import SearchProfessor from './search-professor';
 import queryString from 'query-string';
 import SearchRate from './search-rate';
 import Cookies from 'js-cookie';
+import className from 'classnames';
 
 const {
   Header,
@@ -64,13 +65,14 @@ export default class extends React.Component {
   }
 
   renderMenuContent(key) {
+    const { small } = this.state;
     switch (key) {
       case '2':
-        return <SearchSchool closeAll={this.closeAll} onSubmit={this.goSearch} />;
+        return <SearchSchool closeAll={this.closeAll} onSubmit={this.goSearch} small={small} />;
       case '3':
-        return <SearchProfessor closeAll={this.closeAll} onSubmit={this.goSearch} />;
+        return <SearchProfessor closeAll={this.closeAll} onSubmit={this.goSearch} small={small} />;
       case '4':
-        return <SearchRate closeAll={this.closeAll} onSubmit={this.goSearch} />;
+        return <SearchRate closeAll={this.closeAll} onSubmit={this.goSearch} small={small} />;
       default:
         return false;
     }
@@ -83,6 +85,16 @@ export default class extends React.Component {
   logout = () => {
     Cookies.remove('token');
     location.href = location.href;
+  };
+
+  openMenu = () => {
+    if (this.state.small) {
+      this.setState({ small: false });
+    }
+    else {
+      this.setState({ small: true });
+    }
+    this.closeAll();
   };
 
   render() {
@@ -101,8 +113,8 @@ export default class extends React.Component {
         <Layout>
           <Affix>
             <Header className={style.header}>
-              <Row style={{ flex: 1 }}>
-                <Col lg={{ span: 3 }} md={{ span: 5 }}>
+              <Row style={{ width: '100%' }}>
+                <Col lg={{ span: 3 }} md={{ span: 5 }} sm={{ span: 12 }} xs={{ span: 12 }}>
                   <h2 className={style.logo}>
                     <a href="/">
                       桥选<span style={{
@@ -116,7 +128,12 @@ export default class extends React.Component {
                   </h2>
                 </Col>
 
-                <Col lg={{ span: 21 }} md={{ span: 19 }}>
+                <Col md={{ span: 0 }} sm={{ span: 12 }} xs={{ span: 12 }}
+                     style={{ lineHeight: '64px', textAlign: 'right' }}>
+                  <Icon type="menu" className={style.navIcon} onClick={this.openMenu} />
+                </Col>
+
+                <Col lg={{ span: 21 }} md={{ span: 19 }} sm={{ span: 0 }} xs={{ span: 0 }}>
                   <Menu
                     theme="dark"
                     mode="horizontal"
@@ -137,7 +154,7 @@ export default class extends React.Component {
                       url.query.user && (
                         <Badge count={url.query.user.unread}>
                           <a href="/user/message" style={{ color: '#fff' }}>
-                            <Icon type="inbox" style={{fontSize: 20}} />
+                            <Icon type="inbox" style={{ fontSize: 20 }} />
                           </a>
                         </Badge>
                       )
@@ -168,6 +185,22 @@ export default class extends React.Component {
                   </div>
                 </Col>
               </Row>
+
+              <div className={className([style.miniMenu], {
+                [style.showMiniMenu]: this.state.small
+              })}>
+                <Menu
+                  theme="dark"
+                  mode="horizontal"
+                  className={style.menuSmall}
+                  selectedKeys={[menuContentKey]}
+                  onClick={item => this.MenuClickHandler(item)}>
+                  <Menu.Item key="1">关于</Menu.Item>
+                  <Menu.Item key="2">查高校</Menu.Item>
+                  <Menu.Item key="3">查教授</Menu.Item>
+                  <Menu.Item key="4">点评</Menu.Item>
+                </Menu>
+              </div>
 
               <input type="hidden" id="login-url" value={url.query.loginUrl} />
               {menuContentKey && this.renderMenuContent(menuContentKey)}

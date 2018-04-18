@@ -8,12 +8,19 @@
 }
 
 .header {
-  display: flex;
+  /*display: flex;*/
   height: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .menu {
   line-height: 64px;
+}
+
+.menuSmall {
+  display: flex;
+  justify-content: center;
 }
 
 .row {
@@ -35,8 +42,22 @@
   height: 0;
 }
 
+.menuWrapSmall {
+  top: 109px
+}
+
 .show {
   height: 225px;
+}
+
+.miniMenu{
+  height: 0;
+  overflow: hidden;
+  transition: height .5s;
+}
+
+.showMiniMenu {
+  height: 46px;
 }
 
 .menuWrap :global(.ant-btn-primary) {
@@ -86,7 +107,6 @@
   color: rgba(255, 255, 255, 1);
 }
 
-
 .mask {
   position: fixed;
   left: 0;
@@ -102,4 +122,34 @@
   height: 5px;
   border-radius: 50%;
   background-color: red;
+}
+
+@media only screen and (max-width: 767.99px) {
+  .navIcon {
+    /*position: absolute;*/
+    /*right: 30px;*/
+    /*top: 25px;*/
+    /*z-index: 1;*/
+    width: 16px;
+    height: 22px;
+    cursor: pointer;
+    position: relative;
+    top: 10px
+  }
+
+  .navIcon:before {
+    content: "";
+    display: block;
+    border-radius: 2px;
+    width: 16px;
+    height: 2px;
+    background: #fff;
+    -webkit-box-shadow: 0 6px 0 0 #fff, 0 12px 0 0 #fff;
+    box-shadow: 0 6px 0 0 #fff, 0 12px 0 0 #fff;
+    position: absolute;
+  }
+
+  :global(.ant-layout-header) {
+    padding: 0 20px;
+  }
 }
