@@ -185,11 +185,8 @@ class Professor extends React.Component {
                         </Row>
                         <Row>
                           <Col span={4}></Col>
-                          <Col span={20}>{professorInfo.school}</Col>
+                          <Col span={20}>{professorInfo.school}-{professorInfo.college}</Col>
                         </Row>
-                        {/*<Row>*/}
-                        {/*<Col span={16}>心理学教授</Col>*/}
-                        {/*</Row>*/}
                         <Row>
                           <Col span={4}></Col>
                           <Col span={20} className={commonStyle.colorBlue} style={{ marginBottom: 20 }}>
