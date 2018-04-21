@@ -48,11 +48,11 @@ class Message extends React.Component {
     if (item.type == 'success') {
       msgArr = item.message.split(item.name);
 
-      if (item.info_type == 'professor') {
+      if (item.info_type == 'professor' || item.info_type == 'professor_rate') {
         href = `/professor/${item.id}`;
       }
 
-      if (item.info_type == 'school') {
+      if (item.info_type == 'school' || item.info_type == 'school_rate') {
         href = `/school/${item.id}`;
       }
 
