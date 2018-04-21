@@ -114,7 +114,7 @@ export default class extends React.Component {
           <Affix>
             <Header className={style.header}>
               <Row style={{ width: '100%' }}>
-                <Col lg={{ span: 3 }} md={{ span: 5 }} sm={{ span: 12 }} xs={{ span: 12 }}>
+                <Col lg={{ span: 3 }} md={{ span: 5 }} sm={{ span: 12 }} xs={{ span: 12 }} style={{margin:0}}>
                   <h2 className={style.logo}>
                     <a href="/">
                       桥选<span style={{
