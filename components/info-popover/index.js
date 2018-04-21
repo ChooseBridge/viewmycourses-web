@@ -36,6 +36,8 @@ class InfoPopover extends React.Component {
     });
   }
 
+  getGraduateLabel = is_graduate => is_graduate ? '毕业年份' : '预计毕业年份'
+
   render() {
     const {
       children,
@@ -65,7 +67,7 @@ class InfoPopover extends React.Component {
                   '高中所在省份/联邦州'
                 }
               </div>
-              <div>毕业年份</div>
+              <div>{this.getGraduateLabel(student.is_graduate)}</div>
             </Col>
 
             <Col className={style.wrap}>
@@ -73,12 +75,7 @@ class InfoPopover extends React.Component {
               <div>{student.major}</div>
               <div>{student.exam_province}</div>
               <div>
-                {
-                  student.is_graduate == 0 ?
-                  '在读'
-                  :
-                  student.graduate_year
-                }
+                {student.graduate_year}
               </div>
             </Col>
           </Row>
@@ -86,18 +83,13 @@ class InfoPopover extends React.Component {
           <Row type="flex">
             <Col className={cla(style.wrap, style.title)}>
               <div>高中</div>
-              <div>毕业年份</div>
+              <div>{this.getGraduateLabel(student.is_graduate)}</div>
             </Col>
 
             <Col className={style.wrap}>
               <div>{student.school_name}</div>
               <div>
-                {
-                  student.is_graduate == 0 ?
-                  '在读'
-                  :
-                  student.graduate_year
-                }
+                {student.graduate_year}
               </div>
             </Col>
           </Row>
