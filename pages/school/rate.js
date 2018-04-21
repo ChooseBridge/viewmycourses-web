@@ -184,7 +184,7 @@ class SchoolRate extends React.Component {
               <Card className={style.wrap}>
                 <div>评价高校</div>
                 <h2>{schoolInfo.school_name}</h2>
-                <div>{schoolInfo.country} {schoolInfo.province} {schoolInfo.city}</div>
+                <div>{schoolInfo.city}, {schoolInfo.province} {schoolInfo.country}</div>
               </Card>
             }
 
