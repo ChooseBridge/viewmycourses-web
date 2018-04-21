@@ -90,7 +90,7 @@ class Search extends Component {
     } = this.state;
     const { closeAll, small } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const grid = { md: { span: 12 }, sm: { span: 24, offset: 0 } };
+    const grid = { md: { span: 12, offset: 6 }, sm: { span: 24, offset: 0 } };
 
     return (
       <Form onSubmit={this.handleSubmit}>
