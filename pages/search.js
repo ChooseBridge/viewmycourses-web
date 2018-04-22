@@ -454,7 +454,7 @@ class Search extends React.Component {
           <Col span={6}>学校</Col>
           <Col span={16}>
             <div><h2>{item.school_name}</h2></div>
-            <div>{item.city}, {item.province} {item.country}</div>
+            <div>{item.city || item.city_name}, {item.province || item.province_name} {item.country || item.country_name}</div>
           </Col>
         </Row>
       </a>
