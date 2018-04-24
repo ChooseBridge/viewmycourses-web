@@ -179,11 +179,11 @@ class User extends React.Component {
               <Row>
                 <Col span={12}>
                   <Row>
-                    <Col span={4}><Avatar size="large" icon="user" /></Col>
                     {
                       student &&
                       <Col span={20}>
-                        <Row>
+                        <Row type="flex" align="middle">
+                          <Col span={4}><Avatar size="large" icon="user" /></Col>
                           <Col>
                             <span style={{ fontSize: 32 }}>{student.name}</span>
                           </Col>
@@ -191,6 +191,7 @@ class User extends React.Component {
                         {
                           student.education_status == 1 ?
                           <Row type="flex">
+                            <Col span={4}></Col>
                             <Col style={{ fontWeight: 800, marginRight: 6 }}>
                               <div>大学</div>
                               <div>专业</div>
@@ -221,6 +222,7 @@ class User extends React.Component {
                           </Row>
                           :
                           <Row type="flex">
+                            <Col span={4}></Col>
                             <Col style={{ fontWeight: 800, marginRight: 6 }}>
                               <div>高中</div>
                               <div>毕业年份</div>
@@ -240,7 +242,8 @@ class User extends React.Component {
                           </Row>
                         }
                         <Row>
-                          <Col span={16} style={{ marginTop: 20 }}>
+                          <Col span={4}></Col>
+                          <Col span={20} style={{ marginTop: 20 }}>
                             {student &&
                             <a target="_blank" href={`https://i.choosebridge.com/profile/${student.name}/edit`}><Button type="primary">编辑个人资料</Button></a>}
                           </Col>
@@ -249,6 +252,7 @@ class User extends React.Component {
                     }
                   </Row>
                 </Col>
+                <Col span={12}>111</Col>
               </Row>
             </Card>
 

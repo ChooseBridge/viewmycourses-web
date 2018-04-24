@@ -63,6 +63,7 @@ class ProfessorForm extends React.Component {
             title: '提交成功',
             content: <span>教授主页创建成功，现在就去<a href={`/professor/${id}/rate`}>点评该教授</a>的课程吧！</span>,
             okText: '确定',
+            width: 550,
             onOk: () => location.href = `/professor/${id}`
           });
         }, e => {
@@ -217,7 +218,7 @@ class ProfessorForm extends React.Component {
                     }, message: '请同意!'
                   }]
                 })(
-                  <Checkbox>我已阅读并接受<a href="/terms">协议</a></Checkbox>
+                  <Checkbox>我已阅读并接受<a href="/terms" target="_blank">协议</a></Checkbox>
                 )}
               </FormItem>
               <FormItem {...tailFormItemLayout}>

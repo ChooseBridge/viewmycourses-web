@@ -193,10 +193,13 @@ class Professor extends React.Component {
                         </Row>
                         <Row>
                           <Col span={4}></Col>
-                          <Col span={20} className={commonStyle.colorBlue} style={{ marginBottom: 20 }}>
+                          <Col span={4} className={commonStyle.colorBlue} style={{ marginBottom: 20 }}>
                             <Amend
                               amendType='professor'
                               id={this.props.url.query.id} />
+                          </Col>
+                          <Col span={16}>
+                            <a href="" target="_blank">教授个人主页</a>
                           </Col>
                         </Row>
                         <Row>

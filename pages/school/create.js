@@ -55,17 +55,26 @@ class SchoolForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.setState({ loading: true });
-        client(api.createSchool)({ body: values }).then(({ id }) => {
+        this.setState({
+          loading: true
+        });
+        client(api.createSchool)({
+          body: values
+        }).then(({
+          id
+        }) => {
           Modal.success({
             title: '提交成功',
-            content: '我们已收到您的创建请求，审核结果将会显示在消息中心',
+            content: '我们已收到您的创建请求，审核结果将会显示在消息中心。',
             okText: '确定',
-            onOk: () => location.href = `/school/${id}`
+            width: 550,
+            onOk: () => location.href = "/"
           });
         }, e => {
           message.error(e.errorMsg);
-          this.setState({ loading: false });
+          this.setState({
+            loading: false
+          });
         });
       }
     });
@@ -207,7 +216,7 @@ class SchoolForm extends React.Component {
                 {...formItemLayout}
                 validateStatus={provinceError ? 'error' : ''}
                 help={provinceError || ''}
-                label="省市：">
+                label="省市/联邦州：">
                 {getFieldDecorator('province_id', {
                   rules: [{ required: true, message: '请填写洲/省' }]
                 })(
@@ -282,7 +291,7 @@ class SchoolForm extends React.Component {
                     }, message: '请同意！'
                   }]
                 })(
-                  <Checkbox>我已阅读并接受<a href="/terms">协议</a></Checkbox>
+                  <Checkbox>我已阅读并接受<a href="/terms" target="_blank">协议</a></Checkbox>
                 )}
               </FormItem>
               <FormItem {...tailFormItemLayout}>

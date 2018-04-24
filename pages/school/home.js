@@ -217,7 +217,7 @@ class School extends React.Component {
                   <Row>
                     <Col span={12}>
                       <div>{schoolInfo.city}, {schoolInfo.province} {schoolInfo.country} <span className={style.colorBlue}>
-                        <a href={schoolInfo.website_url}>网站</a></span>
+                        <a href={schoolInfo.website_url} target="_blank">网站</a></span>
                       </div>
 
                       <Amend

@@ -220,19 +220,25 @@ class SchoolRate extends React.Component {
                     在评论结束后再次检查我的课程信息（例如课程编号等）以及我的点评内容，确保信息适当、真实、准确。
                   </div>
                 </Col>
+              </Row>
 
-                <div>
-                  <Checkbox
-                    checked={agreed}
-                    onChange={e => this.setState({ agreed: e.target.checked })}>
-                    我同意
-                  </Checkbox>
-                </div>
+              <Row type="flex" justify="center">
+                <Col>
+                  <div>
+                    <Checkbox
+                      checked={agreed}
+                      onChange={e => this.setState({ agreed: e.target.checked })}>
+                      我同意
+                    </Checkbox>
+                  </div>
+                </Col>
               </Row>
             </Card>
 
             <Card className={style.wrap}>
-              <Form layout="horizontal" onSubmit={this.handleSubmit} style={{ width: 620 }}>
+              <Form layout="horizontal"
+                onSubmit={this.handleSubmit}
+                style={{ width: 620, margin: "0 auto"}}>
                 <FormItem
                   {...formItemLayout}
                   validateStatus={schoolError ? 'error' : ''}
