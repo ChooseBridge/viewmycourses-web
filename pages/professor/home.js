@@ -199,7 +199,12 @@ class Professor extends React.Component {
                               id={this.props.url.query.id} />
                           </Col>
                           <Col span={16}>
-                            <a href="" target="_blank">教授个人主页</a>
+                            {
+                              professorInfo.professor_web_site ?
+                              <a href={professorInfo.professor_web_site} target="_blank">教授个人主页</a>
+                              :
+                              <a href="">教授个人主页</a>
+                            }
                           </Col>
                         </Row>
                         <Row>
