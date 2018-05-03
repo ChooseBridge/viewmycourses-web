@@ -32,7 +32,8 @@ class User extends React.Component {
     client(api.getStudent)().then(res => {
       this.setState({
         ratesInfo: res.ratesInfo,
-        student: res.student
+        student: res.student,
+        data: res
       });
     });
   }
@@ -167,7 +168,8 @@ class User extends React.Component {
 
     const {
       ratesInfo,
-      student
+      student,
+      data,
     } = this.state;
 
     return (
@@ -252,7 +254,32 @@ class User extends React.Component {
                     }
                   </Row>
                 </Col>
-                <Col span={12}>111</Col>
+                <Col span={12}>
+                  {
+                    data &&
+                    <div>
+                      <div>RP（积分）值：{data.points}</div>
+                      {
+                        data.isVip &&
+                        <div>特权时限：{data.vipExpireTime}</div>
+                      }
+
+                      {
+                        student.email === '' ?
+                        <div>
+                          已经是大学生了？使用你的
+                          <a href="https://i.choosebridge.com/account" target="_blank">高校邮箱绑定</a>
+                          即可享受高校学生社群特权！
+                        </div> :
+                        <div>
+                          特权就快到期了？快去撰写点评或
+                          <a href="https://i.choosebridge.com/invite" target="_blank">邀请好友</a>
+                          提升你的RP值来<a href="https://i.choosebridge.com/redeem" target="_blank">兑换特权</a>吧！
+                        </div>
+                      }
+                    </div>
+                  }
+                </Col>
               </Row>
             </Card>
 
