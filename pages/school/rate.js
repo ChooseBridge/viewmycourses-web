@@ -238,7 +238,7 @@ class SchoolRate extends React.Component {
             <Card className={style.wrap}>
               <Form layout="horizontal"
                 onSubmit={this.handleSubmit}
-                style={{ width: 620, margin: "0 auto"}}>
+                className={style.schoolRateForm}>
                 <FormItem
                   {...formItemLayout}
                   validateStatus={schoolError ? 'error' : ''}

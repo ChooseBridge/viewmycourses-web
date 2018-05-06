@@ -25,3 +25,13 @@
 .tag:global(.ant-tag-checkable-checked) {
 	background-color: #1890ff;
 }
+
+.schoolRateForm {
+	width: 620px;
+	margin: 0 auto 0 120px;
+}
+
+.proRateForm {
+	width: 700px;
+	margin: 0 auto 0 120px;
+}

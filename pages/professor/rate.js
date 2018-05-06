@@ -297,7 +297,7 @@ class ProfessorRate extends React.Component {
             <Card className={style.wrap}>
               <Form layout="horizontal"
                 onSubmit={this.handleSubmit}
-                style={{ width: 700, margin: '0 auto' }}>
+                className={style.proRateForm}>
                 <FormItem
                   {...formItemLayout}
                   validateStatus={categorysError ? 'error' : ''}
@@ -469,6 +469,8 @@ class ProfessorRate extends React.Component {
                   {...formItemLayout}
                   validateStatus={quizError ? 'error' : ''}
                   help={quizError || ''}
+                  labelCol={{span: 12}}
+                  wrapperCol={{span: 12}}
                   label="每月考试数（包括成绩计入总分的随堂检测等）">
                   {getFieldDecorator('quiz_num', {
                     rules: [{ required: true, message: '请填写每月考试数' }]
