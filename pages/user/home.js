@@ -194,25 +194,20 @@ class User extends React.Component {
                           student.education_status == 1 ?
                           <Row type="flex">
                             <Col span={4}></Col>
-                            <Col style={{ fontWeight: 800, marginRight: 6 }}>
-                              <div>大学</div>
-                              <div>专业</div>
+                            <Col span={17} style={{ marginRight: 6 }}>
+                              <div><span style={{fontWeight: 800, marginRight: 10}}>大学</span> {student.school_name}</div>
+                              <div><span style={{fontWeight: 800, marginRight: 10}}>专业</span> {student.major}</div>
                               <div>
-                                {
+                                <span style={{fontWeight: 800, marginRight: 10}}>{
                                   student.school_status == '国内' ?
                                   '高考地'
                                   :
                                   '高中所在省份/联邦州'
-                                }
+                                }</span>
+                                {student.exam_province}
                               </div>
-                              <div>毕业年份</div>
-                            </Col>
-
-                            <Col>
-                              <div>{student.school_name}</div>
-                              <div>{student.major}</div>
-                              <div>{student.exam_province}</div>
                               <div>
+                                <span style={{fontWeight: 800, marginRight: 10}}>毕业年份</span>
                                 {
                                   student.is_graduate == 0 ?
                                   '在读'
@@ -257,7 +252,7 @@ class User extends React.Component {
                 <Col span={12}>
                   {
                     data &&
-                    <div>
+                    <div style={{paddingTop: 48}}>
                       <div>RP（积分）值：{data.points}</div>
                       {
                         data.isVip &&
