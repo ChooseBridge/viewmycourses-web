@@ -172,6 +172,12 @@ class User extends React.Component {
       data,
     } = this.state;
 
+    let vipLeftDay = 0;
+
+    if (data) {
+      vipLeftDay = Math.round(((new Date(data.vipExpireTime)) - (new Date())) / 86400000);
+    }
+
     return (
       <ALayout title='个人主页' url={url}>
         <Content className={commonStyle.container}>
@@ -252,26 +258,31 @@ class User extends React.Component {
                 <Col span={12}>
                   {
                     data &&
-                    <div style={{paddingTop: 48}}>
-                      <div>RP（积分）值：{data.points}</div>
-                      {
-                        data.isVip &&
-                        <div>特权时限：{data.vipExpireTime}</div>
-                      }
+                    <div style={{ paddingTop: 48 }}>
+                      <Row>
+                        <Col span={12} style={{textAlign: 'center'}}>
+                          <div>您当前的 RP 值</div>
+                          <div style={{fontSize:40, color: '#8bc34a', margin: 10}}>{data.points}</div>
+                        </Col>
+                        <Col span={12} style={{textAlign: 'center'}}>
+                          <div>您的高校学生社群特权</div>
+                          <div style={{ margin: 10}}>剩余 <span style={{fontSize:40, color: '#e91e1e'}}>{vipLeftDay}</span> 天</div>
+                        </Col>
+                      </Row>
 
-                      {
-                        student.email === '' ?
-                        <div>
-                          已经是大学生了？使用你的
-                          <a href="https://i.choosebridge.com/account" target="_blank">高校邮箱绑定</a>
-                          即可享受高校学生社群特权！
-                        </div> :
-                        <div>
-                          特权就快到期了？快去撰写点评或
-                          <a href="https://i.choosebridge.com/invite" target="_blank">邀请好友</a>
-                          提升你的RP值来<a href="https://i.choosebridge.com/redeem" target="_blank">兑换特权</a>吧！
-                        </div>
-                      }
+                      <div style={{textAlign:'center'}}>
+                        {
+                          student.email === '' ? <div>
+                            已经是大学生了？使用你的
+                            <a href="https://i.choosebridge.com/account" target="_blank">高校邮箱绑定</a>
+                            即可享受高校学生社群特权！
+                          </div> : <div>
+                            特权就快到期了？快去撰写点评或
+                            <a href="https://i.choosebridge.com/invite" target="_blank">邀请好友</a>
+                            提升你的RP值来<a href="https://i.choosebridge.com/redeem" target="_blank">兑换特权</a>吧！
+                          </div>
+                        }
+                      </div>
                     </div>
                   }
                 </Col>
