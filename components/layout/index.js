@@ -219,7 +219,7 @@ export default class extends React.Component {
               <a href="/privacy">隐私政策</a>
               <a href="/copyright">版权声明</a>
             </div>
-            <div>备案号 xxxxxxxx</div>
+            <div><a href="http://www.miitbeian.gov.cn" target="_blank">沪ICP备18012627号</a></div>
           </Footer>
         </Layout>
       </Base>
