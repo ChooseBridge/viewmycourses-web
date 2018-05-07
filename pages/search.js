@@ -542,7 +542,7 @@ class Search extends React.Component {
                   href="/professor/create">创建教授</a>或
                 <a
                   onClick={e => {
-                    if (!url.query.user.student.is_email_edu) {
+                    if (!url.query.user) {
                       e.preventDefault();
                       requiredEdu();
                     }
