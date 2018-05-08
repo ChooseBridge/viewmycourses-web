@@ -169,13 +169,15 @@ class User extends React.Component {
     const {
       ratesInfo,
       student,
-      data,
+      data
     } = this.state;
 
     let vipLeftDay = 0;
 
     if (data) {
-      vipLeftDay = Math.round(((new Date(data.vipExpireTime)) - (new Date())) / 86400000);
+      if (data.isVip) {
+        vipLeftDay = Math.round(((new Date(data.vipExpireTime)) - (new Date())) / 86400000);
+      }
     }
 
     return (
