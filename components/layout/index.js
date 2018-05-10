@@ -176,9 +176,9 @@ export default class extends React.Component {
                             </Menu.Item>
                           </Menu>
                         )}>
-                          <a href="/user" style={{ color: '#fff' }}>
+                          <span style={{ color: '#fff' }}>
                             {url.query.user.student.name}
-                          </a>
+                          </span>
                         </Dropdown>
                       ) : <a href={url.query.loginUrl}><Button ghost type="primary">登录</Button></a>
                     }
