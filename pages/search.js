@@ -477,7 +477,7 @@ class Search extends React.Component {
           <Col span={6}>教授</Col>
           <Col span={16}>
             <div><h2>{item.professor_full_name}</h2></div>
-            <div>{item.school_name} - {item.college} 教授</div>
+            <div>{item.school_name} - {item.college}</div>
           </Col>
         </Row>
       </a>
