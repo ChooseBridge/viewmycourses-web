@@ -203,8 +203,8 @@ class User extends React.Component {
                           <Row type="flex">
                             <Col span={4}></Col>
                             <Col span={17} style={{ marginRight: 6 }}>
-                              <div><span style={{fontWeight: 800, marginRight: 10}}>大学</span> {student.school_name}</div>
-                              <div><span style={{fontWeight: 800, marginRight: 10}}>专业</span> {student.major}</div>
+                              <div><span style={{fontWeight: 800, marginRight: 10}}>大学</span> {student.school_name || 'N/A'}</div>
+                              <div><span style={{fontWeight: 800, marginRight: 10}}>专业</span> {student.major || 'N/A'}</div>
                               <div>
                                 <span style={{fontWeight: 800, marginRight: 10}}>{
                                   student.school_status == '国内' ?
@@ -212,7 +212,7 @@ class User extends React.Component {
                                   :
                                   '高中所在省份/联邦州'
                                 }</span>
-                                {student.exam_province}
+                                {student.exam_province || 'N/A'}
                               </div>
                               <div>
                                 <span style={{fontWeight: 800, marginRight: 10}}>毕业年份</span>
@@ -220,7 +220,7 @@ class User extends React.Component {
                                   student.is_graduate == 0 ?
                                   '在读'
                                   :
-                                  student.graduate_year
+                                  (student.graduate_year || 'N/A')
                                 }
                               </div>
                             </Col>
@@ -234,13 +234,13 @@ class User extends React.Component {
                             </Col>
 
                             <Col>
-                              <div>{student.school_name}</div>
+                              <div>{student.school_name || 'N/A'}</div>
                               <div>
                                 {
                                   student.is_graduate == 0 ?
                                   '在读'
                                   :
-                                  student.graduate_year
+                                  (student.graduate_year || 'N/A')
                                 }
                               </div>
                             </Col>
@@ -268,7 +268,7 @@ class User extends React.Component {
                         </Col>
                         <Col span={12} style={{textAlign: 'center'}}>
                           <div>您的高校学生社群特权</div>
-                          <div style={{ margin: 10}}>剩余 <span style={{fontSize:40, color: '#e91e1e'}}>{vipLeftDay}</span> 天</div>
+                          <div style={{ margin: 10}}>剩余 <span style={{fontSize:40, color: vipLeftDay < 30 ? '#e91e1e' : '#8bc34a'}}>{vipLeftDay}</span> 天</div>
                         </Col>
                       </Row>
 

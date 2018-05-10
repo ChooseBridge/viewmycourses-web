@@ -469,9 +469,8 @@ class ProfessorRate extends React.Component {
                   {...formItemLayout}
                   validateStatus={quizError ? 'error' : ''}
                   help={quizError || ''}
-                  labelCol={{span: 12}}
-                  wrapperCol={{span: 12}}
-                  label="每月考试数（包括成绩计入总分的随堂检测等）">
+                  label="每月考试数"
+                  extra={<div>包括大测验与成绩计入总分的随堂检测等</div>}>
                   {getFieldDecorator('quiz_num', {
                     rules: [{ required: true, message: '请填写每月考试数' }]
                   })(
