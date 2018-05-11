@@ -37,8 +37,12 @@ node -v
 ```
 npm i -g pm2
 ```
+### 代码构建
+```
+npm run build
+```
+
 ### 启动项目
 ```
-cd /{PROJECT_DIR}
 pm2 start npm -- start 
 ```
