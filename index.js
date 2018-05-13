@@ -16,9 +16,9 @@ app.prepare()
     const server = express();
 
     const render = (req, res, page, params = {}) => {
-      const uri = req.protocol + '://' + req.get('host') + req.originalUrl;
+      // const uri = req.protocol + '://' + req.get('host') + req.originalUrl;
       return app.render(req, res, page, Object.assign({}, params, {
-        loginUrl: `${config.loginUrl}${uri}`
+        loginUrl: config.loginUrl
       }));
     };
 
