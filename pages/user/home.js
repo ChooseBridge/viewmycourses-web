@@ -110,6 +110,21 @@ class User extends React.Component {
       comment
     } = item;
 
+    const changeDifficultLevel = (difficult_level) => {
+      switch (difficult_level) {
+        case '1':
+          return '容易';
+        case '2':
+          return '较易';
+        case '3':
+          return '中等';
+        case '4':
+          return '较难';
+        case '5':
+          return '困难';
+      }
+    };
+
     return (
       <div key={key}>
         <div className={style.schoolName}>
@@ -146,7 +161,7 @@ class User extends React.Component {
                 <Col span={6}>课程编号：{course_code}</Col>
                 <Col span={6}>课程名：{course_name}</Col>
                 <Col span={6}>是否出勤：{is_attend}</Col>
-                <Col span={6}>课程难度：{difficult_level}</Col>
+                <Col span={6}>课程难度：{changeDifficultLevel(difficult_level)}</Col>
                 <Col span={6}>书面作业量：{homework_num}</Col>
                 {/*<Col span={6}>书面作业量：{written_homework_num}</Col>*/}
                 <Col span={6}>每月考试数：{quiz_num}</Col>
@@ -274,12 +289,12 @@ class User extends React.Component {
 
                       <div style={{textAlign:'center'}}>
                         {
-                          student.email === '' ? <div>
+                          student.is_email_edu === 0 ? <div>
                             已经是大学生了？使用你的
                             <a href="https://i.choosebridge.com/account" target="_blank">高校邮箱绑定</a>
                             即可享受高校学生社群特权！
                           </div> : <div>
-                            特权就快到期了？快去撰写点评或
+                            特权就快到期了？快去<span style={{color:"#1890ff"}}>撰写点评</span>或
                             <a href="https://i.choosebridge.com/invite" target="_blank">邀请好友</a>
                             提升你的RP值来<a href="https://i.choosebridge.com/redeem" target="_blank">兑换特权</a>吧！
                           </div>
