@@ -281,10 +281,10 @@ class User extends React.Component {
                           <div>您当前的 RP 值</div>
                           <div style={{fontSize:40, color: '#8bc34a', margin: 10}}>{data.points}</div>
                         </Col>
-                        {data.isVip && <Col span={12} style={{textAlign: 'center'}}>
+                        <Col span={12} style={{textAlign: 'center'}}>
                           <div>您的高校学生社群特权</div>
                           <div style={{ margin: 10}}>剩余 <span style={{fontSize:40, color: vipLeftDay < 30 ? '#e91e1e' : '#8bc34a'}}>{vipLeftDay}</span> 天</div>
-                        </Col>}
+                        </Col>
                       </Row>
 
                       <div style={{textAlign:'center'}}>
