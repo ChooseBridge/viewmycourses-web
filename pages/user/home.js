@@ -189,10 +189,8 @@ class User extends React.Component {
 
     let vipLeftDay = 0;
 
-    if (data) {
-      if (data.isVip) {
-        vipLeftDay = Math.round(((new Date(data.vipExpireTime)) - (new Date())) / 86400000);
-      }
+    if (data && data.isVip) {
+      vipLeftDay = Math.round(((new Date(data.vipExpireTime)) - (new Date())) / 86400000);
     }
 
     return (
