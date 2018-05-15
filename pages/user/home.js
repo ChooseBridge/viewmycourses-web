@@ -287,7 +287,7 @@ class User extends React.Component {
 
                       <div style={{textAlign:'center'}}>
                         {
-                          student.is_email_edu === 0 ? <div>
+                          !data.isVip ? <div>
                             已经是大学生了？使用你的
                             <a href="https://i.choosebridge.com/account" target="_blank">高校邮箱绑定</a>
                             即可享受高校学生社群特权！
