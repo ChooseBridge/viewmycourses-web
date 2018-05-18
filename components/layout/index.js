@@ -166,7 +166,9 @@ export default class extends React.Component {
 
                     {
                       url.query.user ? (
-                        <Dropdown overlay={(
+                        <Dropdown
+                          trigger={['click']}
+                          overlay={(
                           <Menu>
                             <Menu.Item>
                               <a href="/user">个人主页</a>
@@ -176,7 +178,7 @@ export default class extends React.Component {
                             </Menu.Item>
                           </Menu>
                         )}>
-                          <span style={{ color: '#fff' }}>
+                          <span style={{ color: '#fff', cursor: 'pointer' }}>
                             {url.query.user.student.name}
                           </span>
                         </Dropdown>
