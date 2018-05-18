@@ -220,6 +220,17 @@ class ProfessorRate extends React.Component {
       }
     };
 
+    const limitDecimals = (value) => {
+      const reg = /^(\-)*(\d+)\.(\d).*$/;
+      if(typeof value === 'string') {
+        return !isNaN(Number(value)) ? value.replace(reg, '$1$2.$3') : ''
+      } else if (typeof value === 'number') {
+        return !isNaN(value) ? String(value).replace(reg, '$1$2.$3') : ''
+      } else {
+        return ''
+      }
+    };
+
     const categorysError = isFieldTouched('course_category_name') && getFieldError('course_category_name');
     const courseCodeError = isFieldTouched('course_code') && getFieldError('course_code');
     const courseNameError = isFieldTouched('course_name') && getFieldError('course_name');
@@ -470,11 +481,14 @@ class ProfessorRate extends React.Component {
                   validateStatus={quizError ? 'error' : ''}
                   help={quizError || ''}
                   label="每月考试数"
-                  extra={<div>包括大测验与成绩计入总分的随堂检测等</div>}>
+                  formatter={num => {console.log(num); return num}}
+                  extra={<div>包括大测验与成绩计入总分的随堂检测等。<br/>计算方法为总考试数/上课时间，例如：一学期有期中与期末两场考试，上课四个月，则改空填写0.5。</div>}>
                   {getFieldDecorator('quiz_num', {
                     rules: [{ required: true, message: '请填写每月考试数' }]
                   })(
                     <InputNumber
+                      formatter={limitDecimals}
+                      parser={limitDecimals}
                       onChange={() => {
                         setTimeout(() => this.onCalEffort(), 1000);
                       }}
@@ -492,6 +506,8 @@ class ProfessorRate extends React.Component {
                     rules: [{ required: true, message: '请填写每周课堂外所花总时间' }]
                   })(
                     <InputNumber
+                      formatter={limitDecimals}
+                      parser={limitDecimals}
                       onChange={() => {
                         setTimeout(() => this.onCalEffort(), 1000);
                       }}
@@ -504,10 +520,11 @@ class ProfessorRate extends React.Component {
                   {...formItemLayout}
                   validateStatus={gradeError ? 'error' : ''}
                   help={gradeError || ''}
-                  label="你的成绩"
+                  label="您的成绩"
                   extra={
                     <div>
                       <div>
+                        您在本网站的点评将完全匿名发表，请放心填写真实信息。<br />
                         百分比成绩换算标准为90%以上为A，每减少10%下降一个等第。
                         <br /> A+, A, A-统一为A，以此类推。
                       </div>
@@ -540,13 +557,13 @@ class ProfessorRate extends React.Component {
                   label="文字点评"
                   extra={
                     <div>
-                      我们提供了以下示例问题供你选择，也欢迎分享课程学习中的趣事，让大家对这门课程有更多了解！
+                      我们提供了以下示例问题供您选择，也欢迎分享课程学习中的趣事，让大家对这门课程有更多了解！
                       <ul>
-                        <li>这门课抢课难度如何？</li>
+                        <li>这门课抢课难度如何？点名情况如何？</li>
                         <li>从这门课能学到什么？讨论为主还是讲课为主？巩固还是拓展课本？</li>
                         <li>作业是怎样的？小组项目？练习题？阅读？写作？还是？</li>
                         <li>考试频率多高？考试内容与题型？给分情况如何？</li>
-                        <li>应该如何学习这门课程？预习？复习？你有什么特别的学习建议？</li>
+                        <li>应该如何学习这门课程？预习？复习？您有什么特别的学习建议？</li>
                         <li>这学期的课程与之前有哪些不同？</li>
                       </ul>
                     </div>
