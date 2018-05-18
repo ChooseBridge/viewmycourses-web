@@ -181,16 +181,31 @@ class ProfessorForm extends React.Component {
                 validateStatus={collegeError ? 'error' : ''}
                 help={collegeError || ''}
                 label="学院：">
+                {/*{getFieldDecorator('college_id', {*/}
+                  {/*rules: [{ required: true, message: '请填写学院' }]*/}
+                {/*})(*/}
+                  {/*<Select*/}
+                    {/*size="large"*/}
+                    {/*style={{ width: 250 }}*/}
+                    {/*placeholder="学院">*/}
+                    {/*{*/}
+                      {/*this.state.collage.map(clg => <Option key={clg.college_id}*/}
+                                                            {/*value={clg.college_id}>{clg.college_name}</Option>)*/}
+                    {/*}*/}
+                  {/*</Select>*/}
+                {/*)}*/}
                 {getFieldDecorator('college_id', {
                   rules: [{ required: true, message: '请填写学院' }]
                 })(
                   <Select
                     size="large"
-                    style={{ width: 250 }}
-                    placeholder="学院">
+                    mode="combobox"
+                    placeholder="学院"
+                    labelInValue
+                    style={{ width: 250 }}>
                     {
                       this.state.collage.map(clg => <Option key={clg.college_id}
-                                                            value={clg.college_id}>{clg.college_name}</Option>)
+                                                            value={String(clg.college_name)}>{clg.college_name}</Option>)
                     }
                   </Select>
                 )}
