@@ -36,7 +36,7 @@ class ProfessorForm extends React.Component {
     this.state = {
       schools: [],
       collage: [],
-      loading: false
+      loading: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -194,20 +194,36 @@ class ProfessorForm extends React.Component {
                     {/*}*/}
                   {/*</Select>*/}
                 {/*)}*/}
-                {getFieldDecorator('college_id', {
-                  rules: [{ required: true, message: '请填写学院' }]
-                })(
+                {getFieldDecorator('_college_id', {rules: [{ required: true, message: '请填写学院' }]})(
                   <Select
                     size="large"
                     mode="combobox"
                     placeholder="学院"
-                    labelInValue
+                    allowClear
+                    onChange={value => this.props.form.setFieldsValue({
+                      'college_id': value
+                    })}
+                    onSelect={value => {
+                      setTimeout(() => {
+                        const col = this.state.collage.filter(c => c.college_name === value);
+
+                        this.props.form.setFieldsValue({
+                          'college_id': col[0].college_id
+                        });
+                      }, 10);
+                    }}
                     style={{ width: 250 }}>
                     {
                       this.state.collage.map(clg => <Option key={clg.college_id}
-                                                            value={String(clg.college_name)}>{clg.college_name}</Option>)
+                                                            value={clg.college_name}>{clg.college_name}</Option>)
                     }
                   </Select>
+                )}
+
+                {getFieldDecorator('college_id', {
+                  rules: [{ required: true, message: '请填写学院' }]
+                })(
+                  <input type="hidden" />
                 )}
               </FormItem>
               <FormItem
