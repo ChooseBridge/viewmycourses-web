@@ -69,7 +69,7 @@ export default class extends Component {
                           </div>
                         </Col>
 
-                        <Col className={style.center} span={8}>
+                        <Col className={style.center} span={10}>
                           <div className={style.comment}>
                             {rate.comment}
                           </div>
@@ -102,7 +102,7 @@ export default class extends Component {
                           </div>
                         </Col>
 
-                        <Col span={11} className={style.right}>
+                        <Col span={9} className={style.right}>
                           <Col>
                             <Row>
                               <Col span={12}>

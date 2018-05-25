@@ -5,7 +5,7 @@ export default ({ children, title, className }) =>
     <Head>
       <meta charSet='utf-8' />
       <title>{title && `${title} | `}桥选校园</title>
-      <link rel='stylesheet' href='https://unpkg.com/antd@3/dist/antd.min.css' />
+      <link href="https://cdn.bootcss.com/antd/3.5.2/antd.min.css" rel="stylesheet" />
       <link rel="stylesheet" href="/_next/static/style.css" />
       <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet" />
     </Head>
