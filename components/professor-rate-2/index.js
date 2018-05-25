@@ -30,6 +30,17 @@ export default class extends Component {
     }));
   }
 
+  difficultFilter = level => {
+    const names = {
+      1: '容易',
+      2: '较易',
+      3: '中等',
+      4: '较难',
+      5: '很难'
+    };
+    return names[level];
+  }
+
   render() {
     const { dark, rate } = this.props;
     const { thumbsUp, thumbsDown } = this.state;
@@ -72,9 +83,9 @@ export default class extends Component {
                         </div>
                         <div className={style.items}>
                           <div><strong>课程类别:</strong> {rate.course_category_name}</div>
-                          <div><strong>课程名:</strong> {rate.course_name}</div>
+                          <div><strong>课程名:</strong><br />{rate.course_name}</div>
                           <div><strong className={style.label}>是否记出勤:</strong> {rate.is_attend === 1 ? '是' : '否'}</div>
-                          <div><strong>课程难度:</strong> {rate.difficult_level}</div>
+                          <div><strong>课程难度:</strong> {this.difficultFilter(rate.difficult_level)}</div>
                           <div><strong>书面作业量:</strong> {homeWorkPipe(rate.homework_num)}</div>
                           <div><strong>每月考试数:</strong> {rate.quiz_num}</div>
                           <div><strong>我的成绩:</strong> {rate.grade}</div>
