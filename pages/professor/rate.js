@@ -231,6 +231,17 @@ class ProfessorRate extends React.Component {
       }
     };
 
+    const limitDecimalsTwo = (value) => {
+      const reg = /^(\-)*(\d+)\.(\d\d).*$/;
+      if (typeof value === 'string') {
+        return !isNaN(Number(value)) ? value.replace(reg, '$1$2.$3') : ''
+      } else if (typeof value === 'number') {
+        return !isNaN(value) ? String(value).replace(reg, '$1$2.$3') : ''
+      } else {
+        return ''
+      }
+    };
+
     const categorysError = isFieldTouched('course_category_name') && getFieldError('course_category_name');
     const courseCodeError = isFieldTouched('course_code') && getFieldError('course_code');
     const courseNameError = isFieldTouched('course_name') && getFieldError('course_name');
@@ -487,8 +498,8 @@ class ProfessorRate extends React.Component {
                     rules: [{ required: true, message: '请填写每月考试数' }]
                   })(
                     <InputNumber
-                      formatter={limitDecimals}
-                      parser={limitDecimals}
+                      formatter={limitDecimalsTwo}
+                      parser={limitDecimalsTwo}
                       onChange={() => {
                         setTimeout(() => this.onCalEffort(), 1000);
                       }}
