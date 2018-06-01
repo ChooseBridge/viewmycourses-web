@@ -5,8 +5,8 @@ const DEV = !TEST && !PROD;
 
 const config = {
   port: 3000,
-  apiHost: 'http://school.anyquestion.top',
-  loginUrl: 'https://i.choosebridge.com/oauth/authorize?client_id=1&redirect_uri=http://school.anyquestion.top/callback&response_type=code&state=',
+  apiHost: 'https://api.viewmycourses.com/',
+  loginUrl: 'https://i.choosebridge.com/oauth/authorize?client_id=999&redirect_uri=https://api.viewmycourses.com/callback&response_type=code&state=',
   loginRedirectPrefix: 'https://www.viewmycourses.com'
 };
 
