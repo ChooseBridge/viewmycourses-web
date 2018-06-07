@@ -9,6 +9,7 @@ import {
   Col,
   Card,
   message,
+  Select,
   Avatar
 } from 'antd';
 import cla from 'classnames';
@@ -26,6 +27,8 @@ import requiredEdu from '../../common/required-edu';
 const {
   Content
 } = Layout;
+
+const { Option } = Select;
 
 function renderDistrict(item) {
   return (
@@ -81,7 +84,8 @@ class School extends React.Component {
           key: item.school_district_name,
           tab: item.school_district_name
         };
-      })
+      }),
+      ratesInfo: school.ratesInfo
     };
 
     this.onTabChange = this.onTabChange.bind(this);
@@ -98,7 +102,7 @@ class School extends React.Component {
     const tabs = document.getElementsByClassName('ant-tabs-tab');
 
     for (let i = 0; i < tabs.length; i++) {
-      tabs[i].style.marginRight = "10px";
+      tabs[i].style.marginRight = '10px';
     }
   }
 
@@ -128,7 +132,7 @@ class School extends React.Component {
       }
     }).then(school => {
       this.setState({
-        school,
+        school
 
       });
     });
@@ -142,7 +146,7 @@ class School extends React.Component {
     }).then(res => {
       // console.log(res);
       this.getSchoolDetail();
-      done()
+      done();
     }).catch(() => {
       message.error('您已经投过票了');
     });
@@ -156,7 +160,7 @@ class School extends React.Component {
     }).then(res => {
       // console.log(res);
       this.getSchoolDetail();
-      done()
+      done();
     }).catch(() => {
       message.error('您已经投过票了');
     });
@@ -172,6 +176,24 @@ class School extends React.Component {
     });
   }
 
+  handleChange = (e) => {
+    const {
+      school
+    } = this.state;
+
+    let ratesInfo;
+
+    if (e == 'all') {
+      ratesInfo = school.ratesInfo;
+    } else {
+      ratesInfo = school.ratesInfo.filter(item => item.school_district_name == e);
+    }
+
+    this.setState({
+      ratesInfo
+    });
+  }
+
   render() {
     const {
       url
@@ -180,13 +202,14 @@ class School extends React.Component {
     const {
       school,
       tabList,
-      contentList
+      contentList,
+      ratesInfo
     } = this.state;
 
     const {
       schoolInfo,
-      ratesInfo,
-      randomProfessor
+      randomProfessor,
+      schoolDistrictInfo
     } = school;
 
     return (
@@ -216,7 +239,8 @@ class School extends React.Component {
                   </Row>
                   <Row>
                     <Col span={12}>
-                      <div>{schoolInfo.city}, {schoolInfo.province} {schoolInfo.country} <span className={style.colorBlue}>
+                      <div>{schoolInfo.city}, {schoolInfo.province} {schoolInfo.country} <span
+                        className={style.colorBlue}>
                         <a href={schoolInfo.website_url} target="_blank">网站</a></span>
                       </div>
 
@@ -243,29 +267,29 @@ class School extends React.Component {
                       </Row>
                     </Col>
                     {randomProfessor && (
-                       <Col span={12}>
-                      <div><h2 style={{margin:0}}>每日推荐</h2></div>
-                      <Row>
-                        <Col span={4}>
-                          <Avatar size="large" icon="user" style={{marginTop:15}} />
-                        </Col>
-                        <Col span={12}>
-                          <div className={style.schoolStyle}>
-                            <a href={`/professor/${randomProfessor.professor_id}`}>
-                              {randomProfessor.professor_full_name}
-                            </a>
-                          </div>
-                          <div style={{ color: '#9e9e9e' }}>{randomProfessor.rate_num}条评论</div>
-                        </Col>
-                        <Col
-                          span={8}
-                          className={cla(commonStyle.textRight)}>
-                          <div className={style.schoolStyle}>{randomProfessor.effort}</div>
-                          <div>课程平均努力指数</div>
-                        </Col>
-                      </Row>
-                    </Col>
-                    ) }
+                      <Col span={12}>
+                        <div><h2 style={{ margin: 0 }}>每日推荐</h2></div>
+                        <Row>
+                          <Col span={4}>
+                            <Avatar size="large" icon="user" style={{ marginTop: 15 }} />
+                          </Col>
+                          <Col span={12}>
+                            <div className={style.schoolStyle}>
+                              <a href={`/professor/${randomProfessor.professor_id}`}>
+                                {randomProfessor.professor_full_name}
+                              </a>
+                            </div>
+                            <div style={{ color: '#9e9e9e' }}>{randomProfessor.rate_num}条评论</div>
+                          </Col>
+                          <Col
+                            span={8}
+                            className={cla(commonStyle.textRight)}>
+                            <div className={style.schoolStyle}>{randomProfessor.effort}</div>
+                            <div>课程平均努力指数</div>
+                          </Col>
+                        </Row>
+                      </Col>
+                    )}
                   </Row>
                 </Col>
               </Row>
@@ -284,7 +308,27 @@ class School extends React.Component {
               ratesInfo &&
               <Card className={style.wrap} style={{ marginBottom: 30 }}>
                 <Row>
-                  <Col span={24} className={style.textWrap}>{ratesInfo.length}位同学的点评</Col>
+                  <Col span={12} className={style.textWrap}>{ratesInfo.length}位同学的点评</Col>
+
+                  <Col span={12} className={commonStyle.textRight}>
+                    {
+                      schoolDistrictInfo && <Select
+                      placeholder="按课程筛选"
+                      style={{ width: 200 }}
+                      defaultValue="all"
+                      onChange={this.handleChange}>
+                      <Option value="all">全部</Option>
+                      {
+                        schoolDistrictInfo.map(item =>
+                          <Option
+                            key={item.school_district_id}
+                            value={item.school_district_name}>{item.school_district_name}
+                          </Option>
+                        )
+                      }
+                    </Select>
+                    }
+                  </Col>
                 </Row>
               </Card>
             }
@@ -305,7 +349,7 @@ class School extends React.Component {
               }
             </div>
 
-            <Card className={style.wrap} style={{textAlign: 'center'}}>
+            <Card className={style.wrap} style={{ textAlign: 'center' }}>
               <h1>想让学弟学妹们更加了解你的学校？</h1>
               <div>
                 <a
